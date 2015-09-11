@@ -6,3 +6,10 @@ Desktop.ini
 # My configurations:
 sn.ini
 deploy_key_rsa
+
+#备份版本不算
+*.backup.zip
+
+#显示文件列表
+*.list.bat
+*.list.txt
