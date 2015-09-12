@@ -9,6 +9,7 @@
 按功能索引：
 [ajax] 01-php版简易ajax--Suggestions
 [BBS][File] 02-php_BBS_FileBased
+[AuthCode][YanZhengMa] 03-php_yanZhengMa(AuthCode)
 
 -----------------------------------
 ===================================
@@ -22,7 +23,10 @@
 -----------------------------------
 按时间索引：
 [2015-09-07]	01-php版简易ajax--Suggestions	
-[9:23 2015-09-11]	02-php_BBS_FileBased
+[2015-09-11]	02-php_BBS_FileBased
+[2015-09-12]	03-php_yanZhengMa(AuthCode)
+
+
 
 -----------------------------------
 ===================================
