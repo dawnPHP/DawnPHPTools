@@ -1,0 +1,18 @@
+------------------------------
+excel导入到mysql
+------------------------------
+总思路:excel导入到txt中，再导入到mysql;
+------------------------------
+1.建立表结构
+create table result(
+	id int(10) not null primary key auto_increment,
+	d_id varchar(8),
+	num int(20),
+	rs varchar(20)
+);
+
+2.excel数据到txt
+excel中另存为“文本文件（制表符分割）(*.txt)”，去掉表头；
+
+3.txt导入到mysql
+load data local infile 'E:\\class_result.txt' into table result fields terminated by '\t';
