@@ -10,6 +10,7 @@
 [AuthCode][YanZhengMa][验证码] 03-php_yanZhengMa(AuthCode)
 [MySQL][PHP][增删改查] 00-singlePageBlog
 [excel2mysql] 04-php_excel2MySQL
+[二维码][phpqrcode]	05-php_erWeiMa
 
 -----------------------------------
 ===================================
@@ -21,8 +22,9 @@
 [2015-09-07]	01-php版简易ajax--Suggestions	
 [2015-09-11]	02-php_BBS_FileBased
 [2015-09-12]	03-php_yanZhengMa(AuthCode)
-[2015-09-24]	00-singlePageBlog
 [2015-09-22]	04-php_excel2MySQL
+[2015-09-24]	00-singlePageBlog
+[2015-09-24]	05-php_erWeiMa
 
 -----------------------------------
 ===================================
