@@ -8,7 +8,8 @@ pros&cons: 还需完善评论计数功能
 
 version: v1.0.0
 time:[18:01 2015-09-29]
-auther: Dawn
+auther: Dawn modify from
+	http://blog.csdn.net/wyhuan1030/article/details/6138635
 Email: jimmymall@live.com
 
 Files&Functions:
