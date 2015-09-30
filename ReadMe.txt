@@ -14,6 +14,8 @@
 [excel2mysql] 04-php_excel2MySQL
 [二维码][phpqrcode]	05-php_erWeiMa
 [pdf]	06-PHP_Lib_FPDF
+[博客底部][页码]	08-php_showPageBtns
+
 -----------------------------------
 ===================================
 
@@ -29,6 +31,8 @@
 [2015-09-24]	05-php_erWeiMa
 [2015-09-25]	06-PHP_Lib_FPDF
 [2015-09-29]	07-php_counter
+[2015-09-30]	08-php_showPageBtns
+
 -----------------------------------
 ===================================
 13:36 2015-09-07
@@ -57,5 +61,5 @@ time:press F5 in notepad[13:55 2015-09-07]
 auther: Dawn
 Email: jimmymall@live.com
 
-Files$Functions:
+Files&Functions:
 Databases:
