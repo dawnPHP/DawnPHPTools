@@ -8,13 +8,15 @@
 [ajax] 01-php版简易ajax--Suggestions
 [BBS][File] 02-php_BBS_FileBased
 [blog][counter]	07-php_counter
+[二维码][phpqrcode]	05-php_erWeiMa
+[博客底部][页码]	08-php_showPageBtns
+[评论]	09-php_commentSystem
+
 
 [AuthCode][YanZhengMa][验证码] 03-php_yanZhengMa(AuthCode)
 [MySQL][PHP][增删改查] 00-singlePageBlog
 [excel2mysql] 04-php_excel2MySQL
-[二维码][phpqrcode]	05-php_erWeiMa
 [pdf]	06-PHP_Lib_FPDF
-[博客底部][页码]	08-php_showPageBtns
 
 -----------------------------------
 ===================================
@@ -32,6 +34,7 @@
 [2015-09-25]	06-PHP_Lib_FPDF
 [2015-09-29]	07-php_counter
 [2015-09-30]	08-php_showPageBtns
+[2015-10-01]	09-php_commentSystem
 
 -----------------------------------
 ===================================
