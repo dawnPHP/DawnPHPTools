@@ -9,6 +9,8 @@ deploy_key_rsa
 
 #备份版本不算
 *.backup.zip
+dustbin
+**/dustbin/
 
 #显示文件列表
 *.list.bat
