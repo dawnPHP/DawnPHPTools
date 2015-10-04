@@ -26,8 +26,11 @@ date_default_timezone_set('Asia/Shanghai');
 
 //评论系统
 echo '<div id=comment>';
-echo '<h1>这是待评论的博客、图片或商品</h1>';
-echo '<p>这是待评论的内容。该系统支持评论、对评论回复、对评论进行删除。一旦删除，会级联删除对该评论进行回复的所有评论。</p>';
+echo '<h1>待评论的博客、图片或商品</h1>';
+echo '<p><b>v1.0.1</b><br>用ajax改写 删除评论。在级联删除多个耗时较多：<br>
+（php通过ajax返回的序列化的数组在js中需要eval后使用）。</p>
+
+<p><b>v1.0.0</b><br>这是待评论的内容。该系统支持评论、对评论回复、对评论进行删除。一旦删除，会级联删除对该评论进行回复的所有评论。</p>';
 $current_aid=1;//todo 数据获取get或session
 
 
@@ -44,10 +47,12 @@ $current_aid=1;//todo 数据获取get或session
 	//输出评论id数据到js
 	$script = '<script> aCommentList=[];'."\n\n".$script;
 	$script .= '</script>';
-	echo "\r\n".$script."\r\n";	
+	echo "\r\n".$script."\r\n";
 ?>
 
 <div class=clear></div>
+
+<pre id='notice'>Notice will go here</pre>
 
 <a name='addComment'></a>
 <form action='action.php?a=c_add' name='comment' method='post'>
@@ -111,18 +116,72 @@ input{margin:10px;}
 </style>
 
 <script>
+//----------------------------------------------
+// 工具函数
+//----------------------------------------------
 //根据id获取obj
 function $(s){
 	if(typeof s=='object') return s;
 	return document.getElementById(s);
 }
 
-//载入事件
+//删除obj对应的dom元素
+function removeDom(obj){
+	if(typeof obj!='object'){
+		obj=$(obj);
+	}
+	return obj.parentElement.removeChild(obj)
+}
+
+/*单独的ajax函数
+*file:文件名
+*fnSucc：读取文件成功时的回调函数函数，响应值为其传入参数；
+*fnFaild：读取文件失败时的回调函数函数，错误代码为其传入参数；
+*/
+function ajax(fileUrl, fnSucc, fnFaild){
+		//1.创建ajax对象
+		if(window.XMLHttpRequest){//加window是为了兼容IE6
+			var oAjax=new XMLHttpRequest();//非IE6
+		}else{
+			var oAjax=new ActiveXObject('Microsoft.XMLHTTP');	//for IE6
+		}
+		//// alert(oAjax);//object XMLHttpRequest
+		
+		//2.链接服务器
+		//open(方法, 文件名, 同步或异步);
+		oAjax.open('GET',fileUrl,true);
+		
+		//3.发送请求
+		oAjax.send();
+		
+		//4.接收返回，并解析；
+		oAjax.onreadystatechange=function(){
+			//oAjax.readyState 浏览器和服务器通信到哪一步了
+			if(4==oAjax.readyState){//4就是读取完成；但可能文件不存在
+				if(200==oAjax.status){  //成功
+					fnSucc(oAjax.responseText);//server端的文件内容传入；
+					//var txt=oAjax.responseText;
+					//oDivLogin.innerHTML=txt;
+				}else{
+					//alert("failed to get the file on the server.." + oAjax.status);
+					if(fnFaild){//如果定义了错误函数，则进行处理；
+						fnFaild(oAjax.status);//传入参数为错误代码；
+					}
+				}
+			}
+		}
+
+}/*end of function ajax*/
+
+
+
+//----------------------------------------------
+//事件处理
+//----------------------------------------------
+	//载入事件
 window.onload=function(){
 	var pid=0;
-	//var oForm=document.getElementById('comment');
 	var oForm=document.comment;
-	//alert(oForm.nickName.value=='')
 	
 	//提交前的验证
 	oForm.onsubmit=function(){
@@ -157,7 +216,35 @@ window.onload=function(){
 		//为 删除按钮 绑定事件
 		oBtnDel.onclick=function(){
 			if(confirm('你确定要删除#'+this.id+'楼的留言吗？(包括此后的回复)')){
-				window.location='action.php?a=c_del&cid=' + this.id;
+				//window.location='action.php?a=c_del&cid=' + this.id;
+				
+				//ajax请求
+				url='action.php?a=c_del&cid=' + this.id;
+				ajax(url, function(text){
+						//ajax成功后的处理
+						//从php返回序列化后的json/array时需要用eval转换
+						var arr = eval('(' + text + ')');
+						//数据删除成功后，该删除dom了：
+						if(1==arr[0]){
+							$('notice').innerHTML =arr[1]
+
+							//删除节点
+							iLen=arr[2].length;
+							for(var i=0; i<iLen; i++){
+								removeDom( $('comment_id_' + arr[2][i] ) )
+							}								
+						}else{
+						//数据删除失败后：
+							$('notice').innerHTML="<span style='color:red'>"+arr[1]+'</span>'
+						}
+						
+					}, function(text){
+						//失败后的处理
+						alert(text)
+					
+					});
+				
+				
 			}
 		}
 		//为 回复按钮 绑定事件

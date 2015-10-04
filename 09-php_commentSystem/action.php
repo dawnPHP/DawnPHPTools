@@ -22,16 +22,25 @@ switch($action){
 			die('invalid deletion.');
 		}
 		//递归删除所有子回复
-	//	$sql="delete from comment where id={$cid} or pid={$cid}";
-//
-//		mysql_query($sql) or die('delete Err: '.mysql_error());
-		$total_deleted=delAllCommentAfter($cid);
-		echo '成功删除了'.$total_deleted.'条评论.<hr>';
+		$total_deletedIDs=delAllCommentAfter($cid);
+		$total_deleted=count($total_deletedIDs);
+		
+		//设定返回值
+		if($total_deleted>0){
+			$msg[0]=1; //成功
+			$msg[1]= '成功删除了'.$total_deleted.'条评论';
+		}else{
+			$msg=array(0, '删除了0条数据');
+		}
+		$msg[]=$total_deletedIDs;
+		
+		//返回json
+		echo json_encode($msg);
+		//echo '成功删除了'.$total_deleted.'条评论.';
 		//echo '<script>window.history.back(-1);</script>';
 		
-		//返回上一页
-		echo '<script>/*等待3s返回上一页并刷新*/
-		setTimeout(function(){window.location.href = document.referrer;}, 3000);</script>';
+		//返回上一页(todo del:使用ajax之后，就不用返回这么多了。)
+		//echo '<script>/*等待3s返回上一页并刷新*/		setTimeout(function(){window.location.href = document.referrer;}, 3000);</script>';
 		break;
 		
 	case 'c_add':
