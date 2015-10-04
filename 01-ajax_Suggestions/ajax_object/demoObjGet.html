@@ -1,0 +1,54 @@
+﻿<h1>ajax (obj) get</h1>
+<hr>
+
+<form id='demoForm' name=test>
+<p>登陆：</p>
+用户名	<input type=text name=user><br /><br />
+密码	<input type=password name=psw><br /><br />
+	<input type=button id=btn value=submit>
+
+</form>
+
+
+<pre id=show></pre>
+
+<script src='ajaxObj.js'></script>
+<script>
+//根据id获取obj
+function $(s){
+	if(typeof s=='object') return s;
+	return document.getElementById(s);
+}
+
+window.onload=function(){
+	//绑定事件
+	$('btn').onclick=function(){
+		//alert('submit ')
+		oForm=document.test;
+		
+		user=oForm.user.value
+		pass=oForm.psw.value
+		
+		//拼装参数
+		var url='data.php';
+		
+		var paras='u='+user;
+		paras += '&pass='+pass;
+		
+		url=url+'?'+paras;
+		//使用ajax请求
+		var myajax=new Ajax();
+		
+		myajax.get(url, function(str){
+				$('show').innerHTML='ajax返回的字符串:<hr> '+str
+				//进一步使用eval处理
+				wjl=eval('('+str+')'); //$('show').innerHTML=wjl['u']
+			}, function(str){
+				$('show').innerHTML='Error: '+str;
+			});
+	}
+}
+
+		
+	
+</script>
