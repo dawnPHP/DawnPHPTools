@@ -6,9 +6,13 @@ title:用fn/oop/prototype各封装一个ajax
 Description: 都可以实现get和post提交数据
 keywords:ajax object prototype
 pros&cons:
+优点与经验：
 	- 注意prototype中内嵌套的this和外部的this不一样，如果
 		要在内部使用外部this，需要在外部var _that=this;在内部用_that;
-		
+	- 嵌套请求(第一个ajax请求成功，再请求第二个，适合于文章评论系统)：demoObjPrototypePost2nd.html
+缺点：
+	- 还没有处理返回数据的方式，json、xml、string等。
+	
 version: V1.0.2
 time:[11:26 2015-10-04]
 auther: Dawn
