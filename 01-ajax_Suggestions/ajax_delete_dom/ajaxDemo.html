@@ -102,9 +102,9 @@ aCommentList=[43,44,45];
 						//$('notice').innerHTML=arr[1]
 						//删除节点
 						for(var i=2; i<arr.length; i++){
-							alert(arr[i])
+							//alert(arr[i])
+							removeDom( $('comment_id_'+arr[i]) )
 						}
-						//removeDom( $(arr[2]) )
 					}else{
 						//删除失败后
 						$('notice').innerHTML="<span style='color:red'>"+arr[1]+'</span>'
