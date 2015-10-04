@@ -20,13 +20,13 @@ function getGetValue($name,$defaultValue=''){
 /**
 * 递归删除所有子回复
 */
-function delAllCommentAfter($cid,$total=0){
+function delAllCommentAfter($cid,$deletedIDs=array()){
 	//删除当前id号的帖子
 	$sql="delete from comment where id={$cid}";
 	mysql_query($sql) or die('delete Err: '.mysql_error());
 
 	//记录删除条目
-	$total += mysql_affected_rows();
+	$deletedIDs[]= $cid;
 	
 	//查找当前id号为父id的帖子
 	$sql="select id from comment where pid={$cid}";
@@ -35,10 +35,10 @@ function delAllCommentAfter($cid,$total=0){
 	//如果找到，则递归删除
 	if(mysql_num_rows($rows)>0){
 		$row=mysql_fetch_assoc($rows);
-		//echo '本次删除条目数：'.$total.'<br />';
-		return delAllCommentAfter($row['id'], $total);
+		//echo '本次删除条目数：'.$deletedIDs.'<br />';
+		return delAllCommentAfter($row['id'], $deletedIDs);
 	}else{
-		return $total;
+		return $deletedIDs;
 	}
 }
 

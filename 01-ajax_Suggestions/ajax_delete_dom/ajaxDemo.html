@@ -1,0 +1,138 @@
+﻿<style>
+.comment{border-left:5px solid red; border-bottom:1px dashed red; padding:10px;}
+.sub{margin-left:50px;}
+.comment .control{float:right;}
+.comment .control span{ cursor: pointer;}
+.comment .control span:hover{background-color:#BE3948; color:white;}
+
+</style>
+
+<div id=comment>
+<h1>使用ajax调用php删除，如果成功则移除相应dom</h1>
+
+<div class="comment" id="comment_id_43"><div class="control"><span id="44">删除</span> <span id="43">回复</span></div><p>[#43楼]<a href="usr.php?uid=1">Tom</a> 2015-10-01 09:05:23:</p>我的回复</div>
+
+<div class="comment sub" id="comment_id_44"><div class="control"><span id="44">删除</span> <span id="44">回复</span></div><p>[#44楼]<a href="usr.php?uid=2">小明</a>回复<a href="user.php?uid=1">Tom</a> 2015-10-01 09:07:23:</p>我的回复</div>
+
+<div class="comment" id="comment_id_45"><div class="control"><span id="44">删除</span> <span id="45">回复</span></div><p>[#45楼]<a href="usr.php?uid=2">小明</a> 2015-10-01 09:17:23:</p>我的回复</div>
+
+	<pre id='notice'>notice will go here</pre>
+</div>
+
+<script>
+//----------------------------------------------
+// 工具函数
+//----------------------------------------------
+//根据id获取obj
+function $(s){
+	if(typeof s=='object') return s;
+	return document.getElementById(s);
+}
+
+//删除obj对应的dom元素
+function removeDom(obj){
+	return obj.parentElement.removeChild(obj)
+}
+
+/*单独的ajax函数
+*file:文件名
+*fnSucc：读取文件成功时的回调函数函数，响应值为其传入参数；
+*fnFaild：读取文件失败时的回调函数函数，错误代码为其传入参数；
+*/
+function ajax(fileUrl, fnSucc, fnFaild){
+		//1.创建ajax对象
+		if(window.XMLHttpRequest){//加window是为了兼容IE6
+			var oAjax=new XMLHttpRequest();//非IE6
+		}else{
+			var oAjax=new ActiveXObject('Microsoft.XMLHTTP');	//for IE6
+		}
+		//// alert(oAjax);//object XMLHttpRequest
+		
+		//2.链接服务器
+		//open(方法, 文件名, 同步或异步);
+		oAjax.open('GET',fileUrl,true);
+		
+		//3.发送请求
+		oAjax.send();
+		
+		//4.接收返回，并解析；
+		oAjax.onreadystatechange=function(){
+			//oAjax.readyState 浏览器和服务器通信到哪一步了
+			if(4==oAjax.readyState){//4就是读取完成；但可能文件不存在
+				if(200==oAjax.status){  //成功
+					fnSucc(oAjax.responseText);//server端的文件内容传入；
+					//var txt=oAjax.responseText;
+					//oDivLogin.innerHTML=txt;
+				}else{
+					//alert("failed to get the file on the server.." + oAjax.status);
+					if(fnFaild){//如果定义了错误函数，则进行处理；
+						fnFaild(oAjax.status);//传入参数为错误代码；
+					}
+				}
+			}
+		}
+
+}/*end of function ajax*/
+
+//删除
+
+aCommentList=[43,44,45];
+
+//为删除 和 回复 按钮绑定事件
+	for(var i in aCommentList){
+		oComment=$('comment_id_'+aCommentList[i]);
+		aBtns=oComment.getElementsByTagName('span');
+		oBtnDel=aBtns[0];		oBtnDel.id=aCommentList[i];
+		oBtnReply=aBtns[1];		oBtnReply.id=aCommentList[i];
+		
+		
+		//为 删除按钮 绑定事件
+		oBtnDel.onclick=function(){
+			if(confirm('你确定要删除#'+this.id+'楼的留言吗？(包括此后的回复)')){
+			//window.location='action.php?a=c_del&cid=' + this.id;
+			
+			//ajax请求
+			url='ajaxDemo.php?a=c_del&cid=' + this.id;
+			ajax(url, function(text){
+					//ajax成功后的处理
+					var arr = eval('(' + text + ')');
+					//删除成功后
+					if(1==arr[0]){
+						$('notice').innerHTML=arr
+						//$('notice').innerHTML=arr[1]
+						//删除节点
+						for(var i=2; i<arr.length; i++){
+							//alert(arr[i])
+							removeDom( $('comment_id_'+arr[i]) )
+						}
+					}else{
+						//删除失败后
+						$('notice').innerHTML="<span style='color:red'>"+arr[1]+'</span>'
+					}
+					//alert(text)
+					
+				}, function(text){
+					//ajax失败后的处理
+					$('notice').innerHTML=text
+				
+				});
+			
+			
+			}
+		}
+	}
+
+/*
+5.创建新节点
+最常用到的几个方法是
+createDocumentFragment()－－创建文档碎片节点
+createTextNode(text)－－创建包含文本text的文本节点
+createElement(tagname)－－创建标签名为tagname的元素
+createElement()、createTextNode()、appendChild()
+
+removeChild()、replaceChild()、insertBefore()
+删除节点
+
+*/
+
+</script>
