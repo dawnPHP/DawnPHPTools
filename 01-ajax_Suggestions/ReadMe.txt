@@ -8,7 +8,9 @@ keywords:ajax object prototype
 pros&cons:
 	- 注意prototype中内嵌套的this和外部的this不一样，如果
 		要在内部使用外部this，需要在外部var _that=this;在内部用_that;
-		
+缺点：
+	- 还没有处理返回数据的方式，json、xml、string等。
+	
 version: V1.0.2
 time:[11:26 2015-10-04]
 auther: Dawn
