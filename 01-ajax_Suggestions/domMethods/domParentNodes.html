@@ -1,0 +1,39 @@
+﻿<h1>点击a标签隐藏li</h1>
+
+<ul id='list'>
+	<li>1<a href='javascript:void(0);'>隐藏</a></li>
+	<li>2<a href='javascript:void(0);'>隐藏</a></li>
+	<li>3<a href='javascript:void(0);'>隐藏</a></li>
+	<li>4<a href='javascript:void(0);'>隐藏</a></li>
+	<li>5<a href='javascript:void(0);'>隐藏</a></li>
+</ul>
+
+<hr>
+<div id=show></div>
+<script>
+//----------------------------------------------
+// 工具函数
+//----------------------------------------------
+//根据id获取obj
+function $(s){
+	if(typeof s=='object') return s;
+	return document.getElementById(s);
+}
+
+function n(s){
+	$('show').innerHTML += s+'<br>';
+}
+
+window.onload=function(){
+	oUls=$('list')
+	aA=oUls.getElementsByTagName('a');
+	//n(aA.length)
+	for(var i=0; i<aA.length; i++){
+		aA[i].onclick=function(){
+			this.parentNode.style.visibility='hidden'
+		}
+	}
+	
+}
+
+</script>

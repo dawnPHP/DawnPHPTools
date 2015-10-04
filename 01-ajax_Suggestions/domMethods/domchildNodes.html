@@ -1,0 +1,40 @@
+﻿<ul id='list'>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+
+<hr>
+<div id=show></div>
+<script>
+//----------------------------------------------
+// 工具函数
+//----------------------------------------------
+//根据id获取obj
+function $(s){
+	if(typeof s=='object') return s;
+	return document.getElementById(s);
+}
+function n(s){
+	$('show').innerHTML += s+'<br>';
+}
+
+window.onload=function(){
+	oUls=$('list')
+	//所有浏览器兼容
+	for(var i=0;i<oUls.children.length; i++){
+		oUls.children[i].style.background='#0f0';
+	}
+	
+	/* //childNodes ie6-8没问题,其余需要用nodeType修正
+	for(var i in oUls.childNodes){
+		if(oUls.childNodes[i].nodeType == 1){
+			oUls.childNodes[i].style.background='#f00';
+		}
+	}*/
+
+}
+
+</script>

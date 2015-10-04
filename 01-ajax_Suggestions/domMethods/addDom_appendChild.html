@@ -1,0 +1,58 @@
+﻿<h1>add dom:add text</h1>
+
+<input type=text id='text' value='a new li'/>
+<input type=button id='btn1' value='add one'/>
+<ul id='list'>
+	<li class=box>1<a href='javascript:void(0);'>隐藏</a></li>
+	<li>2<a href='javascript:void(0);'>隐藏</a></li>
+	<li class=box>3<a href='javascript:void(0);'>隐藏</a></li>
+	<li>4<a href='javascript:void(0);'>隐藏</a></li>
+	<li>5<a href='javascript:void(0);'>隐藏</a></li>
+</ul>
+<hr>
+<div id=show></div>
+
+<style>
+.box{border:1px solid blue;}
+
+</style>
+
+<script>
+//----------------------------------------------
+// 工具函数
+//----------------------------------------------
+//根据id获取obj
+function $(s){
+	if(typeof s=='object') return s;
+	return document.getElementById(s);
+}
+
+function n(s){
+	$('show').innerHTML += s+'<br>';
+}
+
+
+window.onload=function(){
+	oBtn1=$('btn1')
+	oUl=$('list');
+	
+	oBtn1.onclick=function(){
+		//创建子节点
+		var oLi=document.createElement('li');
+		
+		var text=$('text').value;
+		//在节点中插入内容
+		//oLi.innerHTML+=text;
+		
+		//或使用dom方式插入内容
+		var textNode=document.createTextNode(text) 
+		oLi.appendChild(textNode);
+		
+		//插入到原来dom中
+		//父级.appendChild(子节点);
+		oUl.appendChild(oLi);
+		
+	}
+}
+
+</script>

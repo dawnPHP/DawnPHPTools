@@ -1,0 +1,40 @@
+﻿<h1>offsetParent会根据定位不同返回不同结果</h1>
+
+
+<style>
+#div1{background:red; width:200px; height:200px; position:absolute; top:150px; right:200px;}
+#div2{background:blue;width:20px; height:20px; position:absolute; top:10px; left:20px;}
+
+</style>
+<div id=div1>
+	<div id=div2></div>
+</div>
+
+
+
+<hr>
+<div id=show></div>
+<script>
+//----------------------------------------------
+// 工具函数
+//----------------------------------------------
+//根据id获取obj
+function $(s){
+	if(typeof s=='object') return s;
+	return document.getElementById(s);
+}
+
+function n(s){
+	$('show').innerHTML += s+'<br>';
+}
+
+window.onload=function(){
+	div1=$('div1')
+	div2=$('div2')
+	
+	n(div1.offsetParent)
+
+	
+}
+
+</script>
