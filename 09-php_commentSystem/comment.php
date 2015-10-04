@@ -27,8 +27,9 @@ date_default_timezone_set('Asia/Shanghai');
 //评论系统
 echo '<div id=comment>';
 echo '<h1>待评论的博客、图片或商品</h1>';
-echo '<p><b>v1.0.1</b><br>用ajax改写 删除评论。在级联删除多个耗时较多：<br>
-（php通过ajax返回的序列化的数组在js中需要eval后使用）。</p>
+echo '<p><b>v1.0.1</b><br>用ajax改写 删除评论。在级联删除多个dom时耗时较多：<br>
+1.php通过ajax返回的序列化的数组在js中需要eval后使用。<br>
+2.熟悉dom的删除操作。</p>
 
 <p><b>v1.0.0</b><br>这是待评论的内容。该系统支持评论、对评论回复、对评论进行删除。一旦删除，会级联删除对该评论进行回复的所有评论。</p>';
 $current_aid=1;//todo 数据获取get或session
@@ -56,7 +57,7 @@ $current_aid=1;//todo 数据获取get或session
 
 <a name='addComment'></a>
 <form action='action.php?a=c_add' name='comment' method='post'>
-	<span id=commentTo></span>
+	<span id='commentTo'></span>
 	<br>
 	昵称<input type=text name='nickName' />
 	<br>
