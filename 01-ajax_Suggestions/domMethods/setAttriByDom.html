@@ -1,0 +1,71 @@
+﻿<h1>set Attri by dom</h1>
+
+<ul id='list'>
+	<li>1<a href='javascript:void(0);'>隐藏</a></li>
+	<li>2<a href='javascript:void(0);'>隐藏</a></li>
+	<li>3<a href='javascript:void(0);'>隐藏</a></li>
+	<li>4<a href='javascript:void(0);'>隐藏</a></li>
+	<li>5<a href='javascript:void(0);'>隐藏</a></li>
+</ul>
+<hr>
+<div id=show></div>
+
+<style>
+.borderBig{border:10px solid blue;}
+
+</style>
+
+<script>
+//----------------------------------------------
+// 工具函数
+//----------------------------------------------
+//根据id获取obj
+function $(s){
+	if(typeof s=='object') return s;
+	return document.getElementById(s);
+}
+
+function n(s){
+	$('show').innerHTML += s+'<br>';
+}
+
+window.onload=function(){
+	oUls=$('list')
+	oLi=oUls.getElementsByTagName('li')[2];
+	/*
+方法1
+	obj.style.color='red'
+方法2
+	obj.style['color']='red'
+方法3
+	dom方式
+
+1.获取值
+obj.getAttribute(name) 返回元素的属性值，属性由name指定
+
+2.设置值
+.setAttribute(name, value) 这些方法分别获得和设置元素中name属性的值
+
+3.移除值
+.removeAttribute(name) 这个方法从元素中删除属性name
+--------------
+	*/
+	
+	
+	//oLi.style.color='#ff9600'
+	//oLi.style['color']='#0096ff'
+	oLi.setAttribute('style', 'color:#0096ff')
+	oLi.setAttribute('class', 'borderBig')
+	
+	//使用if做兼容
+	if(oLi.nextElementSibling){
+		//oLi.nextElementSibling.style.background='red';
+		//oLi.previousElementSibling.style.background='red';
+		oLi.previousElementSibling.style.background='red';
+	}else{
+		oLi.nextSibling.style.background='blue';
+	}
+	
+}
+
+</script>

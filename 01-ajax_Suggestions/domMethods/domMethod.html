@@ -1,0 +1,155 @@
+﻿--------------
+获取元素
+
+getElementById(id) (document) 获取有指定惟一ID属性值文档中的元素
+getElementsByTagName(name) 返回当前元素中有指定标记名的子元素的数组
+
+.hasChildnodes() 这个方法返回一个布尔值，指示元素是否有子元素
+
+childNodes 返回当前元素所有子元素的数组
+	使用children兼容性更好
+firstChild 返回当前元素的第一个下级子元素
+	高版本浏览器使用firstElementChild
+lastChild 返回当前元素的最后一个子元素
+	高版本浏览器使用lastElementChild
+	
+nextSibling 返回紧跟在当前元素后面的元素
+	高版本浏览器使用 nextElementSibling
+previousSibling 返回紧邻当前元素之前的元素
+	高版本浏览器使用 previousElementSibling
+parentNode 返回元素的父节点
+offsetParent 返回定位父节点
+nodeValue 指定表示元素值的读/写属性
+
+--------------
+操作元素属性
+
+方法1
+	obj.style.color='red'
+方法2
+	obj.style['color']='red'
+方法3
+	dom方式
+
+1.获取值
+obj.getAttribute(name) 返回元素的属性值，属性由name指定
+
+2.设置值
+.setAttribute(name, value) 这些方法分别获得和设置元素中name属性的值
+
+3.移除值
+.removeAttribute(name) 这个方法从元素中删除属性name
+
+
+>>根据class选取元素，封装成函数
+
+--------------
+创建节点
+	createElement(标签名) 创建一个节点
+	appendChild(节点) 追加一个节点
+		例子：为ul插入li
+插入节点
+	insertBefore(节点,原有节点) 在已有元素前插入
+		例子：倒序插入li
+删除dom元素
+	removeChild(节点)
+		例子：删除li
+
+文档碎片（比较鸡肋）
+	文档碎片可以提高dom操作性能（理论上）
+	document.createDocumentFragment()
+--
+document.createElement(tagName) 文档对象上的createElement方法可以创建由tagName指定的元素。如果以串div作为方法参数，就会生成一个div元素
+
+document.createTextNode(text) 文档对象的createTextNode方法会创建一个包含静态文本的节点
+
+父节点.appendChild(childNode) appendChild方法将指定的节点增加到当前元素的子节点列表（作为一个新的子节点）。例如，可以增加一个option元素，作为select元素的子节点
+[缺点是插入到父节点的最后了，不方便。解决办法是使用insert方法]
+
+
+例子1：
+	//创建子节点
+	var oLi=document.createElement('li');
+	
+	var text=$('text').value;
+	//在节点中插入内容
+	//oLi.innerHTML+=text;
+	
+	//或使用dom方式插入内容
+	var textNode=document.createTextNode(text) 
+	oLi.appendChild(textNode);
+	
+	//插入到原来dom中
+	//父级.appendChild(子节点);
+	oUl.appendChild(oLi);
+
+--
+.insertBefore(newNode, targetNode) 这个方法将节点newNode作为当前元素的子节点插到targetNode元素前面
+
+例子2：	
+	//父级.insertBefore(子节点, 在谁之前插入);
+	//如果 【谁之前】这个节点不存在，则有可能报错，需要使用appendChild代替。
+
+--
+.removeChild(childNode) 这个方法从元素中删除子元素childNode
+.replaceChild(newNode, oldNode) 这个方法将节点oldNode替换为节点newNode
+
+
+例子3：
+	//删除dom节点
+	//父级.removeChild(子节点);
+	$('btn2').onclick=function(){
+		//获取删除位置
+		var num=$('text2').value
+		oUl.removeChild(aLi[num]);
+	}
+	
+	//提醒：在添加dom时为了保证后续也有删除行为，插入dom之前即可绑定事件
+	var oA=document.createElement('a');
+	//一旦创建，立刻添加单击事件
+	oA.onclick=function(){
+		oUl.removeChild(this.parentNode)
+	}
+
+文档碎片
+document.createDocumentFragment() 基本没用。
+
+
+
+
+<ul id='list'>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+
+<hr>
+<div id=show></div>
+<script>
+//----------------------------------------------
+// 工具函数
+//----------------------------------------------
+//根据id获取obj
+function $(s){
+	if(typeof s=='object') return s;
+	return document.getElementById(s);
+}
+function n(s){
+	$('show').innerHTML += s+'<br>';
+}
+
+window.onload=function(){
+	oUls=$('list')
+	
+	//ie6-8没问题
+	for(var i in oUls.childNodes){
+		if(oUls.childNodes[i].nodeType == 1){
+			oUls.childNodes[i].style.background='#f00';
+		}
+	}
+
+}
+
+</script>

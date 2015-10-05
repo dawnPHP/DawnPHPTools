@@ -1,0 +1,44 @@
+﻿<h1>nextSibling</h1>
+
+<ul id='list'>
+	<li>1<a href='javascript:void(0);'>隐藏</a></li>
+	<li>2<a href='javascript:void(0);'>隐藏</a></li>
+	<li>3<a href='javascript:void(0);'>隐藏</a></li>
+	<li>4<a href='javascript:void(0);'>隐藏</a></li>
+	<li>5<a href='javascript:void(0);'>隐藏</a></li>
+</ul>
+<hr>
+<div id=show></div>
+<script>
+//----------------------------------------------
+// 工具函数
+//----------------------------------------------
+//根据id获取obj
+function $(s){
+	if(typeof s=='object') return s;
+	return document.getElementById(s);
+}
+
+function n(s){
+	$('show').innerHTML += s+'<br>';
+}
+
+window.onload=function(){
+	oUls=$('list')
+	oLi=oUls.getElementsByTagName('li')[2];
+	
+	//对于高版本浏览器，首尾元素是文本节点
+		//n(oUls.firstChild)
+		//要想获得第一个元素，高版本浏览器使用
+		//n(oUls.firstElementChild)
+	//使用if做兼容
+	if(oLi.nextElementSibling){
+		//oLi.nextElementSibling.style.background='red';
+		oLi.previousElementSibling.style.background='red';
+	}else{
+		oLi.nextSibling.style.background='blue';
+	}
+	
+}
+
+</script>

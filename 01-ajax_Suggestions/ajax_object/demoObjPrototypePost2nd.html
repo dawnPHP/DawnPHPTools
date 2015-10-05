@@ -1,0 +1,76 @@
+﻿<h1>ajax (obj) post</h1>
+<h2>prototype</h2>
+<hr>
+
+<pre style='color:red;'>
+博客看到有人需要ajax post嵌套请求，于是就搞了一个。
+第一个请求成功，再请求第二个。
+
+</pre>
+
+<form id='demoForm' name=test>
+<p>登陆：</p>
+用户名	<input type=text name=user><br /><br />
+密码	<input type=password name=psw><br /><br />
+	<input type=button id=btn value=submit>
+
+</form>
+
+
+<pre id=show></pre>
+
+<script src='ajaxObjPrototype.js'></script>
+<script>
+//根据id获取obj
+function $(s){
+	if(typeof s=='object') return s;
+	return document.getElementById(s);
+}
+
+window.onload=function(){
+	//绑定事件
+	//$('btn').onclick=function(){
+	$('btn').onclick=function(){
+		//alert('submit ')
+		oForm=document.test;
+		
+		user=oForm.user.value
+		pass=oForm.psw.value
+		
+		//拼装参数
+		var url='data.php';
+		
+		var paras='u='+user;
+		paras += '&pass='+pass;
+		
+		//拼装第二套参数
+		var url2='data2.php';
+		
+		var paras2='u=2nd-'+user;
+		paras2 += '&pass=2nd-'+pass;
+		
+		
+		//使用ajax请求
+		var myajax=new Ajax();
+		
+		myajax.post(url, paras, function(str){
+				$('show').innerHTML='';
+				//$('show').innerHTML='ajax返回的字符串:<hr> '+str
+				//进一步使用eval处理
+				//var oStr=eval('('+str+')');
+				$('show').innerHTML += '第1次ajax post请求结果: '+str + '<hr>';
+				//第一次成功后再进行第二次ajax请求
+				myajax.post(url2, paras2, function(str2){
+						$('show').innerHTML += '第2次ajax post请求结果: '+str2 + '<hr>';
+					}, function(str){
+						$('show').innerHTML += 'Error2: '+str2;
+					});
+			}, function(str){
+				$('show').innerHTML = 'Error1: '+str;
+			});
+	}
+}
+
+		
+	
+</script>
