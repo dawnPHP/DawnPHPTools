@@ -148,8 +148,8 @@ window.onload=function(){
 				
 				//添加dom
 				addDomBefore({
-					'id':oStr[2], 
-					'pid':oStr[3], 
+					'pid':oStr[2], 
+					'id':oStr[3], 
 					'uid':3, 
 					'time':oStr[4], 
 					'content':oForm.comment.value,
@@ -228,13 +228,11 @@ aCommentList=[43,44,45];
 		$('commentTo').innerHTML='回复#'+ pid + '楼: ';
 	}
 	
-	
 	/*
-	*在objID之前添加strObj描述的dom元素
-	*
+	* 根据strObj描述信息返回新的评论的dom元素
 	*/
-	function addDomBefore(strObj,objID){
-		//描述对象的属性
+	function getCommentDomByAttri(strObj){
+		//解析出描述对象的属性
 		var id=strObj['id'];
 		var nickName=strObj['nickName'];
 		var content=strObj['content'];
@@ -276,7 +274,15 @@ aCommentList=[43,44,45];
 		
 		//添加文字：评论内容
 		newObj.appendChild(document.createTextNode(content))
-		
+		return newObj;
+	}
+	
+	/*
+	*在objID之前添加newObj
+	*
+	*/
+	function addDomBefore(newObj,objID){
+		var newObj=getCommentDomByAttri(newObj)
 		//显示到dom树中
 		var obj=$(objID)
 		obj.appendChild(newObj)
