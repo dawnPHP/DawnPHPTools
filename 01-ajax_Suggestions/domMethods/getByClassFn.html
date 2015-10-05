@@ -1,0 +1,68 @@
+﻿<h1>get by class</h1>
+
+<ul id='list'>
+	<li class=box>1<a href='javascript:void(0);'>隐藏</a></li>
+	<li>2<a href='javascript:void(0);'>隐藏</a></li>
+	<li class=box>3<a href='javascript:void(0);'>隐藏</a></li>
+	<li>4<a href='javascript:void(0);'>隐藏</a></li>
+	<li>5<a href='javascript:void(0);'>隐藏</a></li>
+</ul>
+<hr>
+<div id=show></div>
+
+<style>
+.box{border:1px solid blue;}
+
+</style>
+
+<script>
+//----------------------------------------------
+// 工具函数
+//----------------------------------------------
+//根据id获取obj
+function $(s){
+	if(typeof s=='object') return s;
+	return document.getElementById(s);
+}
+
+function n(s){
+	$('show').innerHTML += s+'<br>';
+}
+
+//根据class名字获取元素
+//没有bug，但是有局限性。如果有多个class name就杯具了
+function getByClass(oParent, sClass){
+	var aResult=[];
+	//获取所有元素
+	var aEle=oParent.getElementsByTagName('*');
+	//循环过滤出指定class的元素
+	for(var i=0; i<aEle.length; i++){
+		if(aEle[i].className==sClass){
+			//合适的塞到数组中
+			aResult.push(aEle[i])
+		}
+	}
+	//返回数组
+	return aResult;
+}
+
+window.onload=function(){
+	oUl=$('list');
+	
+	//使用自定义函数的写法
+	aBox=getByClass(oUl, 'box');
+	for(var i=0; i<aBox.length; i++){
+		aBox[i].style.color='yellow'
+	}
+	
+	/* // 以前的写法
+	aLi=oUl.getElementsByTagName('li');
+	for(var i=0; i<aLi.length; i++){
+		if(aLi[i].className=='box'){
+			aLi[i].style.color='red'
+		}
+	}
+	*/
+}
+
+</script>

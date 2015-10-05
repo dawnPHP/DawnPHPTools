@@ -1,5 +1,46 @@
 ﻿
 ------------------------
+dir: domMethods
+------------------------
+title: js操作dom的一些常用方法
+Description: 添加和删除dom元素
+keywords: dom操作
+pros&cons:
+http://miostudio.blog.163.com/blog/static/22076512920159482715633/
+精要碎碎念：
+0. 注意兼容性。firstChild和firstElementChild等。
+1.插入元素需要2步
+	先创建，再插入旧dom中；
+	创建dom只有1个方法createElement(tagname)。
+	插入有2个方法appendChild和insertBefore。
+
+2.特殊情况：
+	2.1如果有其他属性，则需要使用setAttribute(attr,value)添加。
+	2.2如果新dom中还要插入东西，可以插入，之后再插入旧dom中；
+		插入方法同上1中所述，或者使用innerHTML也行；
+
+	2.3如果有事件，则创建好新dom可以直接绑定事件，再插入旧dom中；
+
+3.注意同一个标签元素组成的数组是动态数组，和你定义的位置无关。
+	插入新标签后，数组会扩容。反之自动减少。
+
+
+元素、节点、标签都是一个意思。
+	
+version: V1.0.0
+time:[20:58 2015-10-04]
+auther: Dawn
+Email: jimmymall@live.com
+
+
+
+
+
+
+
+
+
+------------------------
 dir: ajax_object
 ------------------------
 title:用fn/oop/prototype各封装一个ajax

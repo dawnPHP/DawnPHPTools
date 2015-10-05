@@ -1,37 +1,40 @@
 ﻿<style>
+*{margin:0; padding:0 10px;}
+#comment{border:1px dashed blue; padding:10px 20px;}
 .comment{border-left:5px solid red; border-bottom:1px dashed red; padding:10px;}
 .sub{margin-left:50px;}
 .comment .control{float:right;}
 .comment .control span{ cursor: pointer;}
 .comment .control span:hover{background-color:#BE3948; color:white;}
 
-
 .footer{height:500px;}
 </style>
 
 <div id=comment>
 <h1>使用ajax调用php添加条目，如果成功则添加相应dom</h1>
-<h1>现在这个ajax封装的不好，不能post请求。我自己再封装一个更强大的。</h1>
+<h4>用原型对ajax封装。支持get和post</h4>
 
+<hr>
 <div class="comment" id="comment_id_43"><div class="control"><span id="44">删除</span> <span id="43">回复</span></div><p>[#43楼]<a href="usr.php?uid=1">Tom</a> 2015-10-01 09:05:23:</p>我的回复</div>
 
 <div class="comment sub" id="comment_id_44"><div class="control"><span id="44">删除</span> <span id="44">回复</span></div><p>[#44楼]<a href="usr.php?uid=2">小明</a>回复<a href="user.php?uid=1">Tom</a> 2015-10-01 09:07:23:</p>我的回复</div>
 
 <div class="comment" id="comment_id_45"><div class="control"><span id="44">删除</span> <span id="45">回复</span></div><p>[#45楼]<a href="usr.php?uid=2">小明</a> 2015-10-01 09:17:23:</p>我的回复</div>
 
-	<pre id='notice'>notice will go here</pre>
 </div>
+	<pre id='notice'>notice will go here</pre><hr>
+	<pre id='show'></pre>
 
 <a name='addComment'></a>
 <form action='ajaxDemo.php?a=c_add' name='comment' method='post'>
 	<span id='commentTo'></span>
 	<br>
-	昵称<input type=text name='nickName' />
+	昵称<input type=text name='nickName' value='Tim'/>
 	<br>
-	email<input type=email name='email' />
+	email<input type=email name='email' value='a@bb.cc' />
 	<br>
 	评论内容	<br>
-	<textarea cols=50 rows=10 name='comment'></textarea>
+	<textarea cols=50 rows=10 name='comment'>12345 good</textarea>
 		<br>
 	<input type=submit name=submit value='submit'>
 	
@@ -43,7 +46,7 @@
 <div class=footer></div>
 
 
-
+<script src='../ajax_object/ajaxObjPrototype.js'></script>
 <script>
 //----------------------------------------------
 // 工具函数
@@ -59,57 +62,51 @@ function removeDom(obj){
 	return obj.parentElement.removeChild(obj)
 }
 
-/*单独的ajax函数
-*file:文件名
-*fnSucc：读取文件成功时的回调函数函数，响应值为其传入参数；
-*fnFaild：读取文件失败时的回调函数函数，错误代码为其传入参数；
+
+//创建并返回dom
+function createNode(tag,attriObj,inner){
+	var attriObj=attriObj||{};
+	var inner=inner||'';
+	//创建元素
+	var newNode=document.createElement(tag);
+	//添加属性
+	for(var i in attriObj){
+		newNode.setAttribute(i, attriObj[i]);
+	}
+	//内部元素
+	if(inner!=''){
+		newNode.innerHTML=inner;
+	}
+	//返回dom元素
+	return newNode
+}
+
+
+/*
+创建新节点
+最常用到的几个方法是
+createDocumentFragment()－－创建文档碎片节点
+
+createTextNode(text)－－创建包含文本text的文本节点
+createElement(tagname)－－创建标签名为tagname的元素
+setAttribute(attri, value)--设置属性
+
+createElement()、createTextNode()、appendChild()
+
+removeChild()、replaceChild()、insertBefore()
+删除节点
 */
-function ajax(fileUrl, fnSucc, fnFaild){
-		//1.创建ajax对象
-		if(window.XMLHttpRequest){//加window是为了兼容IE6
-			var oAjax=new XMLHttpRequest();//非IE6
-		}else{
-			var oAjax=new ActiveXObject('Microsoft.XMLHTTP');	//for IE6
-		}
-		//// alert(oAjax);//object XMLHttpRequest
-		
-		//2.链接服务器
-		//open(方法, 文件名, 同步或异步);
-		oAjax.open('GET',fileUrl,true);
-		
-		//3.发送请求
-		oAjax.send();
-		
-		//4.接收返回，并解析；
-		oAjax.onreadystatechange=function(){
-			//oAjax.readyState 浏览器和服务器通信到哪一步了
-			if(4==oAjax.readyState){//4就是读取完成；但可能文件不存在
-				if(200==oAjax.status){  //成功
-					fnSucc(oAjax.responseText);//server端的文件内容传入；
-					//var txt=oAjax.responseText;
-					//oDivLogin.innerHTML=txt;
-				}else{
-					//alert("failed to get the file on the server.." + oAjax.status);
-					if(fnFaild){//如果定义了错误函数，则进行处理；
-						fnFaild(oAjax.status);//传入参数为错误代码；
-					}
-				}
-			}
-		}
-
-}/*end of function ajax*/
 
 
 
 
-
+//ajax对象的定义封装在函数中。
 
 //----------------------------------------------
 //事件处理
 //----------------------------------------------
 	//载入事件
 window.onload=function(){
-
 	var pid=0;
 	var oForm=document.comment;
 	
@@ -124,12 +121,46 @@ window.onload=function(){
 			return false;
 		};
 		if(''==oForm.comment.value){
-			alert('评论不能为空'); return false;
+			alert('评论不能为空'); 
+			return false;
 		};
 		//pid就是该评论的父评论
 		oForm.pid.value=pid;
-
-		return true;
+		//------------------------
+		//验证结束。开始ajax请求
+		//------------------------
+		//拼装参数
+		var url='ajaxDemo.php?a=c_add';
+		var paras='nickName='+oForm.nickName.value;
+		paras += '&email='+oForm.email.value;
+		paras += '&comment='+oForm.comment.value;
+		paras += '&pid='+oForm.pid.value;
+		//使用ajax请求
+		var myajax=new Ajax();
+		
+		myajax.post(url, paras, function(str){
+				$('show').innerHTML='';
+				//$('show').innerHTML='ajax返回的字符串:<hr> '+str
+				//进一步使用eval处理
+				$('show').innerHTML += str + '<hr>';
+				var oStr=eval('('+str+')');
+				wjl=oStr;//todo debug
+				
+				//添加dom
+				addDomBefore({
+					'id':oStr[2], 
+					'pid':oStr[3], 
+					'uid':3, 
+					'time':oStr[4], 
+					'content':oForm.comment.value,
+					'nickName':oForm.nickName.value},'comment');//todo
+				
+			}, function(str){
+				$('show').innerHTML = 'Error1: '+str;
+			});
+		
+		
+		return false;
 	}
 	
 	
@@ -143,64 +174,122 @@ aCommentList=[43,44,45];
 		oBtnDel=aBtns[0];		oBtnDel.id=aCommentList[i];
 		oBtnReply=aBtns[1];		oBtnReply.id=aCommentList[i];
 		
-		
 		//为 删除按钮 绑定事件
 		oBtnDel.onclick=function(){
-			if(confirm('你确定要删除#'+this.id+'楼的留言吗？(包括此后的回复)')){
-			//window.location='action.php?a=c_del&cid=' + this.id;
-			
-			//ajax请求
-			url='ajaxDemo.php?a=c_del&cid=' + this.id;
-			ajax(url, function(text){
-					//ajax成功后的处理
-					var arr = eval('(' + text + ')');
-					//删除成功后
-					if(1==arr[0]){
-						$('notice').innerHTML=arr
-						//$('notice').innerHTML=arr[1]
-						//删除节点
-						for(var i=2; i<arr.length; i++){
-							//alert(arr[i])
-							removeDom( $('comment_id_'+arr[i]) )
-						}
-					}else{
-						//删除失败后
-						$('notice').innerHTML="<span style='color:red'>"+arr[1]+'</span>'
-					}
-					//alert(text)
-					
-				}, function(text){
-					//ajax失败后的处理
-					$('notice').innerHTML=text
-				
-				});
-			
-			
-			}
+			deleteFn(this);
 		}
 		//为 回复按钮 绑定事件
 		oBtnReply.onclick=function(){
-			//定位到评论框
-			window.location='#addComment';
-			//给定父评论的id
-			pid=this.id;
-			
-			//提示正在回复第几楼
-			$('commentTo').innerHTML='回复#'+ pid + '楼: ';
+			replyFn(this);
+		}
+	}
+	
+	/*
+		删除按钮的事件函数
+	*/
+	function deleteFn(_this){
+		if(confirm('你确定要删除#'+_this.id+'楼的留言吗？(包括此后的回复)')){
+		//window.location='action.php?a=c_del&cid=' + _this.id;
+		
+		//ajax请求
+		var ajax=new Ajax();
+		url='ajaxDemo.php?a=c_del&cid=' + _this.id;
+		ajax.get(url, function(text){
+				//ajax成功后的处理
+				var arr = eval('(' + text + ')');
+				//删除成功后
+				if(1==arr[0]){
+					$('notice').innerHTML=arr
+					//$('notice').innerHTML=arr[1]
+					//删除节点
+					for(var i=2; i<arr.length; i++){
+						removeDom( $('comment_id_'+arr[i]) )
+					}
+				}else{
+					//删除失败后
+					$('notice').innerHTML="<span style='color:red'>"+arr[1]+'</span>'
+				}
+			}, function(text){
+				//ajax失败后的处理
+				$('notice').innerHTML=text
+			});
+		}
+	}
+	/*
+		回复按钮的事件函数
+	*/
+	function replyFn(_this){
+		//定位到评论框
+		window.location='#addComment';
+		//给定父评论的id
+		pid=_this.id;
+		
+		//提示正在回复第几楼
+		$('commentTo').innerHTML='回复#'+ pid + '楼: ';
+	}
+	
+	
+	/*
+	*在objID之前添加strObj描述的dom元素
+	*
+	*/
+	function addDomBefore(strObj,objID){
+		//描述对象的属性
+		var id=strObj['id'];
+		var nickName=strObj['nickName'];
+		var content=strObj['content'];
+		var uid=strObj['uid'];
+		var pid=strObj['pid'];
+		var time=strObj['time'];
+		
+		//control标签
+		var oDivCtrl=createNode('div',{'class':'control'});
+		var oSpan1=createNode('span',{'id':id},'删除');
+		var oSpan2=createNode('span',{'id':id},'回复');
+		
+		oDivCtrl.appendChild(oSpan1); 
+		oDivCtrl.appendChild(oSpan2); 
+
+		//此处添加事件 删除和回复
+		//为 删除按钮 绑定事件
+		oSpan1.onclick=function(){
+			deleteFn(this);
+		}
+		//为 回复按钮 绑定事件
+		oSpan2.onclick=function(){
+			replyFn(this);
 		}
 		
+		//创建最外层div
+		var newStyleClass=pid==0?'comment':'comment sub'
+		var newObj=createNode('div',{'class':newStyleClass, 'id': ('comment_id_'+id) })
+		newObj.appendChild(oDivCtrl)
+		//添加文字
+		var oP=createNode('p',{},' [#'+id+'楼] ');
+		//在p中添加a标签
+		var oA=createNode('a', {'href':'usr.php?uid='+uid}, nickName);
+		oP.appendChild(oA)
+		//添加文字
+		oP.appendChild(document.createTextNode(time+':'))
+		//添加到最外层中
+		newObj.appendChild(oP)
 		
+		//添加文字：评论内容
+		newObj.appendChild(document.createTextNode(content))
 		
-		
-		
+		//显示到dom树中
+		var obj=$(objID)
+		obj.appendChild(newObj)
 	}
 
 /*
 5.创建新节点
 最常用到的几个方法是
 createDocumentFragment()－－创建文档碎片节点
+
 createTextNode(text)－－创建包含文本text的文本节点
 createElement(tagname)－－创建标签名为tagname的元素
+
 createElement()、createTextNode()、appendChild()
 
 removeChild()、replaceChild()、insertBefore()
