@@ -49,7 +49,7 @@ Ajax.prototype={
      },
       
      //post请求
-     'post': function (url,param,successFn,failFn) {
+     'post': function (url,params,successFn,failFn) {
          this.xhr.open("POST", url,true);
 		 var _that=this;
          this.xhr.onreadystatechange=function(){
@@ -77,11 +77,11 @@ Ajax.prototype={
                          failFn(_that.xhr.status);
                      }
                 }
-            } 
+            }
               
          };
          this.xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-         this.xhr.send(param);
-     }
+         this.xhr.send(params);
+     },
       
 }/*end of the ajax prototype*/
