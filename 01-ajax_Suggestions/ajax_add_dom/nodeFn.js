@@ -6,6 +6,7 @@ auther: Dawn
 version: v1.0.0
 license: MIT
 
+from:tool 01/ajax_add_dom/nodeFn.js
 */
 //根据id获取obj
 function $(s){

@@ -4,6 +4,9 @@
 
 2.封装成对象： http://www.oschina.net/code/snippet_574274_11877 正文部分
 
+from: tool 01/ajax_object/ajaxObjPrototype.js
+time: 2015.10.05
+version: v1.0.1
 */
 
 
