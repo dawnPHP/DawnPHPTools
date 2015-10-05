@@ -47,6 +47,7 @@
 
 
 <script src='../ajax_object/ajaxObjPrototype.js'></script>
+<script src='nodeFn.js'></script>
 <script>
 //----------------------------------------------
 // 工具函数
@@ -56,46 +57,6 @@ function $(s){
 	if(typeof s=='object') return s;
 	return document.getElementById(s);
 }
-
-//删除obj对应的dom元素
-function removeDom(obj){
-	return obj.parentElement.removeChild(obj)
-}
-
-
-//创建并返回dom
-function createNode(tag,attriObj,inner){
-	var attriObj=attriObj||{};
-	var inner=inner||'';
-	//创建元素
-	var newNode=document.createElement(tag);
-	//添加属性
-	for(var i in attriObj){
-		newNode.setAttribute(i, attriObj[i]);
-	}
-	//内部元素
-	if(inner!=''){
-		newNode.innerHTML=inner;
-	}
-	//返回dom元素
-	return newNode
-}
-
-
-/*
-创建新节点
-最常用到的几个方法是
-createDocumentFragment()－－创建文档碎片节点
-
-createTextNode(text)－－创建包含文本text的文本节点
-createElement(tagname)－－创建标签名为tagname的元素
-setAttribute(attri, value)--设置属性
-
-createElement()、createTextNode()、appendChild()
-
-removeChild()、replaceChild()、insertBefore()
-删除节点
-*/
 
 
 
@@ -124,8 +85,13 @@ window.onload=function(){
 			alert('评论不能为空'); 
 			return false;
 		};
+		
 		//pid就是该评论的父评论
 		oForm.pid.value=pid;
+		//------------------------
+		//把ajax放到form的submit事件中，巧妙的应用了提交事件。
+		
+		
 		//------------------------
 		//验证结束。开始ajax请求
 		//------------------------
@@ -140,34 +106,39 @@ window.onload=function(){
 		
 		myajax.post(url, paras, function(str){
 				$('show').innerHTML='';
-				//$('show').innerHTML='ajax返回的字符串:<hr> '+str
-				//进一步使用eval处理
 				$('show').innerHTML += str + '<hr>';
+
+				//使用eval处理字符，反序列化为json
 				var oStr=eval('('+str+')');
-				wjl=oStr;//todo debug
 				
-				//添加dom
-				addDomBefore({
+				//根据条件创建新node
+				var newObj=getCommentDomByAttri({
 					'pid':oStr[2], 
 					'id':oStr[3], 
 					'uid':3, 
 					'time':oStr[4], 
 					'content':oForm.comment.value,
-					'nickName':oForm.nickName.value},'comment');//todo
+					'nickName':oForm.nickName.value});
+
+				//添加到dom树中
+				if(oStr[2]==0){
+					$('comment').appendChild(newObj)
+				}else{
+					appAfter( newObj, $('comment_id_'+oStr[2]) );
+				}
 				
 			}, function(str){
 				$('show').innerHTML = 'Error1: '+str;
 			});
-		
-		
+		//ajax已经提交，表单就不应该再提交了。
 		return false;
 	}
 	
 	
-//删除
-aCommentList=[43,44,45];
+	//删除
+	aCommentList=[43,44,45];
 
-//为删除 和 回复 按钮绑定事件
+	//为删除 和 回复 按钮绑定事件
 	for(var i in aCommentList){
 		oComment=$('comment_id_'+aCommentList[i]);
 		aBtns=oComment.getElementsByTagName('span');
@@ -276,31 +247,5 @@ aCommentList=[43,44,45];
 		newObj.appendChild(document.createTextNode(content))
 		return newObj;
 	}
-	
-	/*
-	*在objID之前添加newObj
-	*
-	*/
-	function addDomBefore(newObj,objID){
-		var newObj=getCommentDomByAttri(newObj)
-		//显示到dom树中
-		var obj=$(objID)
-		obj.appendChild(newObj)
-	}
-
-/*
-5.创建新节点
-最常用到的几个方法是
-createDocumentFragment()－－创建文档碎片节点
-
-createTextNode(text)－－创建包含文本text的文本节点
-createElement(tagname)－－创建标签名为tagname的元素
-
-createElement()、createTextNode()、appendChild()
-
-removeChild()、replaceChild()、insertBefore()
-删除节点
-
-*/
 }
 </script>
