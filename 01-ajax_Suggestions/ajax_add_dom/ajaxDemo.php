@@ -38,13 +38,13 @@ switch ($action){
 		$msg[]='添加成功';//添加成功
 		$msg[]=46;//返回添加条目的id //SELECT LAST_INSERT_ID()
 		$msg[]=$_POST['pid'];//返回添加条目父id:pid
+		$msg[]=date('Y-m-d h:i:s', time());//返回添加时间
+		
+		//$msg['post']=$_POST;//返回全部数据，供参考
 		//返回json
 		echo json_encode($msg);
-	
-	
 	
 		break;
 	default:
 		echo 'something Error: 20151004';
 }
-
