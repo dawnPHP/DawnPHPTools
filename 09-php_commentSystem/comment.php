@@ -14,9 +14,19 @@ http://www.cnblogs.com/dwayne/archive/2012/07/06/MySQL_index_join_wayne.html
 //评论系统
 echo '<div class=wrap>';
 echo '<h1>待评论的博客、图片或商品</h1>';
-echo '<p><b>v1.0.1</b><br>用ajax改写 删除评论。在级联删除多个dom时耗时较多：<br>
+echo '<p><b>v1.0.2</b><br>
+用ajax改写 添加 评论。在动态添加dom时耗时较多：<br>
+1.为了使用ajax post，重新写了ajax的prototype形式。<br>
+2.熟悉dom的添加操作。<br>
+	小心：添加第一条评论时可能会失败。<br>
+3.已经修改#comment的范围，仅仅是评论区域。<br>
+4.抽离了css和js到一个文件中；<br>
+  抽离了时区设置、编码、数据库连接到一个入口php文件。<br>
+</p><br>
+
+<p><b>v1.0.1</b><br>用ajax改写 删除评论。在级联删除多个dom时耗时较多：<br>
 1.php通过ajax返回的序列化的数组在js中需要eval后使用。<br>
-2.熟悉dom的删除操作。</p>
+2.熟悉dom的删除操作。</p><br>
 
 <p><b>v1.0.0</b><br>这是待评论的内容。该系统支持评论、对评论回复、对评论进行删除。一旦删除，会级联删除对该评论进行回复的所有评论。</p>';
 $current_aid=1;//todo 数据获取get或session
