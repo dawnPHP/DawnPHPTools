@@ -70,7 +70,8 @@ title:ajax添加后添加dom
 Description: 优化了删除dom功能。实现了添加dom功能。
 keywords:ajax  dom
 pros&cons:
-	dom定位还没搞定。比如新dom放到哪个的前面或某个的后面等。
+	1. dom定位搞定。比如新dom放到哪个的前面或某个的后面等。
+	2. [推荐]封装了一个dom操作库：./ajax_add_dom/nodeFn.js, 可以应用到其他地方。
 version: V1.0
 time:[10:50 2015-10-04]
 auther: Dawn
