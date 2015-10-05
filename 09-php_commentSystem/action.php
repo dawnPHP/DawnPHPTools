@@ -28,7 +28,7 @@ switch($action){
 		//设定返回值
 		if($total_deleted>0){
 			//成功
-			$msg=array(1,'成功删除n1了'.$total_deleted.'条评论');
+			$msg=array(1,'成功删除了'.$total_deleted.'条评论');
 		}else{
 			$msg=array(0, '删除了0条数据');
 		}
@@ -36,7 +36,7 @@ switch($action){
 		$a=array(1,'1234');
 		//返回json
 		echo json_encode($msg);
-		//echo '成功删除n2了'.$total_deleted.'条评论.';
+		//echo '成功删除了'.$total_deleted.'条评论.';
 		//echo '<script>window.history.back(-1);</script>';
 		
 		//返回上一页(todo del:使用ajax之后，就不用返回这么多了。)
@@ -90,7 +90,3 @@ switch($action){
 	default:
 		echo 'other';
 }
-
-
-
-
