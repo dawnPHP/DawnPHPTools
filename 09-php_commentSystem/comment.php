@@ -1,3 +1,5 @@
+<?php	require('myLibDoor.php');	?>
+<link rel='stylesheet' type="text/css" href="main.css">
 <?php
 /**
 博客评论系统
@@ -6,26 +8,11 @@ http://geek.csdn.net/news/detail/38743
 2.简单大方的评论
 http://www.cnblogs.com/dwayne/archive/2012/07/06/MySQL_index_join_wayne.html
 
-
-
-
-
 */
 
-//引入自定义函数库
-include('Temp_function.php');
-//连接数据库
-if(!isset($conn)){
-	include('conn.php');
-}
-
-
-//设置时区
-//date_default_timezone_set('PRC');
-date_default_timezone_set('Asia/Shanghai');
 
 //评论系统
-echo '<div id=comment>';
+echo '<div class=wrap>';
 echo '<h1>待评论的博客、图片或商品</h1>';
 echo '<p><b>v1.0.1</b><br>用ajax改写 删除评论。在级联删除多个dom时耗时较多：<br>
 1.php通过ajax返回的序列化的数组在js中需要eval后使用。<br>
@@ -37,13 +24,15 @@ $current_aid=1;//todo 数据获取get或session
 
 	$uid=2; // 可以从session获取用户id
 
-//显示评论内容
+	//显示评论内容
 	$arrGlobal=array('','');
 	showAllComment($current_aid);
 	$script = $arrGlobal[0];
 	
+	echo '<div id=comment>';
 	echo '<div class=separator>以下是评论：</div>';
 	echo $arrGlobal[1];
+	echo '</div>';
 	
 	//输出评论id数据到js
 	$script = '<script> aCommentList=[];'."\n\n".$script;
@@ -59,12 +48,12 @@ $current_aid=1;//todo 数据获取get或session
 <form action='action.php?a=c_add' name='comment' method='post'>
 	<span id='commentTo'></span>
 	<br>
-	昵称<input type=text name='nickName' />
+	昵称<input type=text name='nickName' value='Tom'/>
 	<br>
-	email<input type=email name='email' />
+	email<input type=email name='email' value='Tom@tom.com'/>
 	<br>
 	评论内容	<br>
-	<textarea cols=50 rows=10 name='comment'></textarea>
+	<textarea cols=50 rows=10 name='comment'>tom's comment</textarea>
 		<br>
 	<input type=submit name=submit value='submit'>
 	
@@ -76,110 +65,19 @@ $current_aid=1;//todo 数据获取get或session
 </div>
 <div class=footer></div>
 
-<style>
-div, p{margin:0; padding:0;}
-.clear{clear:both; height:10px;width:100%;}
 
-
-#comment{width:500px; margin:0 auto;}
-#comment .separator{
-	font-family:'微软雅黑';
-	margin:20px 0; background-color:#0096ff; 
-	padding:5px 10px; color:#fff;
-	width:100%; border-top:1px dashed #0096ff;}
-#comment a{color:#0096ff;}
-.comment{background:#fefefe; padding:5px; margin:5px; 
-    font-family: monospace;
-	border-left:2px solid #0096ff; 
-	border-bottom:1px dashed #aaa;  clear:both;
-
-	word-wrap: break-word;
-　　/*word-break设置强行换行;
-		normal 	亚洲语言和非亚洲语言的文本规则，允许在字内换行*/
-　　word-break: normal;		
-}
-.sub{margin-left:50px;}
-form{padding:10px 30px; border:2px solid #fafafa;}
-form:hover{background:#fafafa; border:2px solid #0096ff;}
-
-.comment:hover{ background:#F8F9FB;}
-.comment p, .comment .control{color:#aaa;}
-.comment a{text-decoration:none;}
-
-.comment .control{float:right;}
-.comment .control span{ cursor: pointer;}
-.comment .control span:hover{background-color:#BE3948; color:white;}
-
-input{margin:10px;}
-
-
-.footer{height:200px;}
-</style>
+<script src='js/ajaxObjPrototype.js'></script>
+<script src='js/nodeFn.js'></script>
 
 <script>
 //----------------------------------------------
-// 工具函数
+// 工具函数 都放到库中了
 //----------------------------------------------
-//根据id获取obj
-function $(s){
-	if(typeof s=='object') return s;
-	return document.getElementById(s);
-}
-
-//删除obj对应的dom元素
-function removeDom(obj){
-	if(typeof obj!='object'){
-		obj=$(obj);
-	}
-	return obj.parentElement.removeChild(obj)
-}
-
-/*单独的ajax函数
-*file:文件名
-*fnSucc：读取文件成功时的回调函数函数，响应值为其传入参数；
-*fnFaild：读取文件失败时的回调函数函数，错误代码为其传入参数；
-*/
-function ajax(fileUrl, fnSucc, fnFaild){
-		//1.创建ajax对象
-		if(window.XMLHttpRequest){//加window是为了兼容IE6
-			var oAjax=new XMLHttpRequest();//非IE6
-		}else{
-			var oAjax=new ActiveXObject('Microsoft.XMLHTTP');	//for IE6
-		}
-		//// alert(oAjax);//object XMLHttpRequest
-		
-		//2.链接服务器
-		//open(方法, 文件名, 同步或异步);
-		oAjax.open('GET',fileUrl,true);
-		
-		//3.发送请求
-		oAjax.send();
-		
-		//4.接收返回，并解析；
-		oAjax.onreadystatechange=function(){
-			//oAjax.readyState 浏览器和服务器通信到哪一步了
-			if(4==oAjax.readyState){//4就是读取完成；但可能文件不存在
-				if(200==oAjax.status){  //成功
-					fnSucc(oAjax.responseText);//server端的文件内容传入；
-					//var txt=oAjax.responseText;
-					//oDivLogin.innerHTML=txt;
-				}else{
-					//alert("failed to get the file on the server.." + oAjax.status);
-					if(fnFaild){//如果定义了错误函数，则进行处理；
-						fnFaild(oAjax.status);//传入参数为错误代码；
-					}
-				}
-			}
-		}
-
-}/*end of function ajax*/
-
 
 
 //----------------------------------------------
 //事件处理
 //----------------------------------------------
-	//载入事件
 window.onload=function(){
 	var pid=0;
 	var oForm=document.comment;
@@ -200,7 +98,54 @@ window.onload=function(){
 		//pid就是该评论的父评论
 		oForm.pid.value=pid;
 
-		return true;
+		//------------------------
+		//把ajax放到form的submit事件中，巧妙的应用了提交事件。
+		
+		
+		//------------------------
+		//验证结束。开始ajax请求
+		//------------------------
+		//拼装参数
+		var url='action.php?a=c_add&time='+(new Date()).getTime();
+		var paras='nickName='+oForm.nickName.value;
+		paras += '&email='+oForm.email.value;
+		paras += '&comment='+oForm.comment.value;
+		paras += '&pid='+oForm.pid.value;
+		paras += '&aid='+oForm.aid.value;
+		paras += '&uid='+oForm.uid.value;
+		paras += '&submit=submit';//确定是post提交的
+		//使用ajax请求
+		var myAjax=new Ajax();
+
+		myAjax.post(url, paras, function(str){
+				$('notice').innerHTML='';
+				$('notice').innerHTML += str + '<hr>';
+					
+				//使用eval处理字符，反序列化为json
+				var oStr=eval('('+str+')');
+				
+				//根据条件创建新node
+				var newObj=getCommentDomByAttri({
+					'pid':oStr[2], 
+					'id':oStr[3], 
+					'uid':oForm.uid.value, 
+					'time':oStr[4], 
+					'content':oForm.comment.value,
+					'nickName':oForm.nickName.value});
+
+				//添加到dom树中
+				if(oStr[2]==0){
+					$('comment').appendChild(newObj)
+				}else{
+					appAfter( newObj, $('comment_id_'+oStr[2]) );
+				}
+				
+			}, function(str){
+				$('notice').innerHTML = 'Error1: '+str;
+			});
+		//ajax已经提交，表单就不应该再提交了。
+		
+		return false;
 	}
 	
 	//alert(aCommentList);
@@ -208,6 +153,7 @@ window.onload=function(){
 	
 	//为删除 和 回复 按钮绑定事件
 	for(var i in aCommentList){
+		//var oComment=[],aBtns=[],oBtnDel=[],oBtnReply=[]
 		oComment=$('comment_id_'+aCommentList[i]);
 		aBtns=oComment.getElementsByTagName('span');
 		oBtnDel=aBtns[0];		oBtnDel.id=aCommentList[i];
@@ -216,50 +162,114 @@ window.onload=function(){
 		
 		//为 删除按钮 绑定事件
 		oBtnDel.onclick=function(){
-			if(confirm('你确定要删除#'+this.id+'楼的留言吗？(包括此后的回复)')){
-				//window.location='action.php?a=c_del&cid=' + this.id;
-				
-				//ajax请求
-				url='action.php?a=c_del&cid=' + this.id;
-				ajax(url, function(text){
-						//ajax成功后的处理
-						//从php返回序列化后的json/array时需要用eval转换
-						var arr = eval('(' + text + ')');
-						//数据删除成功后，该删除dom了：
-						if(1==arr[0]){
-							$('notice').innerHTML =arr[1]
-
-							//删除节点
-							iLen=arr[2].length;
-							for(var i=0; i<iLen; i++){
-								removeDom( $('comment_id_' + arr[2][i] ) )
-							}								
-						}else{
-						//数据删除失败后：
-							$('notice').innerHTML="<span style='color:red'>"+arr[1]+'</span>'
-						}
-						
-					}, function(text){
-						//失败后的处理
-						alert(text)
-					
-					});
-				
-				
-			}
+			deleteFn(this);
 		}
 		//为 回复按钮 绑定事件
 		oBtnReply.onclick=function(){
-			//定位到评论框
-			window.location='#addComment';
-			//给定父评论的id
-			pid=this.id;
-			
-			//提示正在回复第几楼
-			$('commentTo').innerHTML='回复#'+ pid + '楼: ';
+			replyFn(this);
 		}
 	}
 	
+	
+	
+	/*
+		删除按钮的事件函数
+	*/
+	function deleteFn(_this){
+		if(confirm('你确定要删除#'+_this.id+'楼的留言吗？(包括此后的回复)')){
+		//window.location='action.php?a=c_del&cid=' + _this.id;
+		
+		
+		//ajax请求
+		var ajax=new Ajax();
+		//url='action.php?a=c_del&cid=' + _this.id +'&t='+(new Date()).getTime();
+		url='action.php?a=c_del&cid=' + _this.id;
+		
+		ajax.get(url, function(text){
+				//ajax成功后的处理
+				var arr = eval('(' + text + ')');
+				
+				//删除成功后
+				if(1==arr[0]){
+					$('notice').innerHTML=arr
+					//$('notice').innerHTML=arr[1]
+					var arr2=arr[2]
+					//删除节点
+					for(var i=0; i<arr2.length; i++){
+						removeDom( $('comment_id_'+arr2[i]) )
+					}
+				}else{
+					//删除失败后
+					$('notice').innerHTML="<span style='color:red'>"+arr[1]+'</span>'
+				}
+			}, function(text){
+				//ajax失败后的处理
+				$('notice').innerHTML=text
+			});
+		}
+	}
+	/*
+		回复按钮的事件函数
+	*/
+	function replyFn(_this){
+		//定位到评论框
+		window.location='#addComment';
+		//给定父评论的id
+		pid=_this.id;
+		
+		//提示正在回复第几楼
+		$('commentTo').innerHTML='回复#'+ pid + '楼: ';
+	}
+	
+	/*
+	* 根据strObj描述信息返回新的评论的dom元素
+	*/
+	function getCommentDomByAttri(strObj){
+		//解析出描述对象的属性
+		var id=strObj['id'];
+		var nickName=strObj['nickName'];
+		var content=strObj['content'];
+		var uid=strObj['uid'];
+		var pid=strObj['pid'];
+		var time=strObj['time'];
+		
+		//control标签
+		var oDivCtrl=createNode('div',{'class':'control'});
+		var oSpan1=createNode('span',{'id':id},'删除');
+		var oSpan2=createNode('span',{'id':id},'回复');
+		
+		oDivCtrl.appendChild(oSpan1); 
+		oDivCtrl.appendChild(document.createTextNode(' ')); 
+		oDivCtrl.appendChild(oSpan2); 
+
+		//此处添加事件 删除和回复
+		//为 删除按钮 绑定事件
+		oSpan1.onclick=function(){
+			deleteFn(this);
+		}
+		//为 回复按钮 绑定事件
+		oSpan2.onclick=function(){
+			replyFn(this);
+		}
+		
+		//创建最外层div
+		var newStyleClass=pid==0?'comment':'comment sub'
+		var newObj=createNode('div',{'class':newStyleClass, 'id': ('comment_id_'+id) })
+		newObj.appendChild(oDivCtrl)
+		//添加文字
+		var oP=createNode('p',{},' [#'+id+'楼]');
+		//在p中添加a标签
+		var oA=createNode('a', {'href':'usr.php?uid='+(oForm.uid.value)}, nickName);
+		oP.appendChild(oA)
+		//添加文字
+		oP.appendChild(document.createTextNode(time+':'))
+		//添加到最外层中
+		newObj.appendChild(oP)
+		
+		//添加文字：评论内容
+		newObj.appendChild(document.createTextNode(content))
+		return newObj;
+	}
 	
 	
 }

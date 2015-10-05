@@ -1,13 +1,10 @@
-﻿<?php
-//引入自定义函数库
-include('Temp_function.php');
-//连接数据库
-	if(!isset($conn)){
-		include('conn.php');
-	}
+<?php
+//引入入口文件
+include('myLibDoor.php');
+
 
 	$action=getGetValue('a');
-	if($action=='') die('invalid url.');
+	//if($action=='') die('Invalid url.');
 	
 //处理动作
 switch($action){
@@ -18,22 +15,25 @@ switch($action){
 		//执行删除
 		//如果不指定id，则返回错误
 		if($cid=='') {
-			echo '<a href="post.php">点击返回</a>';
-			die('invalid deletion.');
+			$msg=array(0, '删除了0条数据');
+			//返回json
+			echo json_encode($msg);
+			//die('invalid deletion.');
 		}
+		
 		//递归删除所有子回复
 		$total_deletedIDs=delAllCommentAfter($cid);
 		$total_deleted=count($total_deletedIDs);
 		
 		//设定返回值
 		if($total_deleted>0){
-			$msg[0]=1; //成功
-			$msg[1]= '成功删除了'.$total_deleted.'条评论';
+			//成功
+			$msg=array(1,'成功删除了'.$total_deleted.'条评论');
 		}else{
 			$msg=array(0, '删除了0条数据');
 		}
 		$msg[]=$total_deletedIDs;
-		
+		$a=array(1,'1234');
 		//返回json
 		echo json_encode($msg);
 		//echo '成功删除了'.$total_deleted.'条评论.';
@@ -44,8 +44,6 @@ switch($action){
 		break;
 		
 	case 'c_add':
-		echo 'c_add';
-		//	echo '<pre>';print_r($_GET);	print_r($_POST); die();//todo
 		//插入数据库	
 		if(isset($_POST['submit'])){
 			$aid=getPostValue('aid');//文章ID
@@ -61,13 +59,26 @@ switch($action){
 			values({$aid},{$pid},'{$comment}',{$uid},'{$nickName}','{$email}',{$comment_time});";
 
 			mysql_query($sql) or die('insert Err: '.mysql_error());
-			echo '插入'.mysql_affected_rows().'行<hr>';
+		
+			//设定返回值
+			$msg=array(1);//成功
+			$msg[]='添加成功'. mysql_affected_rows() .'行';//添加成功
+			$msg[]=$pid;//返回添加条目父id:pid
+			
+				$lastID=mysql_query('select max(id) as lastID from comment;') or die('select Erro: '.mysql_error());
+				$lastID=mysql_fetch_assoc($lastID);
+			$msg[]=$lastID['lastID'];//返回添加条目的id 怎么用？SELECT LAST_INSERT_ID()
+			
+			$msg[]=date('Y-m-d h:i:s', $comment_time);//返回添加时间
 		}else{
+			$msg=array(0);//成功
+			$msg[]='添加失败';//添加成功
 			die('invalid url.');
 		}
 		
-		//返回上一页
-		echo '<script>window.location.href = document.referrer;//返回上一页并刷新</script>';
+		//$msg['post']=$_POST;//返回全部数据，供参考
+		//返回json
+		echo json_encode($msg);
 		
 		break;
 	case 'insert':
@@ -79,7 +90,3 @@ switch($action){
 	default:
 		echo 'other';
 }
-
-
-
-

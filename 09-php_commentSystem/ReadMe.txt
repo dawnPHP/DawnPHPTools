@@ -1,5 +1,14 @@
 ﻿
 
+v1.0.2
+用ajax改写 添加 评论。在动态添加dom时耗时较多：
+1.为了使用ajax post，重新写了ajax的prototype形式。
+2.熟悉dom的添加操作。
+	小心：添加第一条评论时可能会失败。
+3.已经修改#comment的范围，仅仅是评论区域。
+4.抽离了css和js到一个文件中；
+  抽离了时区设置、编码、数据库连接到一个入口php文件。
+
 
 v1.0.1
 用ajax改写 删除评论。在级联删除多个dom时耗时较多：
@@ -18,7 +27,12 @@ Description:适用于博客文章、照片等的评论
 		3.使用php输出各评论的dom的id给js，使用js给条目添加删除和回复事件；
 		4.一旦删除某条评论，则级联删除其子评论，及子评论的评论...
 		
-
+		5.dom的添加和三个函数密切相关：
+createElement(tagName), setAttribute(attr,value), pId.appendChild(sonId)
+		删除和1个函数密切相关removeChild()
+	缺点：
+		1.帖子楼层怎么显示？删除一个之后楼层不能变。难道再建一个回复评论的表？
+		2.最终修改成完全的php返回json，一切排版给js？
 
 keywords:评论
 pros&cons: 还没有添加注册用户系统，后续还需要改版

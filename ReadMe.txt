@@ -5,12 +5,12 @@
 ===================================
 -----------------------------------
 按功能索引：
-[ajax] 01-php版简易ajax--Suggestions
+[ajax][dom add and delete] 01-php版简易ajax--Suggestions
 [BBS][File] 02-php_BBS_FileBased
 [blog][counter]	07-php_counter
 [二维码][phpqrcode]	05-php_erWeiMa
 [博客底部][页码]	08-php_showPageBtns
-[评论]	09-php_commentSystem
+[评论][递归]	09-php_commentSystem
 
 
 [AuthCode][YanZhengMa][验证码] 03-php_yanZhengMa(AuthCode)
@@ -48,6 +48,17 @@
 2)通过测序，要记录测试环境和相关软件版本号(如win7+php5.6+mysql5.5));
 3)拥有完善的文档，及代码内部注释；
 4)文件夹统一编号，并在总readme中分别进行按类索引、按时间索引。
+
+
+
+====================================
+============Debug Tips==============
+1.如果修改后没效果，可能修改错文件了。
+
+
+============Debug Tips==============
+====================================
+
 
 
 

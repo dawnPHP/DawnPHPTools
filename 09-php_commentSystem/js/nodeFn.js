@@ -15,10 +15,13 @@ function $(s){
 }
 
 //----------------------------------
-//		删除
+//		删除 v1.1
 //----------------------------------
 //删除obj对应的dom元素
 function removeDom(obj){
+	if(typeof obj!='object'){
+		obj=$(obj);
+	}
 	return obj.parentElement.removeChild(obj)
 }
 
