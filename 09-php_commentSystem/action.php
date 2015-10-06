@@ -1,6 +1,6 @@
 <?php
 //引入入口文件
-include('myLibDoor.php');
+include('common/myLibDoor.php');
 
 
 	$action=getGetValue('a');

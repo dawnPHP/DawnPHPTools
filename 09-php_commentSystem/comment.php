@@ -1,13 +1,12 @@
-<?php	require('myLibDoor.php');	?>
-<link rel='stylesheet' type="text/css" href="main.css">
-<?php
+<?php	require('common/myLibDoor.php');	
+echo '<link rel="stylesheet" type="text/css" href="'. $publicPath .'css/main.css">';
+
 /**
 博客评论系统
 1.带顶和踩的评论
 http://geek.csdn.net/news/detail/38743
 2.简单大方的评论
 http://www.cnblogs.com/dwayne/archive/2012/07/06/MySQL_index_join_wayne.html
-
 */
 
 
@@ -22,6 +21,7 @@ echo '<p><b>v1.0.2</b><br>
 3.已经修改#comment的范围，仅仅是评论区域。<br>
 4.抽离了css和js到一个文件中；<br>
   抽离了时区设置、编码、数据库连接到一个入口php文件。<br>
+  <b class=bug>bug001: 当对同一个评论回复超过2次时，第二个不会被删除！</b>
 </p><br>
 
 <p><b>v1.0.1</b><br>用ajax改写 删除评论。在级联删除多个dom时耗时较多：<br>
@@ -29,18 +29,17 @@ echo '<p><b>v1.0.2</b><br>
 2.熟悉dom的删除操作。</p><br>
 
 <p><b>v1.0.0</b><br>这是待评论的内容。该系统支持评论、对评论回复、对评论进行删除。一旦删除，会级联删除对该评论进行回复的所有评论。</p>';
-$current_aid=1;//todo 数据获取get或session
 
-
+	$current_aid=1;//todo 数据获取get或session
 	$uid=2; // 可以从session获取用户id
 
 	//显示评论内容
 	$arrGlobal=array('','');
 	showAllComment($current_aid);
-	$script = $arrGlobal[0];
+	$script = $arrGlobal[0];//给js传递删除条目
 	
 	echo '<div id=comment>';
-	echo '<div class=separator>以下是评论：</div>';
+	echo '<div class=title>以下是评论：</div>';
 	echo $arrGlobal[1];
 	echo '</div>';
 	
@@ -55,7 +54,7 @@ $current_aid=1;//todo 数据获取get或session
 <pre id='notice'>Notice will go here</pre>
 
 <a name='addComment'></a>
-<form action='action.php?a=c_add' name='comment' method='post'>
+<form name='comment'>
 	<span id='commentTo'></span>
 	<br>
 	昵称<input type=text name='nickName' value='Tom'/>
@@ -63,7 +62,7 @@ $current_aid=1;//todo 数据获取get或session
 	email<input type=email name='email' value='Tom@tom.com'/>
 	<br>
 	评论内容	<br>
-	<textarea cols=50 rows=10 name='comment'>tom's comment</textarea>
+	<textarea cols=85 rows=10 name='comment'>tom's comment中文评论</textarea>
 		<br>
 	<input type=submit name=submit value='submit'>
 	
@@ -76,8 +75,8 @@ $current_aid=1;//todo 数据获取get或session
 <div class=footer></div>
 
 
-<script src='js/ajaxObjPrototype.js'></script>
-<script src='js/nodeFn.js'></script>
+<script src='<?php echo $publicPath;?>js/ajaxObjPrototype.js'></script>
+<script src='<?php echo $publicPath;?>js/nodeFn.js'></script>
 
 <script>
 //----------------------------------------------
@@ -187,8 +186,6 @@ window.onload=function(){
 	*/
 	function deleteFn(_this){
 		if(confirm('你确定要删除#'+_this.id+'楼的留言吗？(包括此后的回复)')){
-		//window.location='action.php?a=c_del&cid=' + _this.id;
-		
 		
 		//ajax请求
 		var ajax=new Ajax();
