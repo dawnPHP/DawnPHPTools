@@ -1,0 +1,28 @@
+﻿<html>
+<head>
+<style>
+.wrap{width:1000px; border:#000 1px solid; margin:0 auto;
+	box-shadow:15px 15px #eee;
+	padding:10px;
+}
+.pics{width:200px; margin:5px; border:#eee 10px solid; }
+
+</style>
+</head>
+<body>
+<div class=wrap>
+<h1>upload pics</h1>
+<a href="index.php">预览图片</a>
+<hr>
+
+<form action="upload_file.php" method="post" enctype="multipart/form-data">
+	<label for="file">Filename:</label>
+	<input type="file" name="file" id="file" /> 
+	<br />
+	<br />
+	<input type="submit" name="submit" value="Submit" />
+	<input type="reset" name="reset" value="Reset" />
+</form>
+
+</body>
+</html>

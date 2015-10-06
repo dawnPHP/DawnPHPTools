@@ -1,0 +1,21 @@
+﻿<html>
+<body>
+
+<h1>多文件上传</h1>
+
+<form action="upload_file.php" method="post" enctype="multipart/form-data">
+	<label for="file[]">Filename:</label>
+	<input type="file" name="file[]" id="file" /> <br><br>
+	<label for="file[]">Filename:</label>
+	<input type="file" name="file[]" id="file" /> <br>
+	<br />
+	<input type="submit" name="submit" value="Submit" />
+</form>
+
+</body>
+</html>
+
+<!--
+<form> 标签的 enctype 属性规定了在提交表单时要使用哪种内容类型。在表单需要二进制数据时，比如文件内容，请使用 "multipart/form-data"。
+
+-->

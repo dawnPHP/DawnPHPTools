@@ -11,7 +11,7 @@
 [二维码][phpqrcode]	05-php_erWeiMa
 [博客底部][页码]	08-php_showPageBtns
 [评论][递归]	09-php_commentSystem
-
+[upload][上传]	010-php_upload_files
 
 [AuthCode][YanZhengMa][验证码] 03-php_yanZhengMa(AuthCode)
 [MySQL][PHP][增删改查] 00-singlePageBlog
@@ -20,6 +20,7 @@
 
 -----------------------------------
 ===================================
+
 
 
 ===================================
@@ -35,9 +36,23 @@
 [2015-09-29]	07-php_counter
 [2015-09-30]	08-php_showPageBtns
 [2015-10-01]	09-php_commentSystem
+[2015-10-06]	010-php_upload_files 
 
 -----------------------------------
 ===================================
+
+
+
+
+===================================
+-----------------------------------
+按类名索引：
+010-php_upload_files	{MyDebug: v1.0.0, UploadFiles: v1.0.0}
+
+
+-----------------------------------
+===================================
+
 13:36 2015-09-07
 决定：把php日常小部件整理到github上，避免重复造轮子。
 建立phpTools，为每个项目做记录，并维护一个总的readMe:
@@ -48,20 +63,6 @@
 2)通过测序，要记录测试环境和相关软件版本号(如win7+php5.6+mysql5.5));
 3)拥有完善的文档，及代码内部注释；
 4)文件夹统一编号，并在总readme中分别进行按类索引、按时间索引。
-
-
-
-====================================
-============Debug Tips==============
-1.如果修改后没效果，可能修改错文件了。
-
-
-============Debug Tips==============
-====================================
-
-
-
-
 ------------------------
 Log format for each tools:V0.1.0
 ------------------------
@@ -77,3 +78,28 @@ Email: jimmymall@live.com
 
 Files&Functions:
 Databases:
+
+
+5)类文件和方法的注释规范，并单独进行索引
+/**=============================================
+ * Benchmark Class
+ *
+ * This class enables you to mark points and calculate the time difference
+ * 类名时驼峰法，方法名是下划线法。
+ *
+ * @version		v1.0.0
+ * @revise		2015.10.06
+ * @date		2015.10.06
+ * @author		Dawn
+ * @email		JimmyMall@live.com
+ * @link		https://github.com/DawnEve/DawnPHPTools
+ =============================================*/
+class Benchmark{
+	 /**
+     * 检测上传根目录(百度云上传时支持自动创建目录，直接返回)
+     * @param string $rootpath   根目录
+     * @return boolean true-检测通过，false-检测失败
+     */
+	 functon xx(){}
+}
+
