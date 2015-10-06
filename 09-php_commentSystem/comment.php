@@ -2,15 +2,16 @@
 echo '<link rel="stylesheet" type="text/css" href="'. $publicPath .'css/main.css">';
 
 /**
-博客评论系统
+评论系统20151006
 1.带顶和踩的评论
 http://geek.csdn.net/news/detail/38743
 2.简单大方的评论
 http://www.cnblogs.com/dwayne/archive/2012/07/06/MySQL_index_join_wayne.html
 */
 
-
-//评论系统
+//============================
+//	显示博客
+//============================
 echo '<div class=wrap>';
 echo '<h1>待评论的博客、图片或商品</h1>';
 echo '<p><b>v1.0.2</b><br>
@@ -30,16 +31,19 @@ echo '<p><b>v1.0.2</b><br>
 
 <p><b>v1.0.0</b><br>这是待评论的内容。该系统支持评论、对评论回复、对评论进行删除。一旦删除，会级联删除对该评论进行回复的所有评论。</p>';
 
+//============================
+//	显示评论
+//============================
 	$current_aid=1;//todo 数据获取get或session
 	$uid=2; // 可以从session获取用户id
 
-	//显示评论内容
+	//获取评论数据
 	$arrGlobal=array('','');
-	showAllComment($current_aid);
+	getAllComments($current_aid);
 	$script = $arrGlobal[0];//给js传递删除条目
 	
-	echo '<div id=comment>';
 	echo '<div class=title>以下是评论：</div>';
+	echo '<div id=comment>';
 	echo $arrGlobal[1];
 	echo '</div>';
 	
@@ -50,11 +54,15 @@ echo '<p><b>v1.0.2</b><br>
 ?>
 
 <div class=clear></div>
-
 <pre id='notice'>Notice will go here</pre>
 
-<a name='addComment'></a>
+<!--
+//============================
+//	添加评论的表单
+//============================
+-->
 <form name='comment'>
+	<a name='addComment'></a>
 	<span id='commentTo'></span>
 	<br>
 	昵称<input type=text name='nickName' value='Tom'/>
@@ -85,7 +93,7 @@ echo '<p><b>v1.0.2</b><br>
 
 
 //----------------------------------------------
-//事件处理
+// 事件处理
 //----------------------------------------------
 window.onload=function(){
 	var pid=0;
@@ -94,12 +102,10 @@ window.onload=function(){
 	//提交前的验证
 	oForm.onsubmit=function(){
 		if(''==oForm.nickName.value){
-			alert('昵称不能为空'); 
-			return false;
+			alert('昵称不能为空'); return false;
 		};
 		if(''==oForm.email.value){
-			alert('邮箱不能为空');
-			return false;
+			alert('邮箱不能为空'); return false;
 		};
 		if(''==oForm.comment.value){
 			alert('评论不能为空'); return false;
@@ -148,26 +154,24 @@ window.onload=function(){
 				}else{
 					appAfter( newObj, $('comment_id_'+oStr[2]) );
 				}
-				
 			}, function(str){
 				$('notice').innerHTML = 'Error1: '+str;
 			});
-		//ajax已经提交，表单就不应该再提交了。
 		
+		//ajax已经提交，表单就不应该再提交了。
 		return false;
 	}
 	
-	//alert(aCommentList);
-	//comment_id_
 	
-	//为删除 和 回复 按钮绑定事件
+	/*
+	*   为删除 和 回复 按钮绑定事件
+	*/
 	for(var i in aCommentList){
 		//var oComment=[],aBtns=[],oBtnDel=[],oBtnReply=[]
 		oComment=$('comment_id_'+aCommentList[i]);
 		aBtns=oComment.getElementsByTagName('span');
 		oBtnDel=aBtns[0];		oBtnDel.id=aCommentList[i];
 		oBtnReply=aBtns[1];		oBtnReply.id=aCommentList[i];
-		
 		
 		//为 删除按钮 绑定事件
 		oBtnDel.onclick=function(){
@@ -182,21 +186,19 @@ window.onload=function(){
 	
 	
 	/*
-		删除按钮的事件函数
+	*	删除按钮的事件函数
 	*/
 	function deleteFn(_this){
 		if(confirm('你确定要删除#'+_this.id+'楼的留言吗？(包括此后的回复)')){
 		
 		//ajax请求
-		var ajax=new Ajax();
-		//url='action.php?a=c_del&cid=' + _this.id +'&t='+(new Date()).getTime();
 		url='action.php?a=c_del&cid=' + _this.id;
-		
+		var ajax=new Ajax();
 		ajax.get(url, function(text){
 				//ajax成功后的处理
 				var arr = eval('(' + text + ')');
 				
-				//删除成功后
+				//后台数据删除成功后
 				if(1==arr[0]){
 					$('notice').innerHTML=arr
 					//$('notice').innerHTML=arr[1]
@@ -206,7 +208,7 @@ window.onload=function(){
 						removeDom( $('comment_id_'+arr2[i]) )
 					}
 				}else{
-					//删除失败后
+					//后台数据删除失败后
 					$('notice').innerHTML="<span style='color:red'>"+arr[1]+'</span>'
 				}
 			}, function(text){
@@ -215,8 +217,10 @@ window.onload=function(){
 			});
 		}
 	}
+	
+	
 	/*
-		回复按钮的事件函数
+	*	回复按钮的事件函数
 	*/
 	function replyFn(_this){
 		//定位到评论框
@@ -227,6 +231,8 @@ window.onload=function(){
 		//提示正在回复第几楼
 		$('commentTo').innerHTML='回复#'+ pid + '楼: ';
 	}
+	
+	
 	
 	/*
 	* 根据strObj描述信息返回新的评论的dom元素
@@ -267,68 +273,16 @@ window.onload=function(){
 		var oP=createNode('p',{},' [#'+id+'楼]');
 		//在p中添加a标签
 		var oA=createNode('a', {'href':'usr.php?uid='+(oForm.uid.value)}, nickName);
-		oP.appendChild(oA)
+		oP.appendChild(oA);
 		//添加文字
-		oP.appendChild(document.createTextNode(time+':'))
+		oP.appendChild(document.createTextNode(time+':'));
 		//添加到最外层中
-		newObj.appendChild(oP)
+		newObj.appendChild(oP);
 		
 		//添加文字：评论内容
-		newObj.appendChild(document.createTextNode(content))
+		newObj.appendChild(document.createTextNode(content));
 		return newObj;
 	}
-	
-	
 }
 
 </script>
-
-
-<?php
-/**
-评论表: comment
-id——自动生成，评论的ID
-aid——文章的id
-pid——父评论的id
-comment——品论内容
-
-uid——评论人的用户编号
-
-nickName--评论人的昵称
-email--评论人的email
-comment_time--评论时间
-
---
--- 表的结构 `comment`
---
-CREATE TABLE IF NOT EXISTS `comment`(
-	id int(10) auto_increment not null primary key,
-	aid int(10),
-	pid int(10) default 0,
-	comment text,
-	uid int(10),
-	nickName varchar(30),
-	email varchar(30),
-	comment_time varchar(30)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---添加索引
-ALTER TABLE comment ADD INDEX aid (aid);  
-ALTER TABLE comment ADD INDEX uid (uid);  
-
-mysql> desc comment;
-+--------------+-------------+------+-----+---------+----------------+
-| Field        | Type        | Null | Key | Default | Extra          |
-+--------------+-------------+------+-----+---------+----------------+
-| id           | int(10)     | NO   | PRI | NULL    | auto_increment |
-| aid          | int(10)     | YES  | MUL | NULL    |                |
-| pid          | int(10)     | YES  |     | 0       |                |
-| comment      | text        | YES  |     | NULL    |                |
-| uid          | int(10)     | YES  | MUL | NULL    |                |
-| nickName     | varchar(30) | YES  |     | NULL    |                |
-| email        | varchar(30) | YES  |     | NULL    |                |
-| comment_time | varchar(30) | YES  |     | NULL    |                |
-+--------------+-------------+------+-----+---------+----------------+
-8 rows in set (0.01 sec)
-
-*/

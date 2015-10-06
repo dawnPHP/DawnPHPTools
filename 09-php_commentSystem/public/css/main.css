@@ -5,7 +5,7 @@ div, p{margin:0; padding:0;}
 
 .wrap{width:700px; margin:0 auto;}
 #comment{width:700px; margin:0 auto; border:1px #98D4FE dashed; border-top:0;}
-#comment .title{
+.title{
 	font-family:'微软雅黑';
 	margin:10px 0; background-color:#0096ff; 
 	padding:5px 10px; color:#fff;

@@ -20,6 +20,7 @@ function getGetValue($name,$defaultValue=''){
 /**
 * 递归删除所有子回复
 */
+//function delAllCommentAfter($cid,&$deletedIDs){
 function delAllCommentAfter($cid,$deletedIDs=array()){
 	//删除当前id号的帖子
 	$sql="delete from comment where id={$cid}";
@@ -50,7 +51,7 @@ function delAllCommentAfter($cid,$deletedIDs=array()){
 * 递归查询所有的评论的函数
 * version:1.0.1
 */
-function showAllComment($current_aid, $pid=0,$lastCID=0){
+function getAllComments($current_aid, $pid=0,$lastCID=0){
 	//使用全局数组
 	global $arrGlobal;
 	
