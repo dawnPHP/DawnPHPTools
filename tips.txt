@@ -1,0 +1,32 @@
+﻿===================================
+========= php to html =============
+===================================
+1.编码方式head头
+header("Content-type: text/html; charset=utf-8");
+
+2.设置时区
+date_default_timezone_set('PRC');
+
+
+
+===================================
+========= html to php =============
+===================================
+1.html访问php的方法：js跳转法
+if(confirm('你确定要删除#'+_this.id+'楼的留言吗？(包括此后的回复)')){
+	window.location='action.php?a=c_del&cid=' + _this.id;
+}
+
+
+
+
+
+
+===================================
+=========== css tips ==============
+===================================
+1.引入css和js文件
+<script src='js/ajax.js'></script>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+
+
