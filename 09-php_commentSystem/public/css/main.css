@@ -1,11 +1,13 @@
 div, p{margin:0; padding:0;}
 .clear{clear:both; height:10px;width:100%;}
 
-.wrap{width:500px; margin:0 auto;}
-#comment{width:500px; margin:0 auto; border:1px blue dashed;}
-#comment .separator{
+.bug{color:red;}
+
+.wrap{width:700px; margin:0 auto;}
+#comment{width:700px; margin:0 auto; border:1px #98D4FE dashed; border-top:0;}
+#comment .title{
 	font-family:'微软雅黑';
-	margin:20px 0; background-color:#0096ff; 
+	margin:10px 0; background-color:#0096ff; 
 	padding:5px 10px; color:#fff;
 	width:100%; border-top:1px dashed #0096ff;}
 #comment a{color:#0096ff;}
