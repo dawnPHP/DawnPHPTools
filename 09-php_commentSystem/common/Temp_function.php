@@ -51,7 +51,7 @@ function delAllCommentAfter($cid,$deletedIDs=array()){
 * 递归查询所有的评论的函数
 * version:1.0.1
 */
-function showAllComment($current_aid, $pid=0,$lastCID=0){
+function getAllComments($current_aid, $pid=0,$lastCID=0){
 	//使用全局数组
 	global $arrGlobal;
 	

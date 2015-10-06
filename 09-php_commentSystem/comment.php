@@ -31,14 +31,15 @@ echo '<p><b>v1.0.2</b><br>
 
 <p><b>v1.0.0</b><br>这是待评论的内容。该系统支持评论、对评论回复、对评论进行删除。一旦删除，会级联删除对该评论进行回复的所有评论。</p>';
 
-	$current_aid=1;//todo 数据获取get或session
-	$uid=2; // 可以从session获取用户id
-
 //============================
 //	显示评论
 //============================
+	$current_aid=1;//todo 数据获取get或session
+	$uid=2; // 可以从session获取用户id
+
+	//获取评论数据
 	$arrGlobal=array('','');
-	showAllComment($current_aid);
+	getAllComments($current_aid);
 	$script = $arrGlobal[0];//给js传递删除条目
 	
 	echo '<div class=title>以下是评论：</div>';
