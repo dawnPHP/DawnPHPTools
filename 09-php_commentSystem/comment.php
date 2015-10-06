@@ -85,7 +85,7 @@ echo '<p><b>v1.0.2</b><br>
 
 
 //----------------------------------------------
-//事件处理
+// 事件处理
 //----------------------------------------------
 window.onload=function(){
 	var pid=0;
@@ -148,17 +148,14 @@ window.onload=function(){
 				}else{
 					appAfter( newObj, $('comment_id_'+oStr[2]) );
 				}
-				
 			}, function(str){
 				$('notice').innerHTML = 'Error1: '+str;
 			});
-		//ajax已经提交，表单就不应该再提交了。
 		
+		//ajax已经提交，表单就不应该再提交了。
 		return false;
 	}
 	
-	//alert(aCommentList);
-	//comment_id_
 	
 	//为删除 和 回复 按钮绑定事件
 	for(var i in aCommentList){
@@ -167,7 +164,6 @@ window.onload=function(){
 		aBtns=oComment.getElementsByTagName('span');
 		oBtnDel=aBtns[0];		oBtnDel.id=aCommentList[i];
 		oBtnReply=aBtns[1];		oBtnReply.id=aCommentList[i];
-		
 		
 		//为 删除按钮 绑定事件
 		oBtnDel.onclick=function(){
@@ -215,6 +211,8 @@ window.onload=function(){
 			});
 		}
 	}
+	
+	
 	/*
 		回复按钮的事件函数
 	*/
@@ -227,6 +225,7 @@ window.onload=function(){
 		//提示正在回复第几楼
 		$('commentTo').innerHTML='回复#'+ pid + '楼: ';
 	}
+	
 	
 	/*
 	* 根据strObj描述信息返回新的评论的dom元素
@@ -277,8 +276,7 @@ window.onload=function(){
 		newObj.appendChild(document.createTextNode(content))
 		return newObj;
 	}
-	
-	
+
 }
 
 </script>
