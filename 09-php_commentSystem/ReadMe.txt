@@ -53,20 +53,35 @@ Files&Functions:
  |-diguiDemo.php 遇到一个php函数递归return的bug。附有解决方案。
 ==================================================
 Databases: 
-CREATE TABLE `comment` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `aid` int(10) DEFAULT NULL,
-  `pid` int(10) DEFAULT '0',
-  `comment` text,
-  `uid` int(10) DEFAULT NULL,
-  `nickName` varchar(30) DEFAULT NULL,
-  `email` varchar(30) DEFAULT NULL,
-  `comment_time` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `aid` (`aid`),
-  KEY `uid` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+评论表: comment
+id——自动生成，评论的ID
+aid——文章的id
+pid——父评论的id
+comment——品论内容
 
+uid——评论人的用户编号
+
+nickName--评论人的昵称
+email--评论人的email
+comment_time--评论时间
+
+--
+-- 表的结构 `comment`
+--
+CREATE TABLE IF NOT EXISTS `comment`(
+	id int(10) auto_increment not null primary key,
+	aid int(10),
+	pid int(10) default 0,
+	comment text,
+	uid int(10),
+	nickName varchar(30),
+	email varchar(30),
+	comment_time varchar(30)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--添加索引
+ALTER TABLE comment ADD INDEX aid (aid);  
+ALTER TABLE comment ADD INDEX uid (uid);  
 
 mysql> desc comment;
 +--------------+-------------+------+-----+---------+----------------+
@@ -81,4 +96,4 @@ mysql> desc comment;
 | email        | varchar(30) | YES  |     | NULL    |                |
 | comment_time | varchar(30) | YES  |     | NULL    |                |
 +--------------+-------------+------+-----+---------+----------------+
-8 rows in set (0.08 sec)
+8 rows in set (0.01 sec)
