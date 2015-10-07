@@ -1,0 +1,43 @@
+﻿<! DOCTYPE html>
+<html>
+<head>
+<meta charset ="utf-8">
+<title> Insert title here </title>
+
+<style>
+.hidden{ position:absolute; visibility:hidden;}
+.thumb{width:200px;}
+</style>
+
+<script type ="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type ="text/javascript">
+$(document).ready( function (){
+      $( "#i_1" ).load( function(){
+             var url = $("#i_1" ).contents().find( "#pic").html();
+             if (url != null){
+                  $( "#tag_img" ).attr("src" ,url);
+            }
+      });
+});
+</script>
+</head>
+<body>
+<h1>PHP JQ 异步上传并立即显示图片</h1>
+<pre>
+重点：
+1.form中的axtion="处理图片的有效PHP页面"
+2.form中的target="iframe的name属性值"，可以设置iframe为absolute和hidden。
+3.JS中必须要有可以等待iframe加载完后处理iframe返回过来的图片地址。
+http://www.open-open.com/lib/view/open1410792776570.html
+</pre>
+
+<img class='thumb' id= "tag_img" src = "" />
+<form enctype ="multipart/form-data" action= "upload_pic.php" method ="post" target= "upload_target">
+     <input type= "file" name ="img" class= "file" value ="" />
+     <input type= "submit" name ="uploadimg" value= "上传" />
+</form>
+123
+<iframe id= "i_1" class=hidden name = "upload_target"></iframe>
+456
+</body>
+</html>
