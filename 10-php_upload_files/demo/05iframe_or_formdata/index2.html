@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>FormData</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="zh-CN" />
+	<!-- 本地jquery库-->
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <!--
+	http://www.cnblogs.com/Zjmainstay/archive/2012/08/09/jQuery_upload_image.html
+	<script type="text/javascript" src="http://files.cnblogs.com/Zjmainstay/jquery-1.6.2.min.js"></script>-->  
+</head>
+<body>
+<style>
+    #feedback{width:1200px;margin:0 auto;}
+    #feedback img{float:left;width:300px;height:300px;}
+</style>
+
+
+<h1>jQuery Upload Image</h1>
+<pre>
+1.一次上传1个文件；基于dataform；即刻上传。
+2.支持chrome,ff， 不支持 IE8 。
+
+</pre>
+
+
+
+
+<div>
+    <!-- 点击图片添加文件方式 -->
+    <img src="images/addfile.jpg" onclick="getElementById('inputfile').click()" title="点击添加图片" alt="点击添加图片">
+    <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile"/>
+</div>
+<div id="feedback"></div>    <!-- 响应返回数据容器 -->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#inputfile").change(function(){
+        //创建FormData对象
+        var data = new FormData();
+        //为FormData对象添加数据
+        //
+        $.each($('#inputfile')[0].files, function(i, file) {
+            data.append('upload_file', file);
+        });
+        $.ajax({
+            url:'submit_form_process.php',
+            type:'POST',
+            data:data,
+            cache: false,
+            contentType: false,    //不可缺
+            processData: false,    //不可缺
+            success:function(data){
+                data = $(data).html();
+                if($("#feedback").children('img').length == 0) $("#feedback").append(data.replace(/&lt;/g,'<').replace(/&gt;/g,'>'));
+                else $("#feedback").children('img').eq(0).before(data.replace(/&lt;/g,'<').replace(/&gt;/g,'>'));
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
