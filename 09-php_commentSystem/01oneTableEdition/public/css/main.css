@@ -1,0 +1,39 @@
+div, p{margin:0; padding:0;}
+.clear{clear:both; height:10px;width:100%;}
+
+.bug{color:red;}
+
+.wrap{width:700px; margin:0 auto;}
+#comment{width:700px; margin:0 auto; border:1px #98D4FE dashed; border-top:0;}
+.title{
+	font-family:'微软雅黑';
+	margin:10px 0; background-color:#0096ff; 
+	padding:5px 10px; color:#fff;
+	width:100%; border-top:1px dashed #0096ff;}
+#comment a{color:#0096ff;}
+.comment{background:#fefefe; padding:5px; margin:5px; 
+    font-family: monospace;
+	border-left:2px solid #0096ff; 
+	border-bottom:1px dashed #aaa;  clear:both;
+
+	word-wrap: break-word;
+　　/*word-break设置强行换行;
+		normal 	亚洲语言和非亚洲语言的文本规则，允许在字内换行*/
+　　word-break: normal;		
+}
+.sub{margin-left:50px;}
+form{padding:10px 30px; border:2px solid #fafafa;}
+form:hover{background:#fafafa; border:2px solid #0096ff;}
+
+.comment:hover{ background:#F8F9FB;}
+.comment p, .comment .control{color:#aaa;}
+.comment a{text-decoration:none;}
+
+.comment .control{float:right;}
+.comment .control span{ cursor: pointer;}
+.comment .control span:hover{background-color:#BE3948; color:white;}
+
+input{margin:10px;}
+
+
+.footer{height:200px;}
