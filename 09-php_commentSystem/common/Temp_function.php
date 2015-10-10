@@ -116,7 +116,7 @@ function getAllComments($current_aid, $pid=0,$lastCID=0){
 		$arrGlobal[0] .= $script;
 		$arrGlobal[1] .= $commentContent;
 		
-		showAllComment($current_aid,$id,$id);
+		getAllComments($current_aid,$id,$id);
 	}
 }
 
