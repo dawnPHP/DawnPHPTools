@@ -3,7 +3,8 @@
 	Dir: v1.0.3, 
 	File: v1.0.0, 
 	MyDebug: v1.0.1, 
-	ZoomImage:v1.0.0
+	ZoomImage:v1.0.0,
+	UploadFile:v1.0.0,
 }
 
 
