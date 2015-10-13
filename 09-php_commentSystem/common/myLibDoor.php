@@ -24,6 +24,6 @@ if(!isset($conn)){
 
 
 //引入自定义函数库
-include( $libPath . 'Temp_function.php');
+include( $libPath . 'function.php');
 
 

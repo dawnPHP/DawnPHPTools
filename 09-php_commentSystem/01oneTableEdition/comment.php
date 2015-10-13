@@ -22,6 +22,7 @@ echo '<p><b>v1.0.2</b><br>
 3.已经修改#comment的范围，仅仅是评论区域。<br>
 4.抽离了css和js到一个文件中；<br>
   抽离了时区设置、编码、数据库连接到一个入口php文件。<br>
+<b>5.数据库文件：100主机->myblog数据库->comment1stedition表</b><br>
   <b class=bug>bug001: 当对同一个评论回复超过2次时，第二个不会被删除！</b>
 </p><br>
 

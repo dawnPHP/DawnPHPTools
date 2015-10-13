@@ -55,7 +55,7 @@ switch($action){
 
 			$comment_time=time();
 
-			$sql="insert into comment(aid,pid, comment, uid, nickName, email, comment_time) 
+			$sql="insert into $commentTbl(aid,pid, comment, uid, nickName, email, comment_time) 
 			values({$aid},{$pid},'{$comment}',{$uid},'{$nickName}','{$email}',{$comment_time});";
 
 			mysql_query($sql) or die('insert Err: '.mysql_error());
@@ -65,7 +65,7 @@ switch($action){
 			$msg[]='添加成功'. mysql_affected_rows() .'行';//添加成功
 			$msg[]=$pid;//返回添加条目父id:pid
 			
-				$lastID=mysql_query('select max(id) as lastID from comment;') or die('select Erro: '.mysql_error());
+				$lastID=mysql_query("select max(id) as lastID from $commentTbl;") or die('select Erro: '.mysql_error());
 				$lastID=mysql_fetch_assoc($lastID);
 			$msg[]=$lastID['lastID'];//返回添加条目的id 怎么用？SELECT LAST_INSERT_ID()
 			

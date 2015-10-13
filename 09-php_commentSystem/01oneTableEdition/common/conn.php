@@ -13,3 +13,6 @@ mysql_select_db('myBlog') or die(mysql_error());
 
 //设置客户端和连接字符集
 mysql_query('set names utf8');
+
+//设置数据表
+$commentTbl='comment1stedition';
