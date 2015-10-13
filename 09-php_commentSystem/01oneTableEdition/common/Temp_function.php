@@ -22,15 +22,16 @@ function getGetValue($name,$defaultValue=''){
 */
 //function delAllCommentAfter($cid,&$deletedIDs){
 function delAllCommentAfter($cid,$deletedIDs=array()){
+	global $commentTbl;
 	//删除当前id号的帖子
-	$sql="delete from comment where id={$cid}";
+	$sql="delete from $commentTbl where id={$cid}";
 	mysql_query($sql) or die('delete Err: '.mysql_error());
 
 	//记录删除条目
 	$deletedIDs[]= $cid;
 	
 	//查找当前id号为父id的帖子
-	$sql="select id from comment where pid={$cid}";
+	$sql="select id from $commentTbl where pid={$cid}";
 	$rows=mysql_query($sql) or die('select Err: '.mysql_error());
 	
 	//如果找到，则递归删除
@@ -54,8 +55,9 @@ function delAllCommentAfter($cid,$deletedIDs=array()){
 function getAllComments($current_aid, $pid=0,$lastCID=0){
 	//使用全局数组
 	global $arrGlobal;
+	global $commentTbl;
 	
-	$sql="select * from comment where aid={$current_aid} and pid={$pid} order by comment_time;";
+	$sql="select * from {$commentTbl} where aid={$current_aid} and pid={$pid} order by comment_time;";
 
 	$rows=mysql_query($sql) or die('select Err: '.mysql_error());
 		
@@ -116,7 +118,7 @@ function getAllComments($current_aid, $pid=0,$lastCID=0){
 		$arrGlobal[0] .= $script;
 		$arrGlobal[1] .= $commentContent;
 		
-		showAllComment($current_aid,$id,$id);
+		getAllComments($current_aid,$id,$id);
 	}
 }
 
@@ -125,11 +127,12 @@ function getAllComments($current_aid, $pid=0,$lastCID=0){
 * 通过id获取某字段名（comment表中）
 */
 function getFiledById($id, $column){
+	global $commentTbl;
 	//连接数据库
 	if(!isset($conn)){include('conn.php');}
 	
 	//查询
-	$rows=mysql_query("select {$column} from comment where id={$id};") or die('select Err: '. mysql_error() );
+	$rows=mysql_query("select {$column} from $commentTbl where id={$id};") or die('select Err: '. mysql_error() );
 	if(mysql_num_rows($rows)<0){
 		die('Nothing returned.');
 	};

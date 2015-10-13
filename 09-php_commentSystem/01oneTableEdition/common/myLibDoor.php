@@ -18,12 +18,10 @@ $publicPath='./public/';
 $libPath='./common/';
 
 //连接数据库
-if(!isset($conn)){
-	include( $libPath . 'conn.php');
-}
+include( $libPath . 'conn.php');
 
 
 //引入自定义函数库
-include( $libPath . 'function.php');
+include( $libPath . 'Temp_function.php');
 
 
