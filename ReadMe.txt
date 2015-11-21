@@ -11,7 +11,7 @@
 [二维码][phpqrcode]	05-php_erWeiMa
 [博客底部][页码]	08-php_showPageBtns
 [评论][递归]	09-php_commentSystem
-[upload][上传]	10-php_upload_files
+[upload][上传][上传预览]	10-php_upload_files
 [zoom][picture]	11-php_zoom_image
 
 [AuthCode][YanZhengMa][验证码] 03-php_yanZhengMa(AuthCode)
