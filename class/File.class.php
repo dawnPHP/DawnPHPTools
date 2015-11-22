@@ -5,7 +5,7 @@
  * 文件操作类
  * 类名时驼峰法，方法名是下划线法。
  *
- * @version		v1.0.0
+ * @version		v1.0.1
  * @revise		2015.10.08
  * @date		2015.10.08
  * @author		Dawn
@@ -31,5 +31,17 @@ class File{
      */
 	static function getFileName($file_name){
 		return explode(".", basename($file_name));
+	}
+	/*
+		删除文件
+	*/
+	static function delete($file_name){
+		if(file_exists($file_name)){
+			if(unlink($file_name)){
+				return true;
+			}
+		}else{
+			return false;
+		}
 	}
 }

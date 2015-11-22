@@ -11,13 +11,15 @@
 [二维码][phpqrcode]	05-php_erWeiMa
 [博客底部][页码]	08-php_showPageBtns
 [评论][递归]	09-php_commentSystem
-[upload][上传]	10-php_upload_files
+[upload][上传][上传预览]	10-php_upload_files
 [zoom][picture]	11-php_zoom_image
 
 [AuthCode][YanZhengMa][验证码] 03-php_yanZhengMa(AuthCode)
 [MySQL][PHP][增删改查] 00-singlePageBlog
 [excel2mysql] 04-php_excel2MySQL
 [pdf]	06-PHP_Lib_FPDF
+[jsonp]	12-jsonp
+[user info]	13-php_getUserInfo
 
 -----------------------------------
 ===================================
@@ -39,6 +41,8 @@
 [2015-10-01]	09-php_commentSystem
 [2015-10-06]	10-php_upload_files 
 [2015-10-08]	11-php_zoom_image
+[2015-11-21]	12-jsonp
+[2015-11-22]	13-php_getUserInfo
 
 -----------------------------------
 ===================================
@@ -51,6 +55,8 @@
 按类名索引：
 10-php_upload_files	{MyDebug: v1.0.0, UploadFiles: v1.0.0}
 11-php_zoom_image	{MyDebug: v1.0.1, Dir: v1.0.0, ZoomImage:v1.0.0}
+13-php_getUserInfo	{myAgentInfo: v1.0.0}
+
 
 -----------------------------------
 ===================================
