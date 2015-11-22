@@ -1,1 +1,43 @@
-﻿
+﻿/*字体样式*/
+.tagbox { font-size: 12px;}
+.tagbox .fc06{color: #a9a9a9; }
+
+.tagbox .clearfix{zoom:1;}
+.tagbox .clearfix:after{clear:both;content:'.';display:block;visibility:hidden;height:0;}
+
+
+/*输入框*/
+.tagbox  span{float:left;}
+.tagbox .new{float:left;margin:0 10px 0 0;padding:1px;width:550px;height:17px;border:1px solid #ccc;background:#fff}
+.tagbox .new ul{float:left;margin:0 0 -2px;padding:0}
+.tagbox .new li,.tagbox .new li .tag-btn,.tagbox .new ul{height:17px;line-height:17px}
+.tagbox .new li,.tagbox .new li .tag-btn{background:url(images/tagbg.png) no-repeat 999px 999px}
+.tagbox .new li{position:relative;float:left;margin:0 3px 0 0;padding:0 9px 0 0;background-position:right -30px;list-style:none;font-size:12px;zoom:1}
+.tagbox .new li .tag-btn{float:left;padding:0 3px 0 7px;background-position:0 0;color:#fff}
+.tagbox .new li .delete-tag-btn{position:absolute;top:3px;right:2px;overflow:hidden;width:11px;height:11px;text-indent:-2000px}
+.tagbox .new .tag-input{float:left;margin:0 0 -2px;width:546px}
+.tagbox .new .tag-input input{margin:0;padding:0;width:100%;height:17px;border:0;background:0 0;line-height:17px}
+
+/*提示*/
+.tagbox .taghint { position:relative;top:-5px;z-index:1;
+ margin-left: 10px; cursor: default;
+  z-index: 2;
+	}
+.tagbox .taghint .noshow {display:none;
+	margin-top:5px;
+    position: absolute;
+    z-index: 100;
+    border: 1px solid #97abc9;
+    background-color: #fff;
+}
+
+/*旧标签*/
+.tagbox .old{ width: 500px;	font-size: 12px;font-family: Arial,Helvetica,simsun;border:1px solid #eee; padding:5px; margin-top:10px;}
+
+.tagbox .old .ztag { min-height: 30px;    _height: 105px; line-height: 22px;margin: 5px 10px;text-align: left;word-wrap: break-word; max-height: 105px;overflow-y: auto;}
+.tagbox .old .ztag span{color: #1E50A2;  margin: 0 5px 0 0;cursor: pointer;}
+
+/*
+.nbw-win .bdc1 {    border-color: #ddd;}
+.nb-are .fc03, .nb-are .fc03:hover {    color: #1E50A2;}
+*/
