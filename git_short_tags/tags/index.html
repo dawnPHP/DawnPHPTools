@@ -13,7 +13,7 @@
 
 <hr><br>
 <div id=edit class="tagbox">
-	<input type="text" style='display:block' name="tags" value="">
+	<input type="text" style='display:block' name="tags" value="angular,bootstrap">
 	<span>标签：</span>
 	<div class="new">
 		<ul class="clearfix">
@@ -75,8 +75,14 @@ function rtrim(str){ //删除右边的空格
 //===================
 window.onload=function(){
 	var tagBox=$('edit');
-	var newTag=tagBox.getElementsByClassName('new')[0];
+	//新标签输入框
+	 newTag=tagBox.getElementsByClassName('new')[0];
+	//新标签提交框（应该隐藏）
+	 tagInFrom=tagBox.getElementsByTagName('input')[0];
 	
+	//----------------------------
+	//事件及其处理函数
+	//----------------------------
 	//初始化时获取焦点
 	var newTag_input=newTag.getElementsByTagName('input')[0];
 	newTag_input.focus();
@@ -115,20 +121,53 @@ window.onload=function(){
 		}
 	}
 	
-	
+
 	//处理输入的新标签
 	function addNewTag(tagName){
 		//处理该输入，是否够5个了？
+		tagsNow=tagInFrom.value;
+		aTags=tagsNow.split(',');
+		//alert(aTags.length);
 		
+		if(aTags.length>4){
+			alert('最多可添加5个标签');
+			newTag_input.value="";
+			return;//如果超过5个，则返回
+		}
 		
 		//是否重复了？
+		if(aTags.indexOf(tagName)!=-1) return;//如果已经有了，则返回
 		
-		//1.显示为数组
-		//2.显示到隐藏input中
+		//1.显示到隐藏input中
+		aTags.push(tagName);
+		tagInFrom.value=aTags.join(',');
 		
-		//3.当前input清空
+		//2.当前input清空
 		newTag_input.value="";
-		//4.当前input缩短
+		//3.当前input缩短
+		$('tags-_input_holder').style.width=parseInt( $('tags-_input_holder').style.width )-tagName.length*12 +'px';
+		//4.显示为灰背景标签
+		addDom(tagName);
+	}
+	
+	//添加dom
+	function addDom(tagName){
+		//新建dom
+		s1=document.createElement('span');
+		s1.setAttribute('class','tag-btn');
+		s1.innerHTML=tagName;
+
+		s2=document.createElement('span');
+		s2.setAttribute('class','delete-tag-btn');
+		s2.setAttribute('title','删除');
+		s2.innerHTML='x';
+
+		li=document.createElement('li');
+		li.appendChild(s1);
+		li.appendChild(s2);
+		
+		//插入到最后
+		newTag.getElementsByTagName('ul')[0].appendChild(li);
 	}
 	
 	

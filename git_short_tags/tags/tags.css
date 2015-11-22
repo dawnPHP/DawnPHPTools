@@ -7,6 +7,7 @@
 
 
 /*输入框*/
+.tagbox input{width:500px;}
 .tagbox  span{float:left;}
 .tagbox .new{float:left;margin:0 10px 0 0;padding:1px;width:550px;height:17px;border:1px solid #ccc;background:#fff}
 .tagbox .new ul{float:left;margin:0 0 -2px;padding:0}
