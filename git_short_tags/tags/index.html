@@ -1,0 +1,139 @@
+﻿<html>
+<head>
+<link rel="stylesheet" href="tags.css" />
+<title>仿163博客添加文章标签功能</title>
+</head>
+<body>
+<h1>仿163博客添加文章标签功能</h1>
+<pre>
+1.前台基于js，后台基于php。
+2.完稿后第一行隐藏，用于提交表单：用户添加的标签。
+3.相关博客：http://tieba.baidu.com/p/4174331708
+</pre>
+
+<hr><br>
+<div id=edit class="tagbox">
+	<input type="text" style='display:block' name="tags" value="">
+	<span>标签：</span>
+	<div class="new">
+		<ul class="clearfix">
+			<li>
+				<span class="tag-btn">angular</span>
+				<span class="delete-tag-btn" title="删除">x</span>
+			</li>
+			<li>
+				<span class="tag-btn">bootstrap</span>
+				<span class="delete-tag-btn" title="删除">x</span>
+			</li>
+		</ul>
+		<div id="tags-_input_holder" class="tag-input" style="width: 425px;">
+			<input type="text" maxlength="20">
+		</div>
+	</div>
+   
+	<div class="taghint">
+		<a onclick="return false;" hidefocus="true" href="#">
+			<span>[Tip]</span>
+			<span class="noshow">标签是由用户定义的、概括文章内容的关键词，比日志分类更准确、更具体。经常使用标签，可以让读者更加方便地找到感兴趣的文章。</span>
+		</a>
+		<span class="fc06">请使用空格或回车分隔不同标签</span>
+	</div>
+	
+	<div class="old">      
+		<div class="fc06">使用过的标签：</div>
+		<div class="ztag">        
+			<span>html</span>
+			<span>css</span>
+			<span>js</span>
+			<span>jQ</span>
+			<span>nodeJS</span>
+			<span>书籍</span>
+			<span>摄影</span>
+			<span>源代码</span>   
+		</div>
+	  
+		<div class="fc06">
+			<p>请使用空格或回车分隔不同标签, 最多可输入5个</p>
+		</div>
+	</div>
+
+</div>
+<script>
+//tools
+function $(s){return document.getElementById(s);}
+
+function trim(str){ //删除左右两端的空格
+	return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+function ltrim(str){ //删除左边的空格
+	return str.replace(/(^\s*)/g,"");
+}
+function rtrim(str){ //删除右边的空格
+	return str.replace(/(\s*$)/g,"");
+}
+
+//===================
+window.onload=function(){
+	var tagBox=$('edit');
+	var newTag=tagBox.getElementsByClassName('new')[0];
+	
+	//初始化时获取焦点
+	var newTag_input=newTag.getElementsByTagName('input')[0];
+	newTag_input.focus();
+	
+	//鼠标悬停时显示提示
+	var switcher=(tagBox.getElementsByClassName('taghint')[0]).getElementsByTagName('span')[0];//按钮
+	var hint=tagBox.getElementsByClassName('noshow')[0];//提示文字
+	switcher.onmouseover=function(){
+		hint.style.visibility='visible';
+		//鼠标移出时隐藏提示
+		switcher.onmouseout=function(){
+			hint.style.visibility='hidden';
+		}
+	}
+	 
+	//空格或回车 处理标签
+	newTag_input.onkeydown=function(event){
+		//获取事件
+		var e = event || window.event || arguments.callee.caller.arguments[0];
+		if((e && e.keyCode==13) || (e && e.keyCode==32)){ // enter键 或空格
+			//获取输入
+			var newTag=trim(this.value);
+			addNewTag(newTag);
+		}
+	}
+	
+	//旧标签的单击事件
+	var oldTag=tagBox.getElementsByClassName('old')[0];
+	var aOldTag=oldTag.getElementsByTagName('span');
+	for(var i=0;i<aOldTag.length; i++){
+		//获取该标签
+		aOldTag[i].onclick=function(){
+			var tagName=this.innerHTML;
+			//添加该标签
+			addNewTag(tagName);
+		}
+	}
+	
+	
+	//处理输入的新标签
+	function addNewTag(tagName){
+		//处理该输入，是否够5个了？
+		
+		
+		//是否重复了？
+		
+		//1.显示为数组
+		//2.显示到隐藏input中
+		
+		//3.当前input清空
+		newTag_input.value="";
+		//4.当前input缩短
+	}
+	
+	
+}
+
+</script>
+</body>
+</html>

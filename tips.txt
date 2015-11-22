@@ -55,3 +55,7 @@ if(confirm('你确定要删除#'+_this.id+'楼的留言吗？(包括此后的回
 <script src='js/ajax.js'></script>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 
+2.html css input submit按钮和input输入框怎么不对齐
+都设置 vertical-align: middle;
+http://blog.csdn.net/liujiajie1990/article/details/7956217
+
