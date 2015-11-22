@@ -1,0 +1,30 @@
+﻿基于html5的FileReader对象的图片本地预览。
+
+
+<input type='file' id='upload' />
+<img src='' id='img00'>
+<script>
+
+function $(s){return document.getElementById(s)}
+// 检查是否支持FileReader对象
+$('upload').onchange=function(){
+	if (typeof FileReader != 'undefined') {
+	　　var acceptedTypes = {
+	　　　　'image/png': true,
+	　　　　'image/jpeg': true,
+	　　　　'image/gif': true
+	　　};
+	　　if (acceptedTypes[$('upload').files[0].type] === true) {
+			var reader = new FileReader();
+			reader.onload = function (event) {
+				//var image = new Image();
+				var image = $('img00');
+				image.src = event.target.result;
+				image.width = 100;
+				document.body.appendChild(image);
+			};
+			reader.readAsDataURL(document.getElementById('upload').files[0]);
+	　　}
+	}
+}
+</script>
