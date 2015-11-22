@@ -44,8 +44,3 @@
 
 .tagbox .old .ztag { min-height: 30px;    _height: 105px; line-height: 22px;margin: 5px 10px;text-align: left;word-wrap: break-word; max-height: 105px;overflow-y: auto;}
 .tagbox .old .ztag span{color: #1E50A2;  margin: 0 5px 0 0;cursor: pointer;}
-
-/*
-.nbw-win .bdc1 {    border-color: #ddd;}
-.nb-are .fc03, .nb-are .fc03:hover {    }
-*/
