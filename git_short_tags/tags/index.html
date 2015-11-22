@@ -12,7 +12,7 @@
 </pre>
 
 <hr><br>
-<div class="tagbox">
+<div id=edit class="tagbox">
 	<input type="text" style='display:block' name="tags" value="">
 	<span>标签：</span>
 	<div class="new">
@@ -42,18 +42,14 @@
 	<div class="old">      
 		<div class="fc06">使用过的标签：</div>
 		<div class="ztag">        
-			<span>曲线拟合</span>
-			<span>简史</span>
-			<span>目录</span>
-			<span>mysql</span>
-			<span>网络</span>
-			<span>操作系统</span>
-			<span>托福</span>
-			<span>vba</span>
+			<span>html</span>
+			<span>css</span>
+			<span>js</span>
+			<span>jQ</span>
+			<span>nodeJS</span>
 			<span>书籍</span>
 			<span>摄影</span>
-			<span>源代码</span>
-			<span>sas</span>      
+			<span>源代码</span>   
 		</div>
 	  
 		<div class="fc06">
@@ -63,9 +59,27 @@
 
 </div>
 <script>
+function $(s){return document.getElementById(s);}
 window.onload=function(){
-	alert('ok');
-
+	var tagBox=$('edit');
+	var newTag=tagBox.getElementsByClassName('new')[0];
+	
+	//初始化时获取焦点
+	var newTag_input=newTag.getElementsByTagName('input')[0];
+	newTag_input.focus();
+	
+	//鼠标悬停时显示
+	 var switcher=(tagBox.getElementsByClassName('taghint')[0]).getElementsByTagName('span')[0];//按钮
+	 var hint=tagBox.getElementsByClassName('noshow')[0];//提示文字
+	 switcher.onmouseover=function(){
+		hint.style.visibility='visible';
+		switcher.onmouseout=function(){
+			hint.style.visibility='hidden';
+		}
+	 }
+	 
+	
+	
 }
 
 </script>

@@ -24,8 +24,10 @@
  .tagbox .taghint span{float:left;}
 .tagbox .taghint .noshow {
 	/*
-	*/
 	display:none;
+	visibility: visible;
+	*/
+	visibility: hidden;
 	margin-top:15px;
 	margin-left:-60px;
     position: absolute;

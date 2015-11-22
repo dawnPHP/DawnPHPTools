@@ -3,6 +3,8 @@
 	-[1] begin
 	-[2] basic of html and css
 	-[3] 微调，并在html中写说明
+1 写js功能部分
+	-[1] 鼠标悬停时弹出hint功能；微调。
 	
 
 
