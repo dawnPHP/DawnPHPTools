@@ -19,7 +19,7 @@
 [excel2mysql] 04-php_excel2MySQL
 [pdf]	06-PHP_Lib_FPDF
 [jsonp]	12-jsonp
-
+[user info]	13-php_getUserInfo
 
 -----------------------------------
 ===================================
@@ -42,6 +42,7 @@
 [2015-10-06]	10-php_upload_files 
 [2015-10-08]	11-php_zoom_image
 [2015-11-21]	12-jsonp
+[2015-11-22]	13-php_getUserInfo
 
 -----------------------------------
 ===================================
@@ -54,6 +55,8 @@
 按类名索引：
 10-php_upload_files	{MyDebug: v1.0.0, UploadFiles: v1.0.0}
 11-php_zoom_image	{MyDebug: v1.0.1, Dir: v1.0.0, ZoomImage:v1.0.0}
+13-php_getUserInfo	{myAgentInfo: v1.0.0}
+
 
 -----------------------------------
 ===================================
