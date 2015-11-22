@@ -1,5 +1,17 @@
-﻿<link rel="stylesheet" href="tags.css" />
+﻿<html>
+<head>
+<link rel="stylesheet" href="tags.css" />
+<title>仿163博客添加文章标签功能</title>
+</head>
+<body>
+<h1>仿163博客添加文章标签功能</h1>
+<pre>
+1.前台基于js，后台基于php。
+2.第一行隐藏，用于收集用户输入的标签。
 
+</pre>
+
+<hr><br>
 <div class="tagbox">
 	<input type="text" style='display:block' name="tags" value="">
 	<span>标签：</span>
@@ -21,7 +33,8 @@
    
 	<div class="taghint">
 		<a onclick="return false;" hidefocus="true" href="#">
-			Tip<span class="noshow">标签是由用户定义的、概括文章内容的关键词，比日志分类更准确、更具体。经常使用标签，可以让读者更加方便地找到感兴趣的文章。</span>
+			<span>Tip</span>
+			<span class="noshow">标签是由用户定义的、概括文章内容的关键词，比日志分类更准确、更具体。经常使用标签，可以让读者更加方便地找到感兴趣的文章。</span>
 		</a>
 		<span class="fc06">请使用空格或回车分隔不同标签</span>
 	</div>
@@ -49,3 +62,12 @@
 	</div>
 
 </div>
+<script>
+window.onload=function(){
+	alert('ok');
+
+}
+
+</script>
+</body>
+</html>
