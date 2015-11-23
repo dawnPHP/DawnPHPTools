@@ -15,7 +15,7 @@
 2.写php部分
 	-[1] php的伪代码；
 	-[2] 能插入tag了。
-	-[3] 改index.html为edit.php
+	-[3] 改index.html为edit.php,有改为new.php;
 	
 
 	
