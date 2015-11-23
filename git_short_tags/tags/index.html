@@ -12,7 +12,7 @@
 </pre>
 
 <hr><br>
-<div id=edit class="tagbox">
+<div id=edit class="tagBox">
 	<input type="text" style='display:block' name="tags" value="angular,bootstrap">
 	<span>标签：</span>
 	<div class="new">
@@ -34,7 +34,7 @@
 	<div class="taghint">
 		<a onclick="return false;" hidefocus="true" href="#">
 			<span>[Tip]</span>
-			<span class="noshow">标签是由用户定义的、概括文章内容的关键词，比日志分类更准确、更具体。经常使用标签，可以让读者更加方便地找到感兴趣的文章。</span>
+			<span class="noshow">标签是由用户定义的、概括所发布内容的关键词，比目录分类更准确、更具体。经常并合理使用标签，可以让读者更加方便地找到感兴趣的条目。</span>
 		</a>
 		<span class="fc06">请使用空格或回车分隔不同标签</span>
 	</div>
@@ -60,7 +60,7 @@
 </div>
 <script>
 //tools
-function $(s){return document.getElementById(s);}
+function $2(s){return document.getElementById(s);}
 //操作dom元素
 function trim(str){ //删除左右两端的空格
 	return str.replace(/(^\s*)|(\s*$)/g, "");
@@ -88,51 +88,76 @@ function getStyle(obj, attr){
 	}
 }
 
+//根据传入的tag名字创造dom并返回
+function getDom(tagName){
+	//新建 span s1
+	s1=document.createElement('span');
+	s1.setAttribute('class','tag-btn');
+	s1.innerHTML=tagName;
+	//新建 span s2
+	s2=document.createElement('span');
+	s2.setAttribute('class','delete-tag-btn');
+	s2.setAttribute('title','删除');
+	s2.innerHTML='x';
+	//新建 li
+	li=document.createElement('li');
+	li.appendChild(s1);
+	li.appendChild(s2);
+	//return the new dom
+	return li;
+}
+
+
 //===================
 window.onload=function(){
-	var tagBox=$('edit');
-	//新标签输入框
-	 newTag=tagBox.getElementsByClassName('new')[0];
-	 newTag_div=newTag.getElementsByTagName('div')[0];
+	//获取待操作的dom元素
+	var oTagBox=document.getElementById('edit');
 	//新标签提交框（应该隐藏）
-	 tagInFrom=tagBox.getElementsByTagName('input')[0];
+	var oTagInFrom=oTagBox.getElementsByTagName('input')[0];
+	//新标签输入框 外div
+	var oNewTag=oTagBox.getElementsByClassName('new')[0];
+	//新标签输入框：内div
+	var oNewTag_div=oNewTag.getElementsByTagName('div')[0];
+	//新标签输入框：内ul
+	var oUl=oNewTag.getElementsByTagName('ul')[0];
 	
 	//----------------------------
 	//事件及其处理函数
 	//----------------------------
-	//初始化时获取焦点
-	var newTag_input=newTag.getElementsByTagName('input')[0];
-	newTag_input.focus();
-	
 	//鼠标悬停时显示提示
-	var switcher=(tagBox.getElementsByClassName('taghint')[0]).getElementsByTagName('span')[0];//按钮
-	var hint=tagBox.getElementsByClassName('noshow')[0];//提示文字
-	switcher.onmouseover=function(){
-		hint.style.visibility='visible';
+	var oSwitcher=(oTagBox.getElementsByClassName('taghint')[0]).getElementsByTagName('span')[0];//按钮
+	var oHint=oTagBox.getElementsByClassName('noshow')[0];//提示文字
+	oSwitcher.onmouseover=function(){
+		oHint.style.visibility='visible';
 		//鼠标移出时隐藏提示
-		switcher.onmouseout=function(){
-			hint.style.visibility='hidden';
+		oSwitcher.onmouseout=function(){
+			oHint.style.visibility='hidden';
 		}
 	}
+	
+	//初始化时获取焦点
+	var oNewTag_input=oNewTag.getElementsByTagName('input')[0];
+	oNewTag_input.focus();
 	 
 	//空格或回车 处理标签
-	newTag_input.onkeydown=function(event){
+	oNewTag_input.onkeydown=function(event){
 		//获取事件
 		var e = event || window.event || arguments.callee.caller.arguments[0];
 		if((e && e.keyCode==13) || (e && e.keyCode==32)){ // enter键 或空格
 			//获取输入
-			var newTag=trim(this.value);
-			addNewTag(newTag);
+			var tagName=trim(this.value);
+			//添加该标签
+			addNewTag(tagName);
 		}
 	}
 	
 	//旧标签的单击事件
-	var oldTag=tagBox.getElementsByClassName('old')[0];
+	var oldTag=oTagBox.getElementsByClassName('old')[0];
 	var aOldTag=oldTag.getElementsByTagName('span');
 	for(var i=0;i<aOldTag.length; i++){
 		//获取该标签
 		aOldTag[i].onclick=function(){
-			var tagName=this.innerHTML;
+			var tagName=trim(this.innerHTML);
 			//添加该标签
 			addNewTag(tagName);
 		}
@@ -142,61 +167,33 @@ window.onload=function(){
 	//处理输入的新标签
 	function addNewTag(tagName){
 		//处理该输入，是否够5个了？
-		tagsNow=tagInFrom.value;
-		aTags=tagsNow.split(',');
-		//alert(aTags.length);
+		var aTags=oTagInFrom.value.split(',');
 		
 		if(aTags.length>4){
 			alert('最多可添加5个标签');
-			newTag_input.value="";
+			oNewTag_input.value="";
 			return;//如果超过5个，则返回
 		}
 		
 		//是否重复了？
 		if(aTags.indexOf(tagName)!=-1){
-			newTag_input.value="";
+			oNewTag_input.value="";
 			return;//如果已经有了，则返回
 		}
 		
 		//1.显示到隐藏input中
 		aTags.push(tagName);
-		tagInFrom.value=aTags.join(',');
-		
+		oTagInFrom.value=aTags.join(',');
 		//2.当前input清空
-		newTag_input.value="";
+		oNewTag_input.value="";
 		//3.当前input缩短到很短
-		newTag_div.style.width=10 +'px';
-		//4.显示为灰背景标签
-		li=getDom(tagName);
-		//插入到ul的最后
-		 ul=newTag.getElementsByTagName('ul')[0];
-		ul.appendChild(li);
+		oNewTag_div.style.width=10 +'px';
+		//4.显示为灰背景标签//插入到ul的最后
+		oUl.appendChild( getDom(tagName) );
 		//5.再次调整input长度
-		newTag_div.style.width=( parseInt(getStyle(newTag,'width')) -parseInt(getStyle(ul,'width')) ) +'px';
+		oNewTag_div.style.width=( parseInt(getStyle(oNewTag,'width')) -parseInt(getStyle(oUl,'width')) ) +'px';
 	}
 }
-	
-	//根据传入的tag名字创造dom并返回
-	function getDom(tagName){
-		//新建dom
-		s1=document.createElement('span');
-		s1.setAttribute('class','tag-btn');
-		s1.innerHTML=tagName;
-
-		s2=document.createElement('span');
-		s2.setAttribute('class','delete-tag-btn');
-		s2.setAttribute('title','删除');
-		s2.innerHTML='x';
-
-		li=document.createElement('li');
-		li.appendChild(s1);
-		li.appendChild(s2);
-		
-		return li;
-	}
-	
-	
-
 </script>
 </body>
 </html>
