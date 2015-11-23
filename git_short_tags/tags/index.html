@@ -58,13 +58,14 @@
 		</div>
 	</div>
 	<input type='hidden' name='a_id' value='1'>
+	<input type='hidden' name='u_id' value='1'>
 	<input type='submit' name='send' value='submit'>
 	</form>
 </div>
 <script>
 //tools
 function $2(s){return document.getElementById(s);}
-//操作dom元素
+//除去空格
 function trim(str){ //删除左右两端的空格
 	return str.replace(/(^\s*)|(\s*$)/g, "");
 }
