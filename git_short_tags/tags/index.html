@@ -166,16 +166,39 @@ window.onload=function(){
 
 	//处理输入的新标签
 	function addNewTag(tagName){
-		//处理该输入，是否够5个了？
-		var aTags=oTagInFrom.value.split(',');
+		//去掉2端空格
+		var tagName=trim(tagName);
+		//如果有特殊字符，则过滤掉
+		var reg=/[<>\/\\\.\[\]\{\}\=\+\-]/g;
+		if( reg.test(tagName) ){
+			alert('不能输入 <>/\.[]{}=+- 等特殊字符！');
+			return;
+		}
+		//再过滤一遍再使用
+		tagName=tagName.replace(reg,'');
 		
+		//标签长度不能超过15个字符
+		if(tagName.length==0){
+			alert('标签不能为空！');
+			//如果是空，则返回
+			return;
+		}
+		if(tagName.length>=15){
+			alert('标签不能超过15个字符！');
+			//如果太长，则返回
+			return;
+		}
+		
+		
+		//标签是否超过5个？
+		var aTags=oTagInFrom.value.split(',');
 		if(aTags.length>4){
 			alert('最多可添加5个标签');
 			oNewTag_input.value="";
 			return;//如果超过5个，则返回
 		}
 		
-		//是否重复了？
+		//标签是否和已有标签重复？
 		if(aTags.indexOf(tagName)!=-1){
 			oNewTag_input.value="";
 			return;//如果已经有了，则返回
