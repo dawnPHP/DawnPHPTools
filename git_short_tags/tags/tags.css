@@ -7,7 +7,7 @@
 
 
 /*输入框*/
-.tagbox input{width:500px; margin:10px;}
+.tagbox input{ margin:10px;}
 .tagbox  span{float:left;}
 .tagbox .new{float:left;margin:0 10px 0 0;padding:1px;width:550px;height:17px;border:1px solid #ccc;background:#fff}
 .tagbox .new ul{float:left;margin:0 0 -2px;padding:0}
@@ -20,9 +20,8 @@
 .tagbox .new .tag-input input{margin:0;padding:0;width:100%;height:17px;border:0;background:0 0;line-height:17px}
 
 /*提示*/
-.tagbox .taghint {  position:relative;
- margin-left: 10px; cursor: default;  z-index: 2;}
- .tagbox .taghint span{float:left;}
+.tagbox .taghint {  position:relative; margin-left: 10px; cursor: default;  z-index: 2;}
+.tagbox .taghint span{float:left;}
 .tagbox .taghint .noshow {visibility: hidden; margin-top:15px; margin-left:-60px;  position: absolute; z-index: 100;  border: 1px solid #97abc9; background-color: #fff; color: #1E50A2; padding: 10px; width: 200px;}
 
 /*旧标签*/

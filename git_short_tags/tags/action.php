@@ -24,6 +24,11 @@ switch($_GET['a']){
 }
 
 
+//跳转
+header("Location: index.html");
+exit();
+
+
 
 //=================================
 

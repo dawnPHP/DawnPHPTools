@@ -14,7 +14,7 @@
 <hr><br>
 <div id=edit class="tagBox">
 	<form action='action.php?a=tag' method='post'>
-	<input type="text" style='display:block' name="tags" value="angular,bootstrap">
+	<input type="text" style='display:block;width:500px;' name="tags" value="angular,bootstrap">
 	<span>标签：</span>
 	<div class="new">
 		<ul class="clearfix">
