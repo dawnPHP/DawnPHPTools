@@ -7,7 +7,7 @@
 
 
 /*输入框*/
-.tagbox input{width:500px;}
+.tagbox input{width:500px; margin:10px;}
 .tagbox  span{float:left;}
 .tagbox .new{float:left;margin:0 10px 0 0;padding:1px;width:550px;height:17px;border:1px solid #ccc;background:#fff}
 .tagbox .new ul{float:left;margin:0 0 -2px;padding:0}
@@ -21,27 +21,12 @@
 
 /*提示*/
 .tagbox .taghint {  position:relative;
- margin-left: 10px; cursor: default;  z-index: 2;	}
+ margin-left: 10px; cursor: default;  z-index: 2;}
  .tagbox .taghint span{float:left;}
-.tagbox .taghint .noshow {
-	/*
-	display:none;
-	visibility: visible;
-	*/
-	visibility: hidden;
-	margin-top:15px;
-	margin-left:-60px;
-    position: absolute;
-    z-index: 100;
-    border: 1px solid #97abc9;
-    background-color: #fff;
-	color: #1E50A2;
-	padding: 10px;
-    width: 200px;
-}
+.tagbox .taghint .noshow {visibility: hidden; margin-top:15px; margin-left:-60px;  position: absolute; z-index: 100;  border: 1px solid #97abc9; background-color: #fff; color: #1E50A2; padding: 10px; width: 200px;}
 
 /*旧标签*/
-.tagbox .old{ width: 500px;	font-size: 12px;font-family: Arial,Helvetica,simsun;border:1px solid #eee; padding:5px; margin-top:30px;}
+.tagbox .old{ width: 500px;	font-size: 12px;font-family: '微软雅黑',Arial,Helvetica,simsun;border:1px solid #eee; padding:5px; margin-top:30px;}
 
 .tagbox .old .ztag { min-height: 30px;    _height: 105px; line-height: 22px;margin: 5px 10px;text-align: left;word-wrap: break-word; max-height: 105px;overflow-y: auto;}
 .tagbox .old .ztag span{color: #1E50A2;  margin: 0 5px 0 0;cursor: pointer;}

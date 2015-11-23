@@ -26,7 +26,7 @@
 				<span class="delete-tag-btn" title="删除">x</span>
 			</li>
 		</ul>
-		<div id="tags-_input_holder" class="tag-input" style="width: 425px;">
+		<div class="tag-input" style="width: 425px;">
 			<input type="text" maxlength="20">
 		</div>
 	</div>
@@ -61,7 +61,7 @@
 <script>
 //tools
 function $(s){return document.getElementById(s);}
-
+//操作dom元素
 function trim(str){ //删除左右两端的空格
 	return str.replace(/(^\s*)|(\s*$)/g, "");
 }
@@ -71,12 +71,29 @@ function ltrim(str){ //删除左边的空格
 function rtrim(str){ //删除右边的空格
 	return str.replace(/(\s*$)/g,"");
 }
+//获取样式
+/********************************
+*获取非行间样式 ok
+********************************
+*用js的style方法(obj.style.attr)可以获得html标签的样式,但是不能获取非行间样式。
+*那么怎么用js获取css的非行间样式呢?
+*在IE下可以用currentStyle,而在火狐下面我们需要用到getComputed
+*http://miostudio.blog.163.com/blog/static/22076512920142772540838/
+*/
+function getStyle(obj, attr){
+	if(obj.currentStyle){
+		return obj.currentStyle[attr];	//for IE only
+	}else{
+		return getComputedStyle(obj, false)[attr];//for ff/chrome only
+	}
+}
 
 //===================
 window.onload=function(){
 	var tagBox=$('edit');
 	//新标签输入框
 	 newTag=tagBox.getElementsByClassName('new')[0];
+	 newTag_div=newTag.getElementsByTagName('div')[0];
 	//新标签提交框（应该隐藏）
 	 tagInFrom=tagBox.getElementsByTagName('input')[0];
 	
@@ -136,7 +153,10 @@ window.onload=function(){
 		}
 		
 		//是否重复了？
-		if(aTags.indexOf(tagName)!=-1) return;//如果已经有了，则返回
+		if(aTags.indexOf(tagName)!=-1){
+			newTag_input.value="";
+			return;//如果已经有了，则返回
+		}
 		
 		//1.显示到隐藏input中
 		aTags.push(tagName);
@@ -144,14 +164,20 @@ window.onload=function(){
 		
 		//2.当前input清空
 		newTag_input.value="";
-		//3.当前input缩短
-		$('tags-_input_holder').style.width=parseInt( $('tags-_input_holder').style.width )-tagName.length*12 +'px';
+		//3.当前input缩短到很短
+		newTag_div.style.width=10 +'px';
 		//4.显示为灰背景标签
-		addDom(tagName);
+		li=getDom(tagName);
+		//插入到ul的最后
+		 ul=newTag.getElementsByTagName('ul')[0];
+		ul.appendChild(li);
+		//5.再次调整input长度
+		newTag_div.style.width=( parseInt(getStyle(newTag,'width')) -parseInt(getStyle(ul,'width')) ) +'px';
 	}
+}
 	
-	//添加dom
-	function addDom(tagName){
+	//根据传入的tag名字创造dom并返回
+	function getDom(tagName){
 		//新建dom
 		s1=document.createElement('span');
 		s1.setAttribute('class','tag-btn');
@@ -166,12 +192,10 @@ window.onload=function(){
 		li.appendChild(s1);
 		li.appendChild(s2);
 		
-		//插入到最后
-		newTag.getElementsByTagName('ul')[0].appendChild(li);
+		return li;
 	}
 	
 	
-}
 
 </script>
 </body>
