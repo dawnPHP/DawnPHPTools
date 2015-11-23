@@ -17,7 +17,7 @@
 	-[1] php的伪代码；
 	-[2] 能插入tag了。
 	-[3] 改index.html为edit.php,有改为new.php;
-	-[4] 添加了新建、修改、页面；
+	-[4] 添加新建new.php、修改edit.php、主页index.php；无功能；
 	
 
 	
