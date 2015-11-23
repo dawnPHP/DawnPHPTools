@@ -57,7 +57,7 @@
 			<p>请使用空格或回车分隔不同标签, 最多可输入5个</p>
 		</div>
 	</div>
-	<input type='hidden' name='a_id' value='1'>
+	条目编号<input type='text' name='a_id' value='1'>
 	<input type='hidden' name='u_id' value='1'>
 	<input type='submit' name='send' value='submit'>
 	</form>
@@ -180,7 +180,10 @@ window.onload=function(){
 		}
 		
 		//标签是否超过5个？
-		var aTags=oTagInFrom.value.split(',');
+		var aTags=[];
+		if(trim(oTagInFrom.value) !=''){
+			aTags=oTagInFrom.value.split(',');
+		}
 		if(aTags.length>4){
 			alert('最多可添加5个标签');
 			oNewTag_input.value="";
@@ -197,6 +200,8 @@ window.onload=function(){
 		//1.显示到隐藏input中
 		aTags.push(tagName);
 		oTagInFrom.value=aTags.join(',');
+
+		
 		//2.当前input清空
 		oNewTag_input.value="";
 		//3.当前input缩短到很短
