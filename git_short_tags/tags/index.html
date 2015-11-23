@@ -13,6 +13,7 @@
 
 <hr><br>
 <div id=edit class="tagBox">
+	<form action='action.php?a=tag' method='post'>
 	<input type="text" style='display:block' name="tags" value="angular,bootstrap">
 	<span>标签：</span>
 	<div class="new">
@@ -27,7 +28,7 @@
 			</li>
 		</ul>
 		<div class="tag-input" style="width: 425px;">
-			<input type="text" maxlength="20">
+			<input type="text" name='input' value='' maxlength="20">
 		</div>
 	</div>
    
@@ -56,7 +57,9 @@
 			<p>请使用空格或回车分隔不同标签, 最多可输入5个</p>
 		</div>
 	</div>
-
+	<input type='hidden' name='a_id' value='1'>
+	<input type='submit' name='send' value='submit'>
+	</form>
 </div>
 <script>
 //tools
