@@ -180,7 +180,7 @@ window.onload=function(){
 		}
 		
 		//标签是否超过5个？
-		var aTags=[];
+		var aTags=[];//bug(1.9),fixed.
 		if(trim(oTagInFrom.value) !=''){
 			aTags=oTagInFrom.value.split(',');
 		}
