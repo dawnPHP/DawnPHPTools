@@ -22,7 +22,7 @@
 		-[1] 把配置文件conn.php修改到common目录下。独立header.php
 	-[6] edit.php功能基本可以，小bug：回车自动提交，需要阻止。
 		-[1]js阻止冒泡：return false;//阻止默认行为 这个是终极方法，但是会有副作用。
-
+		-[2] fix:edit.php获取要修改的article id;
 	
 	
 =============================

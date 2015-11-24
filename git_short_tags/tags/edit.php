@@ -61,7 +61,7 @@ echo $allTags;
 			<p>请使用空格或回车分隔不同标签, 最多可输入5个</p>
 		</div>
 	</div>
-	<input type='hidden' name='a_id' value='1'>
+	<input type='hidden' name='a_id' value='<?php echo $a_id;?>'>
 	<input type='hidden' name='u_id' value='1'>
 	<input type='submit' name='send' value='submit'>
 	</form>
