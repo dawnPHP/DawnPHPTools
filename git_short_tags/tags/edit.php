@@ -5,32 +5,31 @@ include 'common/function.php';
 
 <?php 
 echo '<h2>Edit Mode:</h2>';
-?>
 
-<?php
 //获取数据
 $a_id=$_GET['aid'];
 $arr=getTagByAid($a_id,false);
 
-debug($arr);
+echo '[a_id='.$a_id.']';
+//debug($arr);
+$allTags='<script>allTags=[];';
+for($i=0;$i<count($arr);$i++){
+	$allTags .= "allTags.push('{$arr[$i][1]}');\n";
+	//debug($arr[$i][1]);
+}
 
+$allTags .= '</script>';
+echo $allTags;
 ?>
 
 <hr><br>
 <div id=edit class="tagBox">
 	<form action='action.php?a=tag' method='post'>
-	<input type="text" style='display:block;width:500px;' name="tags" value="angular,bootstrap">
+	<input type="text" style='display:block;width:500px;' name="tags" value="">
 	<span>标签：</span>
 	<div class="new">
 		<ul class="clearfix">
-			<li>
-				<span class="tag-btn">angular</span>
-				<span class="delete-tag-btn" title="删除">x</span>
-			</li>
-			<li>
-				<span class="tag-btn">bootstrap</span>
-				<span class="delete-tag-btn" title="删除">x</span>
-			</li>
+
 		</ul>
 		<div class="tag-input" style="width: 425px;">
 			<input type="text" name='input' value='' maxlength="20">
@@ -131,6 +130,10 @@ window.onload=function(){
 		}
 	}
 	
+	//编辑模式：初始化时添加标签
+	for(var i=0;i<allTags.length;i++){
+		addNewTag(allTags[i]);
+	}
 	
 	 
 	//空格或回车 处理标签
@@ -185,7 +188,11 @@ window.onload=function(){
 		}
 		
 		//标签是否超过5个？
-		var aTags=oTagInFrom.value.split(',');
+		var aTags=[];//bug(1.9),fixed.
+		if(trim(oTagInFrom.value) !=''){
+			aTags=oTagInFrom.value.split(',');
+		}
+		
 		if(aTags.length>4){
 			alert('最多可添加5个标签');
 			oNewTag_input.value="";

@@ -45,8 +45,10 @@ function showTags($a_id){
 }
 
 //排除函数
-function debug($arr){
+function debug($arr,$isDie=true){
 	echo '<pre>';
 	print_r($arr);
 	echo '</pre>';
+	
+	if($isDie)die();
 }

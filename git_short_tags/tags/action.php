@@ -1,5 +1,5 @@
 ﻿<?php
-include 'conn.php';
+include 'common/function.php';
 echo '<pre>';
 /*
 print_r($_SESSION);

@@ -18,8 +18,9 @@
 	-[2] 能插入tag了。
 	-[3] 改index.html为edit.php,有改为new.php;
 	-[4] 添加新建new.php、修改edit.php、主页index.php；无功能；
-	-[5] 单击标签的功能，在index.php下，有传入则显示单个标签，否则完全显示；
+	-NO[5] 单击标签的功能，在index.php下，有传入则显示单个标签，否则完全显示；
 		-[1] 把配置文件conn.php修改到common目录下。独立header.php
+	-[6] edit.php功能基本可以，小bug：回车自动提交，需要阻止。
 
 	
 	
