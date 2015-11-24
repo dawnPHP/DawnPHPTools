@@ -1,13 +1,13 @@
-<?php include 'header.php';?>
+<?php
+include 'header.php';
+include 'common/function.php';
+?>
 
 <?php 
 echo '<h2>Edit Mode:</h2>';
 ?>
 
 <?php
-include 'conn.php';
-include 'common/function.php';
-
 //获取数据
 $a_id=$_GET['aid'];
 $arr=getTagByAid($a_id,false);

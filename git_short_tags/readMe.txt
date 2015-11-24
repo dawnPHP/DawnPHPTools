@@ -19,7 +19,7 @@
 	-[3] 改index.html为edit.php,有改为new.php;
 	-[4] 添加新建new.php、修改edit.php、主页index.php；无功能；
 	-[5] 单击标签的功能，在index.php下，有传入则显示单个标签，否则完全显示；
-	
+		-[1] 把配置文件conn.php修改到common目录下。独立header.php
 
 	
 	

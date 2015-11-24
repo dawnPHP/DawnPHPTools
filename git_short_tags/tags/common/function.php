@@ -1,4 +1,6 @@
 <?php
+include 'common/conn.php';
+
 /**
 	通过文章a_id获取tag列表
 	第二个参数默认返回html，false则返回元素为(id,tag)的二维数组

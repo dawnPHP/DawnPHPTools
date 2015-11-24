@@ -1,4 +1,7 @@
-<?php include 'header.php';?>
+<?php
+include 'header.php';
+include 'common/function.php';
+?>
 
 <?php 
 echo '<h2>New Mode:</h2>';
