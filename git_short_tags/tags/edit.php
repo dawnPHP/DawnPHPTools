@@ -62,7 +62,7 @@ echo $allTags;
 		</div>
 	</div>
 	<input type='hidden' name='a_id' value='<?php echo $a_id;?>'>
-	<input type='hidden' name='u_id' value='1'>
+	<input type='hidden' name='u_id' value='<?php echo $u_id;?>'>
 	<input type='submit' name='send' value='submit'>
 	</form>
 </div>

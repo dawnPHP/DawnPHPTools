@@ -24,8 +24,6 @@ include 'common/function.php';
 ?>
 
 <?php
-$u_id=1;//应该从session中获取
-
 if(isset($_GET['tag'])){
 	echo '<h2>Sort By Tag:</h2>';
 	
