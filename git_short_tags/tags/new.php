@@ -8,20 +8,12 @@ echo '<h2>New Mode:</h2>';
 ?>
 <div id=edit class="tagBox">
 	<form action='action.php?a=tag' method='post'>
-	<input type="text" style='display:block;width:500px;' name="tags" value="angular,bootstrap">
+	<input type="text" style='display:block;width:500px;' name="tags" value="">
 	<span>标签：</span>
 	<div class="new">
 		<ul class="clearfix">
-			<li>
-				<span class="tag-btn">angular</span>
-				<span class="delete-tag-btn" title="删除">x</span>
-			</li>
-			<li>
-				<span class="tag-btn">bootstrap</span>
-				<span class="delete-tag-btn" title="删除">x</span>
-			</li>
 		</ul>
-		<div class="tag-input" style="width: 425px;">
+		<div class="tag-input">
 			<input type="text" name='input' value='' maxlength="20">
 		</div>
 	</div>

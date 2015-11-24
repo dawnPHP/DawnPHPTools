@@ -18,15 +18,14 @@
 	-[2] 能插入tag了。
 	-[3] 改index.html为edit.php,有改为new.php;
 	-[4] 添加新建new.php、修改edit.php、主页index.php；无功能；
-	-NO[5] 单击标签的功能，在index.php下，有传入则显示单个标签，否则完全显示；
+	-[5] 单击标签的功能，在index.php下，有传入则显示单个标签，否则完全显示；
 		-[1] 把配置文件conn.php修改到common目录下。独立header.php
 		-[2] index接受标签传入，并显示含有该标签的元素。
-		
-		
 	-[6] edit.php功能基本可以，小bug：回车自动提交，需要阻止。
 		-[1]js阻止冒泡：return false;//阻止默认行为 这个是终极方法，但是会有副作用。
 		-[2] fix:edit.php获取要修改的article id;
-	
+	-[7] new.php功能。
+		-[1] 清空输入框；
 	
 =============================
 伪代码
