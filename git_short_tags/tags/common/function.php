@@ -44,6 +44,33 @@ function showTags($a_id){
 	echo $html;
 }
 
+//从标签名获取其id
+function getIdByTag($tag,$u_id){
+	//查询数据
+	$sql="select id from tags where u_id='{$u_id}' and tag='{$tag}' limit 1;";
+	$rows=mysql_query($sql) or die(mysql_error());
+	
+	//返回id
+	if($row=mysql_fetch_assoc($rows)){
+		$id=$row['id'];
+		return $id;
+	}else{
+		return false;
+	}
+}
+
+//根据标签 列出所有相关条目
+function showItemsByTag($t_id){
+	$sql="select a_id from article_tags where t_id='{$t_id}';";
+	$rows=mysql_query($sql) or die(mysql_error());
+	
+	//返回id
+	while($row=mysql_fetch_assoc($rows)){
+		$a_id=$row['a_id'];
+		showTags($a_id);
+	}
+}
+
 //排除函数
 function debug($arr,$isDie=true){
 	echo '<pre>';

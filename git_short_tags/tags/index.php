@@ -20,16 +20,33 @@ include 'common/function.php';
 </style>
 
 <?php 
-echo '<h2>Index Mode:</h2>';
+
 ?>
 
 <?php
-//显示标签 by a_id;
-$arr_aid=array(1,2,3,4);
-foreach($arr_aid as $a_id){
-	showTags($a_id);
-}
+$u_id=1;//应该从session中获取
 
+if(isset($_GET['tag'])){
+	echo '<h2>Sort By Tag:</h2>';
+	
+	$tag=$_GET['tag'];
+	//debug($tag);
+	$t_id=getIdByTag($tag,$u_id);
+	if($t_id!==false){
+		showItemsByTag($t_id);
+	}else{
+		echo '查询失败！<a href="index.php">单击返回</a>';
+		die();
+	}
+}else{
+	echo '<h2>Index Mode:</h2>';
+	
+	//显示标签 by a_id;
+	$arr_aid=array(1,2,3,4);
+	foreach($arr_aid as $a_id){
+		showTags($a_id);
+	}
+}
 
 ?>
 
