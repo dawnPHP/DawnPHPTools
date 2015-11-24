@@ -146,6 +146,12 @@ window.onload=function(){
 			//添加该标签
 			addNewTag(tagName);
 		}
+		
+		if(e && e.keyCode==13){
+			//event.stopPropagation();    //阻止冒泡的标准方法
+			//event.cancelBubble = true;  //IE
+			return false;//阻止默认行为 这个是终极方法，但是会有副作用。
+		}
 	}
 	
 	//旧标签的单击事件
