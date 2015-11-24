@@ -1,17 +1,8 @@
-﻿<html>
-<head>
-<link rel="stylesheet" href="tags.css" />
-<title>仿163博客添加文章标签功能</title>
-</head>
-<body>
-<h1>仿163博客添加文章标签功能</h1>
-<pre>
-1.前台基于js，后台基于php。
-2.完稿后第一行隐藏，用于提交表单：用户添加的标签。
-3.相关博客：http://tieba.baidu.com/p/4174331708
-</pre>
+<?php include 'header.php';?>
 
-<hr><br>
+<?php 
+echo '<h2>New Mode:</h2>';
+?>
 <div id=edit class="tagBox">
 	<form action='action.php?a=tag' method='post'>
 	<input type="text" style='display:block;width:500px;' name="tags" value="angular,bootstrap">
