@@ -28,15 +28,15 @@ echo '<h2>New Mode:</h2>';
 	
 	<div class="old">      
 		<div class="fc06">使用过的标签：</div>
-		<div class="ztag">        
-			<span>html</span>
-			<span>css</span>
-			<span>js</span>
-			<span>jQ</span>
-			<span>nodeJS</span>
-			<span>书籍</span>
-			<span>摄影</span>
-			<span>源代码</span>   
+		<div class="ztag">
+			<?php 
+			//获取旧标签
+			$oldTags=getTagByUid($u_id);
+			//遍历输出
+			for($i=0;$i<count($oldTags);$i++){
+				echo '<span>'.$oldTags[$i].'</span>'."\n";
+			}
+			?> 
 		</div>
 	  
 		<div class="fc06">

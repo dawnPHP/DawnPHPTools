@@ -71,7 +71,24 @@ function showItemsByTag($t_id){
 	}
 }
 
-//排除函数
+//通过u_id获取所有的标签
+function getTagByUid($u_id){
+	//获取数据
+	$sql="select tag from tags where u_id='{$u_id}';";
+	$rows=mysql_query($sql) or die(mysql_error());
+	
+	//为返回数组做准备
+	$arr=array();
+	while($row=mysql_fetch_assoc($rows)){
+		$tag=$row['tag'];
+		$arr[]=$tag;
+	}
+
+	return $arr;
+}	
+	
+
+//排错函数
 function debug($arr,$isDie=true){
 	echo '<pre>';
 	print_r($arr);

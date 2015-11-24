@@ -19,7 +19,7 @@ $u_id=1;
 <pre>
 1.前台基于js，后台基于php。
 2.完稿后第一行隐藏，用于提交表单：用户添加的标签。
-3.相关博客：http://tieba.baidu.com/p/4174331708
+3.贴吧：http://tieba.baidu.com/p/4174331708
 </pre>
 <a href='index.php'>首页</a> | 
 <a href='new.php'>新建</a>
