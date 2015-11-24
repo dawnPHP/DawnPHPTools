@@ -40,7 +40,7 @@ if(isset($_GET['tag'])){
 	echo '<h2>Index Mode:</h2>';
 	
 	//显示标签 by a_id;
-	$arr_aid=array(1,2,3,4,5);
+	$arr_aid=array(1,2,3,4,5,6);
 	foreach($arr_aid as $a_id){
 		showTags($a_id);
 	}
