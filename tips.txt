@@ -12,9 +12,11 @@
 ===================================
 =========== mysql tips ==============
 ===================================
-1.
+1.获取上一条插入的id
 $u_id=mysql_insert_id();
 
+2.清空表内容，同时归零自增列。只有表结构。
+--truncate table table_name;
 
 
 ===================================
@@ -31,7 +33,7 @@ date("Y-m-d H:i:s", time());
 
 4.静态方法比动态方法效率高。
 
-5.
+5. 跳转。注意加上exit();
 header("Location:result/index.htm");
 exit();
 
@@ -54,4 +56,8 @@ if(confirm('你确定要删除#'+_this.id+'楼的留言吗？(包括此后的回
 1.引入css和js文件
 <script src='js/ajax.js'></script>
 <link rel="stylesheet" type="text/css" href="css/main.css">
+
+2.html css input submit按钮和input输入框怎么不对齐
+都设置 vertical-align: middle;
+http://blog.csdn.net/liujiajie1990/article/details/7956217
 

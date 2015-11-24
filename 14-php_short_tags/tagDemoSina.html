@@ -1,0 +1,121 @@
+﻿<div id="page">
+	文章标签：
+	<div class="tagbox">
+		<div id="tags"></div>
+		<div class="clearfix"></div>
+		<input type="text" value="" name="tag" style="border:none;outline:none"/>
+
+		<div class="old">
+			常用标签：
+			<div class="clearfix"></div>
+			<span class="tag" id="234" name="标签">标签</span>
+			<span class="tag" id="34" name="风景">风景</span>
+			<span class="tag" id="21" name="音乐">音乐</span>
+		</div>
+	</div>
+	
+	<div class="tag-sm">
+		<a onclick="return false;" hidefocus="true" href="#" class="what noul iblock icn0 icn0-614">
+			<span class="show fs0">标签是由用户定义的、概括文章内容的关键词，比日志分类更准确、更具体。经常使用标签，可以让读者更加方便地找到感兴趣的文章。</span>
+		</a>
+		<span class="taghint fc06">请使用空格或回车分隔不同标签</span>
+	</div>
+	
+	
+ 
+</div>
+		
+<style>
+*{	margin: 0;	padding: 0;}
+html,body{	background:#fff;}
+#page{	padding: 20px;}
+.clearfix{	clear:both;}
+.tagbox{
+	border: 1px solid #ccc;
+	width: 200px;
+
+	height: 200px;
+	padding: 10px;
+	position: relative;
+}
+.tag{
+	background:lightblue;
+	color: #fff;
+	padding: 2px 5px;
+	display: block;
+	float: left;
+	margin:5px 5px 5px 0;
+}
+#tags{
+	margin-bottom: 10px;
+	overflow-y: auto;
+}
+.old{
+	position: absolute;
+	bottom: 5px;
+	left: 5px;
+}
+.tagbox span{
+	cursor: pointer;
+}
+</style>
+		
+<script src='/js/jquery.min.js'></script>
+<script>
+ $(function(){
+		$('.tagbox').click(function(){
+			$("input[name='tag']").focus();
+		})
+		$(document).on("click", "#tags span", function(){
+			$(this).remove();
+		});
+		$('.old span').click(function(){
+			ids=new Array();
+			var txt=$(this).attr('name');
+			var id=$(this).attr('id')
+			$('#tags .tag').each(function(){
+				ids+=$(this).attr('id')+','
+			});
+			if(ids==''){
+				ids=new Array();
+			}else{
+				ids = ids.split(",");
+			}
+			if(ids.length>5){
+				alert('标签最多添加5个哦！');
+				return false;
+			};
+			var exist=$.inArray(id,ids);
+			if(exist<0){
+				$('#tags').append('<span id='+id+' name='+txt+' class="tag">'+txt+'</span>')
+			}
+		})
+		$("input[name='tag']").bind('keyup',function(event){ 
+			if(event.keyCode==13){  
+				var txt=$(this).val();
+				if(txt!=''){
+					txts=new Array();
+					$('#tags .tag').each(function(){
+						txts+=$(this).attr('name')+','
+					});
+					if(txts==''){
+						txts=new Array();
+					}else{
+						txts = txts.split(",");
+					}
+					if(txts.length>5){
+						alert('标签最多添加5个哦！');
+						return false;
+					};
+					var exist=$.inArray(txt,txts);
+					if(exist<0){
+						$('#tags').append('<span name='+txt+' class="tag">'+txt+'</span>')
+						$(this).val('');
+					}else{
+						$(this).val('');
+					}
+				}
+			}     
+		});   
+	})
+</script>
