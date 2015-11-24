@@ -2,28 +2,12 @@
 include 'header.php';
 include 'common/function.php';
 ?>
-<style>
-.tags {border:1px dashed #ddd; padding:10px;}
-.tags .clearfix{	clear:both;}
-.tags .tagShow{float:left; }
-.tags .tagShow span{
-	cursor: pointer;
-}
-.tags .tagShow .tag{
-	background:lightblue;
-	color: #fff;
-	padding: 2px 5px;
-	display: block;
-	float: left;
-	margin:5px 5px 5px 0;
-}
-</style>
 
-<?php 
-
-?>
 
 <?php
+//显示标签云
+showTagsCloud($u_id);
+
 if(isset($_GET['tag'])){
 	echo '<h2>Sort By Tag:</h2>';
 	

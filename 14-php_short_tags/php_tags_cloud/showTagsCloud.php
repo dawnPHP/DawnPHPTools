@@ -1,4 +1,8 @@
 ﻿<?php
+
+//================================
+// 返回标签云
+//================================
 function getCloud( $data = array(), $minFontSize = 12, $maxFontSize = 50 ){
 	$minimumCount = min( array_values( $data ) );
 	$maximumCount = max( array_values( $data ) );
@@ -10,12 +14,13 @@ function getCloud( $data = array(), $minFontSize = 12, $maxFontSize = 50 ){
 	 
 	foreach( $data as $tag => $count )
 	{
+		$tempTag=stripslashes( $tag );
 		$size = $minFontSize + ( $count - $minimumCount )
 				* ( $maxFontSize - $minFontSize ) / $spread;
 		$cloudTags[] = '<a style="font-size: ' . floor( $size ) . 'px'
-					. '" href="../tags/index.php?tag='.stripslashes( $tag ).'" title="\'' . $tag .
+					. '" href="../tags/index.php?tag='.$tempTag.'" title="\'' . $tag .
 					'\' returned a count of ' . $count . '">'
-					. htmlspecialchars( stripslashes( $tag ) ) .'('.$count.')' . '</a>'.'&nbsp;&nbsp;';
+					. htmlspecialchars( $tempTag ) .'('.$count.')' . '</a>'.'&nbsp;&nbsp;';
 	} 
 	 
 	return join( "\n", $cloudTags ) . "\n";
@@ -39,16 +44,16 @@ function debug($a){
 }
 
 
-//获取标签/计数信息
+//获取标签/计数信息:关联数组(tag=>计数)
 function getTagsCount($u_id){
-	$sql="select tag, count(t_id) as num from tags a,article_tags b where a.id=b.t_id and a.u_id='{$u_id}' group by tag;";//改变用户名id
+	$sql="select tag, count(t_id) as count from tags a,article_tags b where a.id=b.t_id and a.u_id='{$u_id}' group by tag;";//改变用户名id
 
 	$rows=mysql_query($sql) or die(mysql_error());
-	$myArr=array();
+	$tempArr=array();
 	while( ($row=mysql_fetch_assoc($rows)) !=null){
-		$myArr[$row['tag']]=$row['num'];
+		$tempArr[$row['tag']]=$row['count'];
 	}
-	return $myArr;
+	return $tempArr;
 }
 
 //
