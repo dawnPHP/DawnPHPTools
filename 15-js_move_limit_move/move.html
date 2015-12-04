@@ -32,8 +32,23 @@ window.onload=function(){
 		//鼠标移动，为了防止鼠标快速移动时出去，事件加到了document上
 		document.onmousemove=function(e){
 			var oEvent=e||event;
-			oDiv.style.left=oEvent.clientX-disX+'px';
-			oDiv.style.top=oEvent.clientY-disY+'px';
+			var x=oEvent.clientX-disX;
+			var y=oEvent.clientY-disY;
+			
+			//加判断，防止拖出边框
+			if(x<0){x=0;}//左边
+			if(y<0){y=0;}//上边
+			
+			//页面可视区宽度-div宽度，就是右边最大宽度
+			var xMax=document.documentElement.clientWidth-oDiv.clientWidth;
+			var yMax=document.documentElement.clientHeight-oDiv.clientHeight;
+			if(x>xMax){x=xMax;}//右边
+			if(y>yMax){y=yMax;}//下边
+			
+			
+			
+			oDiv.style.left=x+'px';
+			oDiv.style.top=y+'px';
 		};
 		document.onmouseup=function(e){
 			document.onmousemove=null;//清空鼠标移动事件
