@@ -88,6 +88,58 @@ function getTagByUid($u_id){
 }	
 	
 
+//================================
+// 返回标签/计数信息:关联数组(tag=>计数)
+//================================
+function getTagsCount($u_id){
+	$sql="select tag, count(t_id) as count from tags a,article_tags b where a.id=b.t_id and a.u_id='{$u_id}' group by tag;";//改变用户名id
+
+	$rows=mysql_query($sql) or die(mysql_error());
+	$tempArr=array();
+	while( ($row=mysql_fetch_assoc($rows)) !=null){
+		$tempArr[$row['tag']]=$row['count'];
+	}
+	return $tempArr;
+}
+
+
+//================================
+// 返回标签云
+//================================
+function getCloud( $data = array(), $minFontSize = 12, $maxFontSize = 50 ){
+	$minimumCount = min( array_values( $data ) );
+	$maximumCount = max( array_values( $data ) );
+	$spread = $maximumCount - $minimumCount;
+	$cloudHTML = '';
+	$cloudTags = array(); 
+	 
+	$spread == 0 && $spread = 1; 
+	 
+	foreach( $data as $tag => $count )
+	{
+		$tempTag=stripslashes( $tag );
+		$size = $minFontSize + ( $count - $minimumCount )
+				* ( $maxFontSize - $minFontSize ) / $spread;
+		$cloudTags[] = '<a style="font-size: ' . floor( $size ) . 'px'
+			. '" href="../tags/index.php?tag='.$tempTag.'">'
+			. htmlspecialchars( $tempTag ) .'('.$count.')' . '</a>'
+			.'&nbsp;&nbsp;';
+	} 
+	 
+	return join( "\n", $cloudTags ) . "\n";
+}
+
+//================================
+// 显示为标签云
+//================================
+function showTagsCloud($u_id){
+	$html = '<fieldset class=tagcloud><legend>所有的标签</legend>';
+	$myArr=getTagsCount($u_id);
+	$html .= getCloud($myArr, 12, 30); 
+	$html .= '</fieldset>';
+	echo $html;
+}
+	
 //排错函数
 function debug($arr,$isDie=true){
 	echo '<pre>';
