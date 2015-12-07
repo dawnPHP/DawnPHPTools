@@ -29,3 +29,26 @@
 
 .tagbox .old .ztag { min-height: 30px;    _height: 105px; line-height: 22px;margin: 5px 10px;text-align: left;word-wrap: break-word; max-height: 105px;overflow-y: auto;}
 .tagbox .old .ztag span{color: #1E50A2;  margin: 0 5px 0 0;cursor: pointer;}
+
+
+/*-----标签显示:独立的长方形-------*/
+.tags {border:1px dashed #ddd; padding:10px;}
+.tags .clearfix{	clear:both;}
+.tags .tagShow{float:left; }
+.tags .tagShow span{
+	cursor: pointer;
+}
+.tags .tagShow .tag{
+	background:lightblue;
+	color: #fff;
+	padding: 2px 5px;
+	display: block;
+	float: left;
+	margin:5px 5px 5px 0;
+}
+
+/*-----标签云效果-------*/
+.tagcloud{ border:1px solid #aaa; padding:10px; font-family:'微软雅黑';}
+.tagcloud legend{color:#0096ff;font-weight: bold;}
+.tagcloud a{ color: #0096ff;text-decoration: none;}
+.tagcloud a:hover{ text-decoration: underline;}
