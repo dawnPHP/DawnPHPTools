@@ -23,6 +23,7 @@
 [jsonp]	12-jsonp
 [user info]	13-php_getUserInfo
 [tags]	14-php_short_tags
+[autoload]	15-php_autoload_class(可以带namespace)
 
 -----------------------------------
 ===================================
@@ -47,6 +48,7 @@
 [2015-11-21]	12-jsonp
 [2015-11-22]	13-php_getUserInfo
 [2015-11-24]	14-php_short_tags
+[2015-12-08]	15-php_autoload_class(可以带namespace)
 
 -----------------------------------
 ===================================
@@ -60,7 +62,7 @@
 10-php_upload_files	{MyDebug: v1.0.0, UploadFiles: v1.0.0}
 11-php_zoom_image	{MyDebug: v1.0.1, Dir: v1.0.0, ZoomImage:v1.0.0}
 13-php_getUserInfo	{myAgentInfo: v1.0.0}
-
+15-php_autoload_class(可以带namespace)
 
 -----------------------------------
 ===================================
