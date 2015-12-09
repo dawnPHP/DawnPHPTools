@@ -1,0 +1,47 @@
+﻿*{margin:0;padding:0;}
+.header, .main, .footer{ margin:0 auto;width:1000px;}
+.main{
+	border:1px solid #eee;padding:5px;
+	overflow:hidden;
+}
+.main .left{
+	border:1px solid #aaa;
+	width:185px;
+	padding:2px;
+	min-height:500px;
+	float:left;
+}
+.main .right{
+	border:1px solid #aaa;
+	width:800px;
+	padding:2px;
+	min-height:500px;
+	float:right;
+}
+/*a细节*/
+.main  a{ padding:0px; margin:0px 7px; color:#0096ff; text-decoration:none;}
+.main  a:hover{ text-decoration:underline; }
+
+/*left细节*/
+.main .left .btn{padding:5px;}
+.main .left .btn p{    margin: 10px 0 10px 5px;}
+.main .left .btn input{ width:150px;padding:5px; margin:0px 7px;}
+
+.main .left span{color:#666;}
+.main .left ul{ list-style:none;border-top:1px solid #aaa;}
+.main .left ul li{
+	width:89%; 
+	padding:5px 10px;
+}
+.main .left ul li a{display:block; text-decoration:none; color:#0096ff;}
+.main .left ul li.current{background:#eee;}
+.main .left ul li a:hover{text-decoration:underline;}
+
+/*right细节*/
+.main .right .catalog{color:#aaa;} 
+.main .right .item{border-bottom:1px dashed #0096ff; padding:10px;} 
+.main .right .item a.title{font-size:25px;} 
+.main .right .item p{color:#aaa;} 
+.main .right .item p span{float:right;} 
+.main .right .item .status{height:5px;width:100%;background:#eee; margin:5px;} 
+.main .right .item .status .bar{height:5px;width:25%;background:#0CDA1C;} 
