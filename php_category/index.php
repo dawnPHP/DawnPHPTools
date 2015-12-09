@@ -2,8 +2,13 @@
 include 'common/config.php';
 include 'common/function.php';
 ?>
-<link rel="stylesheet" href="css/catalog.css" />
+<html>
+<head>
+<link rel="stylesheet" href="css/category.css" />
 
+</head>
+
+<body>
 <div class='header'>
 	<h1>(php分类管理系统)php进度跟踪管理系统v1.0</h1>
 	<pre>
@@ -41,8 +46,21 @@ include 'common/function.php';
 				<span><a href='action.php?a=del&p_id=1' target="_blank">删除</a></span>
 				<span><a href='edit.php?p_id=1' target="_blank">修改</a></span>
 			</p>
-			<div class=status title='25%'>
-				<div class=bar></div>
+			<div class='status'>
+				<div class='bar c1'></div>
+			</div>
+		</div>
+		
+		
+		<div class='item'>
+			<a class='title' href='detail.php?p_id=1' target="_blank">this is the title of item2</a>
+			<p>
+				2015-11-29 12:35
+				<span><a href='action.php?a=del&p_id=1' target="_blank">删除</a></span>
+				<span><a href='edit.php?p_id=1' target="_blank">修改</a></span>
+			</p>
+			<div class='status'>
+				<div class='bar c3'></div>
 			</div>
 		</div>
 		
@@ -52,9 +70,14 @@ include 'common/function.php';
 </div>
 
 
-</pre>
 <script>
 //
 
 
 </script>
+
+<div class=footer>
+	&copy;2015 All rights reserved;
+</div>
+</body>
+</html>

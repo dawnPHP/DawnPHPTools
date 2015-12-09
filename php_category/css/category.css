@@ -18,6 +18,7 @@
 	min-height:500px;
 	float:right;
 }
+.footer{text-align:center;color:#aaa;}
 /*a细节*/
 .main  a{ padding:0px; margin:0px 7px; color:#0096ff; text-decoration:none;}
 .main  a:hover{ text-decoration:underline; }
@@ -44,4 +45,10 @@
 .main .right .item p{color:#aaa;} 
 .main .right .item p span{float:right;} 
 .main .right .item .status{height:5px;width:100%;background:#eee; margin:5px;} 
-.main .right .item .status .bar{height:5px;width:25%;background:#0CDA1C;} 
+.main .right .item .status .bar{height:5px;background:#0CDA1C;} 
+/*进度条长度*/
+.main .right .item .status .c0{width:0%;} 
+.main .right .item .status .c1{width:25%;} 
+.main .right .item .status .c2{width:50%;} 
+.main .right .item .status .c3{width:75%;} 
+.main .right .item .status .c4{width:100%;} 
