@@ -7,16 +7,6 @@ using class
 	
 2.php和js开发功能
 	-[1] 构建数据库 article 和 category
-mysql> desc category;
-+--------+-------------+------+-----+---------+----------------+
-| Field  | Type        | Null | Key | Default | Extra          |
-+--------+-------------+------+-----+---------+----------------+
-| id     | int(10)     | NO   | PRI | NULL    | auto_increment |
-| name   | varchar(30) | YES  |     | NULL    |                |
-| u_id   | int(10)     | YES  | MUL | NULL    |                |
-| u_rank | int(10)     | YES  |     | NULL    |                |
-+--------+-------------+------+-----+---------+----------------+
-	
 mysql> desc article;
 +-----------+-------------+------+-----+---------+----------------+
 | Field     | Type        | Null | Key | Default | Extra          |
@@ -29,7 +19,19 @@ mysql> desc article;
 | u_id      | int(10)     | YES  | MUL | NULL    |                |
 | cate_id   | int(10)     | YES  |     | NULL    |                |
 +-----------+-------------+------+-----+---------+----------------+
-
+	
+mysql> desc category;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(10)     | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(30) | YES  |     | NULL    |                |
+| u_id   | int(10)     | YES  | MUL | NULL    |                |
+| u_rank | int(10)     | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+	-[2] 订正目录。该用dawnPHP框架。
+	
+	增加ajax函数，初始化时加载分类；
 
 
 	

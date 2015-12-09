@@ -1,11 +1,18 @@
 ﻿<?php
-include 'common/config.php';
-include 'common/function.php';
+define("BathPath","D:/xampp/htdocs/php/DawnPHPTools/php_category/dawnPHP/");
+include('dawnPHP/mylib.php');
+
+/*
+1.从session中获取一个u_id，否则提示登陆。
+2.如果该u_id是管理员或本文作者，则显示，否则不显示。
+3.
+
+*/
 ?>
 <html>
 <head>
-<link rel="stylesheet" href="css/category.css" />
-
+<link rel="stylesheet" href="public/css/category.css" />
+<script src='public/js/ajaxObjPrototype.js'></script>
 </head>
 
 <body>
@@ -72,6 +79,7 @@ include 'common/function.php';
 
 <script>
 //
+aa=new Ajax();
 
 
 </script>
