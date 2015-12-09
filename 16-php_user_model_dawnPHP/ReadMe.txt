@@ -7,7 +7,7 @@ Description:我的框架。
 keywords:用户模型、OOP、ORM
 pros&cons: 
 	pros:使用了自动加载类。建立了框架初步模型。
-	cons:
+	cons:没有实现MVC。因为还不熟悉。
 
 version: v1.0.0
 time:[15:59 2015-12-09]

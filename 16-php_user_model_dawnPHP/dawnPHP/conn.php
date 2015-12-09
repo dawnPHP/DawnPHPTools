@@ -1,6 +1,8 @@
 ﻿<?php
 /*****************************
-*数据库连接
+* 数据库连接
+* name:conn mysql
+* version:1.0.1
 *****************************/
 //页面字符集
 //header("content-type:text/html; cahrset=utf-8");
