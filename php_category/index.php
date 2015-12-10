@@ -100,7 +100,7 @@ window.onload=function(){
 	
 	
 	//请求文章
-	var url2='cateAction.php?a=article&u_id='+u_id+'&cate_id='+cate_id;
+	var url2='cateAction.php?a=artilist&u_id='+u_id+'&cate_id='+cate_id;
 	var ajax2=new Ajax();
 	ajax2.get(url2,function(s){
 		var objs=eval("("+s+")");
@@ -108,14 +108,6 @@ window.onload=function(){
 		showArticle(objs);
 	});
 	
-	//根据jsons插入文章
-	function showArticle(objs){
-		//1.对objs循环
-		for(var i=0;i<objs.length;i++){
-			var obj=objs[i];
-			insertArticleDom(obj);
-		}
-	}
 }
 </script>
 

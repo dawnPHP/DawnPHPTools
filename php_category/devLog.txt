@@ -58,9 +58,10 @@ mysql> desc user;
 		[2] fix bug:默认分类就是某一个用户名下，cate_id=0的条目；
 	-[9] 可以添加目录。
 	-[10] 重构Category类，和Article类，
-		index.php?cate_id=-1&u_id=2 所有条目
-		index.php?cate_id=0&u_id=2 默认分类
-		index.php?cate_id=-2&u_id=2 回收站
+		[1]index.php?cate_id=-1&u_id=2 所有条目
+		[2]index.php?cate_id=0&u_id=2 默认分类
+		
+		[3no] index.php?cate_id=-2&u_id=2 回收站
 		
 	
 	

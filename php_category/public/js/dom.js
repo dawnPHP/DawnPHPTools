@@ -1,4 +1,12 @@
-
+	
+	//根据jsons插入文章
+	function showArticle(objs){
+		//1.对objs循环
+		for(var i=0;i<objs.length;i++){
+			var obj=objs[i];
+			insertArticleDom(obj);
+		}
+	}
 
 	//根据obj插入文章dom
 	function insertArticleDom(obj){

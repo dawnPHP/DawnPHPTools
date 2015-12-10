@@ -25,7 +25,7 @@ switch ($action){
 		$cate=Category::getByUserId($cur_uid);	
 		echo json_encode($cate);
 		break;
-	case 'article':
+	case 'artilist'://article list
 		//返回文章列表
 		$articles=Article::getList($cur_uid,$cate_id);	
 		echo json_encode($articles);

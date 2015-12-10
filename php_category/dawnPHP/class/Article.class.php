@@ -161,9 +161,9 @@ class Article{
 	}
 	
 	
-	//获得列表
+	//获得文章列表
 	public static function getList($uid,$cate_id){
-		if($cate_id<1){
+		if($cate_id==-1){
 			$query=sprintf('select id,title,modi_time,add_time from %sarticle where u_id=%d;',
 			DB_TBL_PREFIX,
 			mysql_real_escape_string($uid,$GLOBALS['DB']));
