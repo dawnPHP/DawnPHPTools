@@ -1,5 +1,5 @@
 ﻿*{margin:0;padding:0;}
-.header, .main, .footer{ margin:0 auto;width:1000px;}
+.header, .main, .footer{ margin:5px auto;width:1000px;}
 .main{
 	border:1px solid #eee;padding:5px;
 	overflow:hidden;
@@ -18,7 +18,7 @@
 	min-height:500px;
 	float:right;
 }
-.footer{text-align:center;color:#aaa;}
+.footer{text-align:center;color:#aaa; padding:20px 5px;border:1px solid #eee;}
 /*a细节*/
 .main  a{ padding:0px; margin:0px 7px; color:#0096ff; text-decoration:none;}
 .main  a:hover{ text-decoration:underline; }

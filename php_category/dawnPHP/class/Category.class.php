@@ -17,7 +17,6 @@ class Category{
 	}
 	
 	public function __set($field,$value){
-
 		if(array_key_exists($field,$this->fields)){ 
 			$this->fields[$field]=$value; 
 		}
@@ -27,8 +26,7 @@ class Category{
 	public static function getById($cate_id){
 		$cate=new Category();
 		$query=sprintf('SELECT * FROM %scategory WHERE id=%d;',DB_TBL_PREFIX,$cate_id); 
-		$result=mysql_query($query,$GLOBALS['DB']); 
-					//debug($cate_id);
+		$result=mysql_query($query,$GLOBALS['DB']);
 			
 		if(mysql_num_rows($result)){
 			$row=mysql_fetch_assoc($result); 
@@ -36,7 +34,6 @@ class Category{
 			$cate->name=$row['name']; 
 			$cate->u_id=$row['u_id']; 
 			$cate->u_rank=$row['u_rank'];
-			
 		}
 		mysql_free_result($result);
 		return $cate;
@@ -51,17 +48,40 @@ class Category{
 		mysql_real_escape_string($u_id,$GLOBALS['DB']));
 		$result=mysql_query($query,$GLOBALS['DB']); 
 
+		$countArr=self::cateCount($uid,$row['id']);
+		
 		$arr=array();
 		while($row=mysql_fetch_assoc($result)){
 			$cate=array();
-			$cate['id']=$row['id']; 
+			$cate['id']=$row['id'];
 			$cate['name']=$row['name']; 
 			$cate['u_id']=$row['u_id']; 
 			$cate['u_rank']=$row['u_rank'];
+			
+			$cate['count']=$countArr[$row['name']];
+			
 			$arr[]=$cate;
 		}
 
 		mysql_free_result($result);
+		return $arr;
+	}
+	
+	//按照分类,返回各类别条目数
+	public static function cateCount($uid){
+		//if($u_id!=$uid) return;
+		$query=sprintf('select a.name,count(b.id) as count from %scategory a, %sarticle b where b.u_id=%d and b.cate_id=a.id group by b.cate_id;',
+			DB_TBL_PREFIX,
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($uid,$GLOBALS['DB']));
+			
+		$result=mysql_query($query,$GLOBALS['DB']);
+		//select a.name,count(b.id) from category a, article b where b.u_id=2 and b.cate_id=a.id group by b.cate_id;
+		$arr=array();
+		while($row=mysql_fetch_assoc($result)){
+			$arr[$row['name']]=$row['count'];
+		}
+		
 		return $arr;
 	}
 	

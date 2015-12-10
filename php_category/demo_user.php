@@ -1,11 +1,17 @@
 ﻿<?php
 session_start();
-echo '<pre>';
-print_r($_SESSION);
+define("BathPath","D:/xampp/htdocs/php/DawnPHPTools/php_category/dawnPHP/");
+include('dawnPHP/mylib.php');
 
-print_r(time());
-//echo getcwd();
+echo '<pre>';
+//print_r($_SESSION);
+
+$aa=Category::cateCount(2);
+print_r($aa);
+
 /**
+echo getcwd();
+print_r(time());
 Array
 (
     [uid] => 2

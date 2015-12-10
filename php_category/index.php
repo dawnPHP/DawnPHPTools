@@ -36,9 +36,7 @@ include('dawnPHP/mylib.php');
 		<span>分类</span>
 		<ul>
 			<!--li class=current><a href='index.php?cate_id=0'>所有分类(100)</a></li>
-			<li><a href='index.php?cate_id=1'>分类1(10)</a></li>
-			<li><a href='index.php?cate_id=2'>分类2(20)</a></li>
-			<li><a href='index.php?cate_id=3'>分类3(80)</a></li-->
+			<li><a href='index.php?cate_id=1'>分类1(10)</a></li-->
 		</ul>
 	</div>
 
@@ -56,24 +54,8 @@ include('dawnPHP/mylib.php');
 			<div class='status'>
 				<div class='bar c1'></div>
 			</div>
-		</div>
-		
-		
-		<div class='item'>
-			<a class='title' href='detail.php?p_id=1' target="_blank">this is the title of item2</a>
-			<p>
-				2015-11-29 12:35
-				<span><a href='action.php?a=del&p_id=1' target="_blank">删除</a></span>
-				<span><a href='edit.php?p_id=1' target="_blank">修改</a></span>
-			</p>
-			<div class='status'>
-				<div class='bar c3'></div>
-			</div>
 		</div-->
-		
-		
 	</div>
-
 </div>
 
 
@@ -160,7 +142,11 @@ window.onload=function(){
 	//根据jsons插入目录
 	function showCate(objs){
 		//所有分类
-		var all={id: "0", name: "所有分类", u_id: "2", u_rank: "0"};
+		var count=0;
+		for(var i=0;i<objs.length;i++){
+			count += parseInt( objs[i]['count'] );
+		}
+		var all={id: "0", name: "所有分类", u_id: "2", u_rank: "0",'count':count};
 		insertCateDom(all,cate_id<=0?true:false);
 		//1.对objs循环
 		for(var i=0;i<objs.length;i++){
@@ -173,13 +159,14 @@ window.onload=function(){
 			}
 		}
 	}
+	
 	//根据obj创建dom并插入到ul中
 	function insertCateDom(obj,isCurrent){
 		var isCurrent=isCurrent||false;
 		//2.创建目录dom
 		var oA=document.createElement('a');
 		oA.setAttribute('href','index.php?cate_id='+obj['id']);
-		oA.innerHTML=obj['name'];
+		oA.innerHTML=obj['name']+'('+obj['count']+')';
 		var oLi=document.createElement('li');
 		if(isCurrent){
 			oLi.setAttribute('class','current');
