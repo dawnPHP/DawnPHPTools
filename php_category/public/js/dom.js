@@ -45,7 +45,7 @@
 		var oRight=document.getElementsByClassName('right')[0];
 		oRight.appendChild(oDiv);
 	}
-	
+
 	
 	//根据jsons插入目录
 	function showCate(objs){
@@ -54,8 +54,10 @@
 		for(var i=0;i<objs.length;i++){
 			count += parseInt( objs[i]['count'] );
 		}
-		var all={id: "0", name: "所有分类", u_id: u_id, u_rank: "0",'count':count};
-		insertCateDom(all,cate_id<=0?true:false);
+		
+		var all={id: "-1", name: "所有分类", u_id: u_id, u_rank: "0",'count':count};
+		insertCateDom(all,cate_id==-1?true:false);
+
 		//1.对objs循环
 		for(var i=0;i<objs.length;i++){
 			var obj=objs[i];
@@ -70,6 +72,7 @@
 	
 	//根据obj创建dom并插入到ul中
 	function insertCateDom(obj,isCurrent){
+
 		var isCurrent=isCurrent||false;
 		//2.创建目录dom
 		var oA=document.createElement('a');
@@ -79,9 +82,13 @@
 		if(isCurrent){
 			oLi.setAttribute('class','current');
 		}
+		if(obj['u_rank']==-1){
+			oLi.setAttribute('class','default');
+		}
 		oLi.appendChild(oA);
 		//3.插入文档结构中
 		var oLeft=document.getElementsByClassName('left')[0];
 		var oUl=oLeft.getElementsByTagName('ul')[0];
 		oUl.appendChild(oLi);
+
 	}

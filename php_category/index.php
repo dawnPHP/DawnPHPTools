@@ -65,13 +65,14 @@ include('dawnPHP/mylib.php');
 var cate_id=<?php echo Dawn::get('cate_id','0'); ?>;
 var u_id=<?php echo (new Dawn())->get('u_id',-1);?>;
 window.onload=function(){
-	
+/*
 	//绑定事件
 	var oBtns=document.getElementsByClassName('left')[0].getElementsByClassName('btn')[0];
 	var oBtn_new=oBtns.getElementsByTagName('input')[0];//新建按钮
 	var oBtn_manage=oBtns.getElementsByTagName('p')[0].getElementsByTagName('a');
 	var oBtn_cate=oBtn_manage[0];//管理分类
 	var oBtn_item=oBtn_manage[1];//管理条目
+	
 	oBtn_new.onclick=function(){
 		alert(this.value);
 	}
@@ -81,7 +82,7 @@ window.onload=function(){
 	oBtn_item.onclick=function(){
 		alert(this.innerHTML);
 	}
-	
+*/	
 	
 	//请求目录
 	var url='cateAction.php?a=category&u_id='+u_id;
@@ -91,6 +92,12 @@ window.onload=function(){
 		if(objs==[]){return;}
 		showCate(objs);
 	});
+	
+	
+	
+	
+	
+	
 	
 	//请求文章
 	var url2='cateAction.php?a=article&u_id='+u_id+'&cate_id='+cate_id;

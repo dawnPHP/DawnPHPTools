@@ -39,6 +39,35 @@ class Category{
 		return $cate;
 	}
 
+	//获得该用户的所有目录信息
+	public static function getByUserId3($u_id){
+		$query=sprintf('select *,count(c.id) as count from 
+(select a.id,name,a.u_id,u_rank,cate_id from article a left join category b on a.cate_id=b.id where a.u_id=%d   
+UNION 
+select a.id,name,b.u_id,u_rank,cate_id from article a right join category b on a.cate_id=b.id  where b.u_id=%d   )  
+c group by cate_id order by u_rank;',
+			mysql_real_escape_string($u_id,$GLOBALS['DB']),
+			mysql_real_escape_string($u_id,$GLOBALS['DB'])
+		);
+		$result=mysql_query($query,$GLOBALS['DB']);
+		$arr=array();
+		while($row=mysql_fetch_assoc($result)){
+			$cate=array();
+			$cate['id']=$row['id'];
+			$cate['name']=$row['name'];
+				if($cate['name']==''){$cate['name']='默认分类';}
+			$cate['u_id']=$row['u_id'];
+			$cate['u_rank']=$row['u_rank'];
+			$cate['count']=$row['count'];
+			
+			//修复分类总数为0时报错
+			//$cate['count']=isset($countArr[$row['name']])?$countArr[$row['name']]:0;
+			
+			$arr[]=$cate;
+		}
+		mysql_free_result($result);debug($arr);
+		return $arr;
+	}
 	
 	//return an object populated based on the record's name 
 	public static function getByUserId($u_id){
@@ -49,8 +78,8 @@ class Category{
 		$result=mysql_query($query,$GLOBALS['DB']); 
 
 		$countArr=self::cateCount($uid);
-		
 		$arr=array();
+
 		while($row=mysql_fetch_assoc($result)){
 			$cate=array();
 			$cate['id']=$row['id'];
@@ -60,29 +89,41 @@ class Category{
 			
 			//修复分类总数为0时报错
 			$cate['count']=isset($countArr[$row['name']])?$countArr[$row['name']]:0;
-			
+
 			$arr[]=$cate;
 		}
+		$arr[]=array(
+			'id'=>0,
+			'name'=>'默认分类',
+			'u_id'=>$uid,
+			'u_rank'=>-1,
+			'count'=>$countArr['默认分类'],
+			
+		);
 
 		mysql_free_result($result);
 		return $arr;
 	}
 	
+		
 	//按照分类,返回各类别条目数
 	public static function cateCount($uid){
 		//if($u_id!=$uid) return;
-		$query=sprintf('select a.name,count(b.id) as count from %scategory a, %sarticle b where b.u_id=%d and b.cate_id=a.id group by b.cate_id;',
+		//'select name,count(id) as count from %sarticle where u_id=%d group by cate_id;',
+		$query=sprintf('select b.name,count(a.id) as count from %sarticle a left join %scategory b on a.cate_id=b.id where a.u_id=%d group by a.cate_id;',
 			DB_TBL_PREFIX,
 			DB_TBL_PREFIX,
 			mysql_real_escape_string($uid,$GLOBALS['DB']));
 			
 		$result=mysql_query($query,$GLOBALS['DB']);
-		//select a.name,count(b.id) from category a, article b where b.u_id=2 and b.cate_id=a.id group by b.cate_id;
 		$arr=array();
 		while($row=mysql_fetch_assoc($result)){
-			$arr[$row['name']]=$row['count'];
+			if($row['name']==''){
+				$arr['默认分类']=$row['count'];
+			}else{
+				$arr[$row['name']]=$row['count'];
+			}
 		}
-		
 		return $arr;
 	}
 	
