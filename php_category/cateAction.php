@@ -9,7 +9,7 @@ $action=$dawn::get('a','');
 if($action==''){
 	die('Invalid visit');
 }
-$uid=$dawn::get('uid',-1);
+$uid=$dawn::get('u_id',-1);
 $cate_id=$dawn::get('cate_id',0);
 
 //当前用户名

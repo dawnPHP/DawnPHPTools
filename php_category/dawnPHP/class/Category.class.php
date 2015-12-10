@@ -48,7 +48,7 @@ class Category{
 		mysql_real_escape_string($u_id,$GLOBALS['DB']));
 		$result=mysql_query($query,$GLOBALS['DB']); 
 
-		$countArr=self::cateCount($uid,$row['id']);
+		$countArr=self::cateCount($uid);
 		
 		$arr=array();
 		while($row=mysql_fetch_assoc($result)){
@@ -58,7 +58,8 @@ class Category{
 			$cate['u_id']=$row['u_id']; 
 			$cate['u_rank']=$row['u_rank'];
 			
-			$cate['count']=$countArr[$row['name']];
+			//修复分类总数为0时报错
+			$cate['count']=isset($countArr[$row['name']])?$countArr[$row['name']]:0;
 			
 			$arr[]=$cate;
 		}
@@ -116,4 +117,22 @@ class Category{
 			}
 		}
 	}
+	
+	
+	//
+	static function delete($id,$uid){
+		//create a new user 
+		$query=sprintf('delete from %scategory where u_id=%d and id=%d;', 
+		DB_TBL_PREFIX,  
+		mysql_real_escape_string($uid,$GLOBALS['DB']), 
+		mysql_real_escape_string($id,$GLOBALS['DB']));
+
+		if(mysql_query($query,$GLOBALS['DB'])){
+			return true; 
+		}else{
+			return false; 
+		}
+	}
+	
+	
 }

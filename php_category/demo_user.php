@@ -6,7 +6,7 @@ include('dawnPHP/mylib.php');
 echo '<pre>';
 //print_r($_SESSION);
 
-$aa=Category::cateCount(2);
+$aa=Category::cateCount(1);
 print_r($aa);
 
 /**

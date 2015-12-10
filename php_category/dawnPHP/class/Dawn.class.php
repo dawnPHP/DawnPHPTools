@@ -25,7 +25,7 @@ class Dawn{
 		if(isset($_SESSION[$key])){
 			return $_SESSION[$key];
 		}else{
-			return null;
+			return -1;
 		}
 	}
 	

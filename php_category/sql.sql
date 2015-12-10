@@ -68,6 +68,7 @@ mysql> desc category;
 
 insert into category(name,u_id,u_rank) values('html',2,1),('css',2,2),('javascript',2,3),('php',2,4);
 
+insert into category(name,u_id,u_rank) values('angular',1,1);
 
 CREATE TABLE `user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
