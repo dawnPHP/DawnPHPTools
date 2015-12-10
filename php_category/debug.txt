@@ -1,1 +1,8 @@
 select * from article where u_id=2 and cate_id=2;
+
+<tr class=even>
+		<input type='hidden' name='id[]' value="2" />
+		<td><input type='text' name='name[]' value="css" /></td>
+		<td><input type='text' name='u_rank[]' value="2" /></td>
+		<td><a href='doEdit.php?a=del&cate_id=2&uid=2'>删除</a></td>
+	</tr>

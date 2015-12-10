@@ -20,11 +20,11 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 <script src='public/js/ajaxObjPrototype.js'></script>
 <script src='public/js/dom.js'></script>
 <style>
-.category{ list-style:none; border:1px; text-align:center;}
-.category tr{margin:15px; background:#eee; height: 50px;}
-.category tr.odd{background:#eee;}
-.category tr.even{background:#fff;}
-.category tr td{min-width:250px; overflow:hidden;}
+.category table{ list-style:none; border:1px; text-align:center;}
+.category table tr{margin:15px; background:#eee; height: 50px;}
+.category table tr.odd{background:#eee;}
+.category table tr.even{background:#fff;}
+.category table tr td{min-width:250px; overflow:hidden;}
 .category input{padding:10px;margin:10px; border:0px; 
 	border-bottom:1px #000 solid;border-right:1px #000 solid;}
 .category input[type='text']{width:90%;height:100%;}
@@ -38,10 +38,12 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 	可以增添、删除、修改目录名称。
 	可以修改目录的显示顺序。	
 </pre>
-<a href='index.php'>返回首页</a> | 
-<a href='index.php'><input type='button' value='添加' /></a>
+<div class='category'>
+<a href='index.php'><input type='button' value='&lt;&lt;返回首页' /></a>
+<input type='button' id='add' value='添加分类' />
+
 <form method='post' action='doEditCate.php?a=send'>
-<table class='category'>
+<table>
 	<tr>
 		<th>目录名称</th>
 		<th>显示顺序</th>
@@ -60,19 +62,28 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 	</tr>
 <?php }?>
 	
-	<tr>
-		<td colspan=3><input type='submit' value="提交" />   
-		<input type='button' name='send' value="取消" /></td>
-	</tr>
 </table>
+	
+			<input type='button' value="提交" />   
+			<a href='index.php'><input type='button' value='&lt;&lt;返回首页(放弃修改)' /></a>
+
 
 </form>
+</div>
 
 <script>
 var u_id=<?php echo (new Dawn())->sessionGet('uid');?>;
 var cate_id=-1;
+function $(s){return document.getElementById(s);}
 window.onload=function(){
-
+	$('add').onclick=function(){
+		var new_cate=prompt('请输入新分类名字：');
+		var ajax=new Ajax();
+		ajax.get('doEditCate.php?a=add&name='+new_cate,function(s){
+			console.log(s);
+			if(s)window.location.reload();
+		})
+	}
 
 }
 

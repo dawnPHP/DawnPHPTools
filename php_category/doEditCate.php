@@ -18,16 +18,18 @@ switch ($action){
 			header("Location:editCate.php");
 			exit();
 		}else{
+			echo '<a href="Location:editCate.php">点击返回</a>';
+			echo '<hr>';
 			die(mysql_error());
 		}
 		break;
-	case 'send':
-	
+	case 'add':
+		$name=Dawn::get('name');
+		echo Category::add($name,$uid);
 		break;
 	
 	
 }
-
-echo '<pre>';
-print_r($_POST);
-
+//echo '<pre>';
+//print_r($_POST);
+?>

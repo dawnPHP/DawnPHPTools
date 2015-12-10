@@ -119,15 +119,53 @@ class Category{
 	}
 	
 	
-	//
+	//删除一个目录
 	static function delete($id,$uid){
-		//create a new user 
+		//删除目录
 		$query=sprintf('delete from %scategory where u_id=%d and id=%d;', 
 		DB_TBL_PREFIX,  
 		mysql_real_escape_string($uid,$GLOBALS['DB']), 
 		mysql_real_escape_string($id,$GLOBALS['DB']));
 
 		if(mysql_query($query,$GLOBALS['DB'])){
+			//再修改文章表中的分类信息为0
+			$query2=sprintf(' update %sarticle set cate_id=0 where u_id=%d and cate_id=%d;', 
+				DB_TBL_PREFIX,
+				mysql_real_escape_string($id,$GLOBALS['DB']), 
+				mysql_real_escape_string($uid,$GLOBALS['DB']));
+			if(mysql_query($query,$GLOBALS['DB'])){
+				return true; 
+			}else{
+				return false;
+			}
+		}else{
+			return false; 
+		}
+	}
+	//新增一个目录
+	static function add($name,$uid){
+		//先确定不存在，
+		$query=sprintf('select * from %scategory where u_id=%d;', 
+		DB_TBL_PREFIX,  
+		mysql_real_escape_string($uid,$GLOBALS['DB']), 
+		mysql_real_escape_string($name,$GLOBALS['DB']));
+
+		$rows=mysql_query($query,$GLOBALS['DB']);
+		$num=mysql_affected_rows();
+		while($row=mysql_fetch_assoc($rows)){
+			if($row['name']==$name){
+				return false;
+			}
+		}
+
+		//然后再添加
+		$query2=sprintf('insert into %scategory(name,u_id,u_rank) values("%s", %d,%d);', 
+		DB_TBL_PREFIX,  
+		mysql_real_escape_string($name,$GLOBALS['DB']),
+		mysql_real_escape_string($uid,$GLOBALS['DB']), 
+		++$num);
+
+		if(mysql_query($query2,$GLOBALS['DB'])){
 			return true; 
 		}else{
 			return false; 
