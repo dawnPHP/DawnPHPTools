@@ -53,3 +53,35 @@ mysql> desc category;
 | u_id   | int(10)     | YES  | MUL | NULL    |                |
 | u_rank | int(10)     | YES  |     | NULL    |                |
 +--------+-------------+------+-----+---------+----------------+
+
+insert into category(name,u_id,u_rank) values('html',2,1),('css',2,2),('javascript',2,3),('php',2,4);
+
+
+CREATE TABLE `user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` char(15) NOT NULL DEFAULT '',
+  `password` char(32) NOT NULL DEFAULT '',
+  `email` varchar(40) NOT NULL DEFAULT '',
+  `regdate` int(10) unsigned NOT NULL DEFAULT '0',
+  `lastlogin` int(10) unsigned NOT NULL DEFAULT '0',
+  `usergroup` int(10) unsigned NOT NULL DEFAULT '0',
+  `session_id` char(30) NOT NULL,
+  `portrait` varchar(30),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+mysql> desc user;
++------------+------------------+------+-----+---------+----------------+
+| Field      | Type             | Null | Key | Default | Extra          |
++------------+------------------+------+-----+---------+----------------+
+| id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| username   | char(15)         | NO   |     |         |                |
+| password   | char(32)         | NO   |     |         |                |
+| email      | varchar(40)      | NO   |     |         |                |
+| regdate    | int(10) unsigned | NO   |     | 0       |                |
+| lastlogin  | int(10) unsigned | NO   |     | 0       |                |
+| usergroup  | int(10) unsigned | NO   |     | 0       |                |
+| session_id | char(30)         | NO   |     | NULL    |                |
+| portrait   | varchar(30)      | YES  |     | NULL    |                |
++------------+------------------+------+-----+---------+----------------+
+

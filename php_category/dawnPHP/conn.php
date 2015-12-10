@@ -12,7 +12,7 @@ define('DB_HOST', '192.168.1.100');
 define('DB_USER', 'root');
 define('DB_PASSWORD', '');
 define('DB_SCHEMA', 'myblog');
-define('DB_TBL_PREFIX', 'WROX_');
+define('DB_TBL_PREFIX', '');
 
 #1、获取连接
 // establish a connection to the database server 

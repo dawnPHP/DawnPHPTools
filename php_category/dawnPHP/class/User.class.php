@@ -1,15 +1,15 @@
-﻿<?php
+<?php
 class User{
 	private $uid;
 	private $fields;
 	
 	public function __construct(){
 		$this->uid=null; 
-		$this->fields=array('username'=>'','password'=>'','emailAddr'=>'','isActive'=>false); 
+		$this->fields=array('username'=>'','password'=>'','email'=>'','regdate'=>'','lastlogin'=>'','usergroup'=>'','session_id'=>''); 
 	}
 	
 	public function __get($field){
-		if($field=='userId'){
+		if($field=='uid'){
 			return $this->uid; 
 		}else{ 
 			return $this->fields[$field]; 
@@ -22,31 +22,35 @@ class User{
 		}
 	}
 	
+	
+	
 	//return if username is valid format 
 	public static function validateUsername($username){ 
 		return preg_match('/^[A-Z0-9]{2,20}$/i',$username); 
 	}
-	
 	//return if email address is valid format 
 	public static function validateEmailAddr($email){ 
 		return filter_var($email,FILTER_VALIDATE_EMAIL); 
-	} 
+	}
 	//return an object populated based on the record‘s user id 
 	public static function getById($user_id){
 		$user=new User();
-		$query=sprintf('SELECT USERNAME,PASSWORD,EMAIL_ADDR,IS_ACTIVE '. 
-		'FROM %sUSER WHERE USER_ID=%d',DB_TBL_PREFIX,$user_id); 
+		$query=sprintf('SELECT * FROM %suser WHERE uid=%d;',DB_TBL_PREFIX,$user_id); 
 		$result=mysql_query($query,$GLOBALS['DB']); 
+			
 		if(mysql_num_rows($result)){
 			$row=mysql_fetch_assoc($result); 
-			$user->username=$row['USERNAME']; 
-			$user->password=$row['PASSWORD']; 
-			$user->emailAddr=$row['EMAIL_ADDR']; 
-			$user->isActive=$row['IS_ACTIVE']; 
-			ChromePhp::log($user_id); 
+			$user->username=$row['username']; 
+			$user->password=$row['password']; 
+			$user->email=$row['email']; 
+			$user->regdate=$row['regdate']; 
+			$user->lastlogin=$row['lastlogin']; 
+			$user->usergroup=$row['usergroup']; 
+			$user->session_id=$row['session_id']; 
+			//ChromePhp::log($user_id); 
 			$user->uid=$user_id; 
 		} 
-		mysql_free_result($result); 
+		mysql_free_result($result);
 		return $user;
 	}
 	
@@ -130,5 +134,46 @@ class User{
 			}
 		}
 	}
+	
+	
+	
+	/**
+		根据uid更新用户登陆时间为当前时间
+	*/
+	public static function updateLastLogin($uid){
+		//获取时间
+		$newTime=time();
+		//执行更新
+		$query = mysql_query("update user set lastlogin={$newTime} where uid={$uid};",$GLOBALS['DB']);
+		if(mysql_affected_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	
+	/**
+		权限：是否可以阅读 todo
+		是管理员、作者、或好友，才可以阅读。
+		好友还没有实现。
+	*/
+	function canRead($p_id){
+		if($this->usergroup ==3 || $this->uid==Article::getById($p_id)){
+			return true;
+		}
+		
+		return false;
+	}
+	
+		
+	/**
+		权限：是否可以修改 todo
+		是管理员、作者，才可以阅读。
+	*/
+	function canEdit($uid){
+
+	}
+	
 }
 ?> 

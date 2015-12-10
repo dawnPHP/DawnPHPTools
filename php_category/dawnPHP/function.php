@@ -1,4 +1,6 @@
 <?php
+
+
 //Ëæ»úÊýº¯Êý
 function random_text($count,$rm_similar=false){
 	$chars=array_flip(array_merge(range(0,9),range('A','Z'))); 

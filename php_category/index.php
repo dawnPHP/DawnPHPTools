@@ -19,7 +19,7 @@ include('dawnPHP/mylib.php');
 <div class='header'>
 	<h1>(php分类管理系统)php进度跟踪管理系统v1.0</h1>
 	<pre>
-	<a href='devLog.txt' target='_blank'>开发日志</a>
+	<a href='devLog.txt' target='_blank'>开发日志</a> | <a href='http://tieba.baidu.com/f?kw=php&fr=wwwt' target='_blank'>php吧</a>
 	分类的增删改查。
 	左边分类，右边是条目。默认不分页。
 	</pre>
@@ -35,10 +35,10 @@ include('dawnPHP/mylib.php');
 		</div>
 		<span>分类</span>
 		<ul>
-			<li class=current><a href='index.php?cate_id=0'>所有分类(100)</a></li>
+			<!--li class=current><a href='index.php?cate_id=0'>所有分类(100)</a></li>
 			<li><a href='index.php?cate_id=1'>分类1(10)</a></li>
 			<li><a href='index.php?cate_id=2'>分类2(20)</a></li>
-			<li><a href='index.php?cate_id=3'>分类3(80)</a></li>
+			<li><a href='index.php?cate_id=3'>分类3(80)</a></li-->
 		</ul>
 	</div>
 
@@ -77,11 +77,53 @@ include('dawnPHP/mylib.php');
 </div>
 
 
+
 <script>
-//
-aa=new Ajax();
-
-
+<?php 
+$cur=(new Dawn())->get('cate_id','0');
+echo 'var cur_id=',$cur,";\n";
+?>
+window.onload=function(){
+	//
+	var ajax=new Ajax();
+	var url='cateAction.php?uid=<?php echo (new Dawn())->get('uid',-1);?>'
+	ajax.get(url,function(s){
+		var objs=eval("("+s+")");
+		showCate(objs);
+	});
+	//根据json插入目录
+	function showCate(objs){
+		var all={id: "0", name: "所有分类", u_id: "2", u_rank: "0"};
+		insertDom(all,cur_id==0?true:false);
+		//1.对objs循环
+		for(var i=0;i<objs.length;i++){
+			var obj=objs[i];
+			//Object {id: "1", name: "html", u_id: "2", u_rank: "1"}
+			if(cur_id==obj['id']){
+				insertDom(obj,true);
+			}else{
+				insertDom(obj);
+			}
+		}
+	}
+	//根据obj创建dom并插入到ul中
+	function insertDom(obj,isCurrent){
+		var isCurrent=isCurrent||false;
+		//2.创建目录dom
+		var oA=document.createElement('a');
+		oA.setAttribute('href','index.php?cate_id='+obj['id']);
+		oA.innerHTML=obj['name'];
+		var oLi=document.createElement('li');
+		if(isCurrent){
+			oLi.setAttribute('class','current');
+		}
+		oLi.appendChild(oA);
+		//3.插入文档结构中
+		var oLeft=document.getElementsByClassName('left')[0];
+		var oUl=oLeft.getElementsByTagName('ul')[0];
+		oUl.appendChild(oLi);
+	}
+}
 </script>
 
 <div class=footer>

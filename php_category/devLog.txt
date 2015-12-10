@@ -29,9 +29,25 @@ mysql> desc category;
 | u_id   | int(10)     | YES  | MUL | NULL    |                |
 | u_rank | int(10)     | YES  |     | NULL    |                |
 +--------+-------------+------+-----+---------+----------------+
+
+mysql> desc user;
++------------+------------------+------+-----+---------+----------------+
+| Field      | Type             | Null | Key | Default | Extra          |
++------------+------------------+------+-----+---------+----------------+
+| id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| username   | char(15)         | NO   |     |         |                |
+| password   | char(32)         | NO   |     |         |                |
+| email      | varchar(40)      | NO   |     |         |                |
+| regdate    | int(10) unsigned | NO   |     | 0       |                |
+| lastlogin  | int(10) unsigned | NO   |     | 0       |                |
+| usergroup  | int(10) unsigned | NO   |     | 0       |                |
+| session_id | char(30)         | NO   |     | NULL    |                |
+| portrait   | varchar(30)      | YES  |     | NULL    |                |
++------------+------------------+------+-----+---------+----------------+
 	-[2] 订正目录。该用dawnPHP框架。
+	-[3] 增加ajax函数，初始化时加载分类:向后台请求json数据，前台添加dom；
 	
-	增加ajax函数，初始化时加载分类；
+	
 
 
 	
