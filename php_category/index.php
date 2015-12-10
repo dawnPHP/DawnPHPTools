@@ -93,6 +93,7 @@ window.onload=function(){
 	});
 	//根据json插入目录
 	function showCate(objs){
+		//所有分类
 		var all={id: "0", name: "所有分类", u_id: "2", u_rank: "0"};
 		insertDom(all,cur_id==0?true:false);
 		//1.对objs循环

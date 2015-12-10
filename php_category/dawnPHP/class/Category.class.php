@@ -53,14 +53,12 @@ class Category{
 
 		$arr=array();
 		while($row=mysql_fetch_assoc($result)){
-			$cate=new Category();
-			
-			$cate->id=$row['id']; 
-			$cate->name=$row['name']; 
-			$cate->u_id=$row['u_id']; 
-			$cate->u_rank=$row['u_rank'];
-			
-			$arr[]=self::toArray($cate);
+			$cate=array();
+			$cate['id']=$row['id']; 
+			$cate['name']=$row['name']; 
+			$cate['u_id']=$row['u_id']; 
+			$cate['u_rank']=$row['u_rank'];
+			$arr[]=$cate;
 		}
 
 		mysql_free_result($result);
@@ -97,17 +95,5 @@ class Category{
 				return false; 
 			}
 		}
-	}
-	
-	//to array 为什么不能独立出去？
-	public static function toArray($obj){
-		$_array = is_object($obj)?get_object_vars($obj): $obj;
-		$array=array('id'=>$_array['id']);
-		$fields=$_array['fields'];
-		foreach ($fields as $key => $value) {
-			$value = (is_array($value) || is_object($value)) ? self::toArray($value) : $value;
-			$array[$key] = $value;
-		}
-		return $array;
 	}
 }
