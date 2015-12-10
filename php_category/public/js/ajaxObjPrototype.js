@@ -1,4 +1,4 @@
-﻿/**
+/**
 封装成ajax 函数
 1.封装成函数： http://www.oschina.net/code/snippet_574274_11877 评论部分
 

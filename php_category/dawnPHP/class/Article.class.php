@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class Article{
 	private $aid;
 	private $fields;

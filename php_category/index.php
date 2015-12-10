@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 define("BathPath","D:/xampp/htdocs/php/DawnPHPTools/php_category/dawnPHP/");
 include('dawnPHP/mylib.php');
 
@@ -67,6 +67,11 @@ echo 'var cate_id=',$cur,";\n";
 ?>
 window.onload=function(){
 	var uid=<?php echo (new Dawn())->get('uid',-1);?>;
+	
+	//绑定事件
+	var oBtn_Cate=document.getElementsByClassName();
+	
+	
 	//请求目录
 	var url='cateAction.php?a=category&uid='+uid;
 	var ajax=new Ajax();
@@ -135,7 +140,6 @@ window.onload=function(){
 		//3.插入文档结构中
 		var oRight=document.getElementsByClassName('right')[0];
 		oRight.appendChild(oDiv);
-	
 	}
 	
 	
