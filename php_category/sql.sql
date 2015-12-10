@@ -32,7 +32,19 @@ mysql> desc article;
 | u_id      | int(10)     | YES  | MUL | NULL    |                |
 | cate_id   | int(10)     | YES  |     | NULL    |                |
 +-----------+-------------+------+-----+---------+----------------+
-
+insert into article(title,content,add_time,u_id,cate_id) values
+	('title of html1','content of html1',1449711107,2,1),
+	('title of html2','content of html2',1449712107,2,1),
+	('title of html3','content of html3',1449713107,2,1),
+	
+	('title of css1','content of css1',1449714107,2,2),
+	('title of css2','content of css2',1449715107,2,2),
+	
+	('title of js1','content of js1',1449716107,2,3),
+	('title of js2','content of js2',1449717107,2,3),
+	
+	('title of php1','content of php1',1449718107,2,4);
+	
 
 
 CREATE TABLE `category` (

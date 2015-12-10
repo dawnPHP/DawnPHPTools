@@ -1,7 +1,7 @@
 <?php
 class Dawn{
 	//get函数
-	function get($key,$default=''){
+	static function get($key,$default=''){
 		if(isset($_GET[$key])){
 			return $_GET[$key];
 		}else{
@@ -9,7 +9,7 @@ class Dawn{
 		}
 	}
 	//post函数
-	function post($key,$default=''){
+	static function post($key,$default=''){
 		if(isset($_POST[$key])){
 			return $_POST[$key];
 		}else{
@@ -17,11 +17,11 @@ class Dawn{
 		}
 	}
 	//session函数-set
-	function sessionSet($key,$value){
+	static function sessionSet($key,$value){
 		$_SESSION[$key]=$value;
 	}
 	//session函数-get
-	function sessionGet($key){
+	static function sessionGet($key){
 		if(isset($_SESSION[$key])){
 			return $_SESSION[$key];
 		}else{

@@ -60,7 +60,7 @@ class Article{
 			mysql_real_escape_string($this->content, $GLOBALS['DB']), 
 			time(),
 			mysql_real_escape_string($this->u_id, $GLOBALS['DB']), 
-			mysql_real_escape_string($this->cate_id, $GLOBALS['DB']); 
+			mysql_real_escape_string($this->cate_id, $GLOBALS['DB'])); 
 			return mysql_query($query, $GLOBALS['DB']); 
 		}else{
 			//create a new Article 
@@ -72,7 +72,7 @@ class Article{
 			time(),
 			time(),
 			mysql_real_escape_string($this->u_id, $GLOBALS['DB']), 
-			mysql_real_escape_string($this->cate_id, $GLOBALS['DB']); 
+			mysql_real_escape_string($this->cate_id, $GLOBALS['DB'])); 
 			 
 			if(mysql_query($query,$GLOBALS['DB'])){ 
 				$this->aid=mysql_insert_id($GLOBALS['DB']); 
@@ -160,5 +160,35 @@ class Article{
 		return false;
 	}
 	
+	
+	//获得列表
+	public static function getList($uid,$cate_id){
+		if($cate_id<1){
+			$query=sprintf('select id,title,modi_time,add_time from %sarticle where u_id=%d;',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($uid,$GLOBALS['DB']));
+		}else{
+			$query=sprintf('select id,title,modi_time,add_time from %sarticle where u_id=%d and cate_id=%d;',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($uid,$GLOBALS['DB']),
+			mysql_real_escape_string($cate_id,$GLOBALS['DB']));
+		}
+		
+		$result=mysql_query($query,$GLOBALS['DB']);
+		
+		$arr=array();
+		while($row=mysql_fetch_assoc($result)){
+			$Article=array();
+			$Article['id']=$row['id'];
+			$Article['title']=$row['title'];
+			//$Article['content']=$row['content'];
+			//date("Y-m-d H:i:s", time());
+			$Article['modi_time']=date("Y-m-d H:i:s", $row['modi_time']);
+			$Article['add_time']=date("Y-m-d H:i:s", $row['add_time']);
+			$arr[]=$Article;
+		}
+		mysql_free_result($result);
+		return $arr;
+	}
 }
 ?> 
