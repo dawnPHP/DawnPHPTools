@@ -15,7 +15,10 @@ switch ($action){
 		$cate_id=Dawn::get('cate_id');
 		$result=Category::delete($cate_id,$uid);
 		if($result){
-			header("Location:editCate.php");
+			echo "<script>alert('删除成功');
+			window.location='editCate.php';
+			</script>";
+			//header("Location:editCate.php");
 			exit();
 		}else{
 			echo '<a href="Location:editCate.php">点击返回</a>';
@@ -27,7 +30,19 @@ switch ($action){
 		$name=Dawn::get('name');
 		echo Category::add($name,$uid);
 		break;
-	
+	case 'send':
+		$result=Category::update($_POST);
+		if($result){
+			echo "<script>alert('修改成功');
+			window.location='index.php';
+			</script>";
+			exit();
+		}else{
+			echo '<a href="Location:editCate.php">点击返回</a>';
+			echo '<hr>';
+			die(mysql_error());
+		}
+		break;
 	
 }
 //echo '<pre>';

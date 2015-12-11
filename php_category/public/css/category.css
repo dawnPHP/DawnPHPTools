@@ -23,6 +23,8 @@
 .footer{text-align:center;color:#aaa; padding:20px 5px;border:1px solid #eee;
 	border-top: 2px solid #0096ff;
 	border-bottom: 2px solid #0096ff;
+	background:#ECF7FF;
+	opacity:0.5;
 }
 /*a细节*/
 .main  a{ padding:0px; margin:0px 7px; color:#0096ff; text-decoration:none;}

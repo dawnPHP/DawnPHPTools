@@ -213,5 +213,38 @@ c group by cate_id order by u_rank;',
 		}
 	}
 	
+	//更新目录
+	static function update($arr){
+		//1.对post数据循环
+		$len=count( $arr['id'] );
+		$query=sprintf('insert into %scategory(id,name,u_rank) values',DB_TBL_PREFIX);
+		for($i=0;$i<$len;$i++){
+			//2.组装sql语句
+			//$query .= sprintf('update %scategory set name="%s",u_rank=%d where id=%d;',
+			$query .= sprintf('( %d,"%s",%d)',
+				mysql_real_escape_string($arr['id'][$i],$GLOBALS['DB']),
+				mysql_real_escape_string($arr['name'][$i],$GLOBALS['DB']),
+				mysql_real_escape_string($arr['u_rank'][$i],$GLOBALS['DB'])
+			);
+			if($i!=$len-1){
+				$query .= ',';
+			}else{
+				$query .= 'ON DUPLICATE KEY UPDATE name=VALUES(name), u_rank=VALUES(u_rank);';
+			}
+		}
+
+		
+		mysql_query($query,$GLOBALS['DB']);
+		$result=mysql_affected_rows();
+		
+		if($result>0){
+			return true; 
+		}else{
+			return false; 
+		}
+	}
+	
+	
+	
 	
 }
