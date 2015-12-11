@@ -1,0 +1,9 @@
+﻿这是一个很神奇的案例！
+添加了我自己的框架。dawnPHP
+
+优点：实现了代码的可重用性。
+缺点：还没有mvc。因为不会。
+
+
+验证码：http://wjl.com/php/php_user/dawnPHP/yanzhengma.php
+查看session:http://wjl.com/php/php_user/demo.php

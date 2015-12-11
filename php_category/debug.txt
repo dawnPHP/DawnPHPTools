@@ -1,0 +1,74 @@
+select * from article where u_id=2 and cate_id=2;
+
+<tr class=even>
+		<input type='hidden' name='id[]' value="2" />
+		<td><input type='text' name='name[]' value="css" /></td>
+		<td><input type='text' name='u_rank[]' value="2" /></td>
+		<td><a href='doEdit.php?a=del&cate_id=2&uid=2'>删除</a></td>
+	</tr>
+
+-------------
+select cate_id,c.name,c.u_id,c.u_rank,count(c.id) as count from 
+(select a.id,a.name,a.u_rank, b.cate_id,b.u_id,b.title from category a left join article b
+ on a.id=b.cate_id 
+ UNION 
+select a.id,a.name,a.u_rank, b.cate_id,b.u_id,b.title from category a right join article b
+ on a.id=b.cate_id) as c 
+group by c.cate_id;
+
+--------------
+select * from 
+(select a.id,a.name,a.u_rank, b.cate_id,b.u_id,b.title from category a left join article b
+ on a.id=b.cate_id 
+ UNION 
+select a.id,a.name,a.u_rank, b.cate_id,b.u_id,b.title from category a right join article b
+ on a.id=b.cate_id) as c 
+group by cate_id;
+
+-----------
+mysql> select id,title,u_id,cate_id from article where u_id=2;
++----+----------------+------+---------+
+| id | title          | u_id | cate_id |
++----+----------------+------+---------+
+|  1 | title of html1 |    2 |       1 |
+|  2 | title of html2 |    2 |       1 |
+|  3 | title of html3 |    2 |       1 |
+|  4 | title of css1  |    2 |       2 |
+|  5 | title of css2  |    2 |       2 |
+|  6 | title of js1   |    2 |       3 |
+|  7 | title of js2   |    2 |       3 |
+|  8 | title of php1  |    2 |       0 |
++----+----------------+------+---------+
+mysql> select * from category where u_id=2;
++----+------------+------+--------+
+| id | name       | u_id | u_rank |
++----+------------+------+--------+
+|  1 | html       |    2 |      1 |
+|  2 | css        |    2 |      2 |
+|  3 | javascript |    2 |      3 |
+|  6 | php2       |    2 |      4 |
+| 13 | app        |    2 |      6 |
+| 14 | android    |    2 |      7 |
++----+------------+------+--------+
+6 rows in set (0.02 sec)
+--------------
+select *,count(c.id) as count from 
+(select a.id,name,a.u_id,cate_id from article a left join category b on a.cate_id=b.id where a.u_id=2 
+UNION 
+select a.id,name,a.u_id,cate_id from article a right join category b on a.cate_id=b.id where a.u_id=2  ) c group by cate_id;
+
+------------
+select *,count(c.id) as count from 
+(select a.id,name,a.u_id,cate_id from article a left join category b on a.cate_id=b.id
+UNION 
+select a.id,name,a.u_id,cate_id from article a right join category b on a.cate_id=b.id ) c 
+  where a.u_id=2 
+group by cate_id;
+
+-----------
+'select *,count(c.id) as count from 
+(select a.id,name,a.u_id,u_rank,cate_id from article a left join category b on a.cate_id=b.id where a.u_id=2  
+UNION 
+select a.id,name,b.u_id,u_rank,cate_id from article a right join category b on a.cate_id=b.id  where b.u_id=2  )  
+c group by cate_id;',
+
