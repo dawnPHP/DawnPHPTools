@@ -1,0 +1,90 @@
+﻿category system
+using class
+
+第一版本：
+1.前台页面和样式
+	-[1] 初步搞定html，添加美化css
+	
+2.php和js开发功能
+	-[1] 构建数据库 article 和 category
+mysql> desc article;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int(10)     | NO   | PRI | NULL    | auto_increment |
+| title     | varchar(30) | YES  |     | NULL    |                |
+| content   | text        | YES  |     | NULL    |                |
+| modi_time | varchar(30) | YES  |     | NULL    |                |
+| add_time  | varchar(30) | YES  |     | NULL    |                |
+| u_id      | int(10)     | YES  | MUL | NULL    |                |
+| cate_id   | int(10)     | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+	
+mysql> desc category;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(10)     | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(30) | YES  |     | NULL    |                |
+| u_id   | int(10)     | YES  | MUL | NULL    |                |
+| u_rank | int(10)     | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+
+mysql> desc user;
++------------+------------------+------+-----+---------+----------------+
+| Field      | Type             | Null | Key | Default | Extra          |
++------------+------------------+------+-----+---------+----------------+
+| id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| username   | char(15)         | NO   |     |         |                |
+| password   | char(32)         | NO   |     |         |                |
+| email      | varchar(40)      | NO   |     |         |                |
+| regdate    | int(10) unsigned | NO   |     | 0       |                |
+| lastlogin  | int(10) unsigned | NO   |     | 0       |                |
+| usergroup  | int(10) unsigned | NO   |     | 0       |                |
+| session_id | char(30)         | NO   |     | NULL    |                |
+| portrait   | varchar(30)      | YES  |     | NULL    |                |
++------------+------------------+------+-----+---------+----------------+
+	-[2] 订正目录。该用dawnPHP框架。
+	-[3] 增加ajax函数，初始化时加载分类:向后台请求json数据，前台添加dom；
+		从当前页获取分类信息，设定当前分类为阴影背景。
+		[2]精简化Category类。
+	-[4] 在article表中增加数据；ajax添加相应目录下的文章列表。
+		[2no]添加默认分类，没有分类信息的就是默认分类。
+	-[5] 显示每个目录的条目数量。所有分类等于所有相加。
+	-[6] 调整编码为utf-8 no bom.
+	-[7] fix bug:单击分类时，对应标题中没有u_id，导致获取条目失败。
+	-[8]ng 可以删除目录了。虽然很丑。虽然还是跳转的。
+		[1] fix bug:删除某一个目录后，文章表中更新cate_id=0；
+		[2] fix bug:默认分类就是某一个用户名下，[revised]cate_id=0的条目；
+			已经被修改为cate_id=0为默认分类。
+		[3]	删除目录后，修改原文章中的cate_id=0,也就是进入默认分类。
+	-[9] 可以添加目录。
+	-[10] 重构Category类，和Article类，
+		[1]index.php?cate_id=-1&u_id=2 所有条目
+		[2]index.php?cate_id=0&u_id=2 默认分类
+		
+		[3no] index.php?cate_id=-2&u_id=2 回收站
+	-[11] 添加了是否修改属性（隐藏表单），不修改不能提交；
+		在所有input的onchange事件中如果修改则修改该属性；
+	-[12] 
+	
+	
+	
+	
+	
+	修改分类:怎么ajax单页面内修改目录表? 
+			如果删除掉一个目录项，则对应的文章怎么处理？[ok 2.8.3]
+			默认分类怎么实现？[ok 2.10.2]
+			回收站怎么实现？
+			怎么拖动修改目录显示顺序？
+	局部更新:怎么联动更新url？
+	
+	
+		
+		
+		
+	
+	
+
+
+	
