@@ -26,15 +26,14 @@ function $(s){return document.getElementById(s);}
 	//根据jsons插入文章
 	function showArticle(objs){
 		if(objs.length==0){
-			oDiv=document.createElement('div');
+			var oDiv=document.createElement('div');
 			oDiv.setAttribute('class','notice');
 			oDiv.innerHTML='该分类下条目数为0！';
 			
 			//3.插入文档结构中
 			var oRight=document.getElementsByClassName('right')[0];
 			oRight.appendChild(oDiv);
-			
-			
+
 			return;
 		}
 		//1.对objs循环

@@ -7,10 +7,6 @@ $uid=$_SESSION['uid'];
 
 define("BathPath","D:/xampp/htdocs/php/DawnPHPTools/php_category/dawnPHP/");
 include('dawnPHP/mylib.php');
-
-//获取数据
-$sql='select id,name,u_rank from category where u_id='.$uid . ' order by u_rank';
-$rows=mysql_query($sql,$GLOBALS['DB']);
 ?>
 
 <html>
@@ -33,7 +29,7 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 
 <span class='spanceWidth'></span>
 
-选择分类：
+1.选择分类：
 <select id='cateList'>
 	<option value='0'>所有分类</option>
 	<option value='1'>xxx1</option>
@@ -41,42 +37,67 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 </select>
 
 <span class='spanceWidth'></span>
+2.在下表勾选要移动的条目：
+<span class='spanceWidth'></span>
 
-选择新分类：
+3.移动到新分类：
 <select id='newCateList'>
 	<option value='0'>所有分类</option>
-	<option value='1'>xxx1</option>
-	<option value='3'>xxx3</option>
 </select>
 <span class='spanceWidth'></span>
 
-<input type='button' id='change' class='btn blue' value='确认修改' />
+<input type='button' id='btnChange' class='btn blue' value='4.确认移动' />
 
-<form method='post' action='doEditCate.php?a=send'>
-<table>
+<form>
+<table id='item'>
 	<tr>
 		<th>选择</th>
 		<th>条目标题</th>
 		<th>添加日期</th>
 	</tr>
-	<div id='item'>
-	
-	<tr>
-		<td><input type='checkbox' name='isSelect'></td>
-		<td>条目标题1条目标题1条目标题1条目标题1条目标题1条目标题1</td>
+	<tr id='tr4'>
+		<td><input type='checkbox' onclick='toggleClass(this,4)' name='isSelect'></td>
+		<td>条目标题1王条目标题1军条目标题1亮</td>
 		<td>2015-12-11</td>
 	</tr>
-	
-	</div>
 </table>
 </form>
 
-</div>
+<hr>
+<a href='index.php'><input type='button' class='btn' value='&lt;&lt;返回首页(放弃修改)' /></a>
 
+</div>
 </body>
 </html>
 <script>
+var u_id=<?php echo $uid;?>;
+
+function toggleClass(obj,num){
+	var dom=$('tr'+num);
+	if(obj.checked){
+		dom._class=dom.className;
+		dom.className='bold';
+	}else{
+		dom.className=dom._class;
+	}
+}
+
+//没有内容的通知
+function nullNotice(){
+	var oDiv=document.createElement('div');
+	oDiv.setAttribute('class','notice');
+	oDiv.innerHTML='该分类下条目数为0！';
+	
+	//3.插入文档结构中
+	var oItem=$('item');
+	oItem.innerHTML='';
+	oItem.appendChild(oDiv);
+}
+
+
+
 window.onload=function(){
+	//页面初始化 拉去下拉目录，当前显示为默认条目
 	var ajax=new Ajax();
 	//var url='doChangeCate.php?a=catelist';
 	var url='cateAction.php?a=category';
@@ -84,23 +105,24 @@ window.onload=function(){
 		var selection=$('cateList');
 		var newSelection=$('newCateList');
 		selection.innerHTML='';
-		newSelection.innerHTML='';
-		
 		var objs=eval("("+s+")");
-		if(objs==[]){return;}
+		if(objs.length==0){return;}
 		for(var i=0;i<objs.length;i++){
 			refreshCateSelection(objs[i],selection);
 			newSelection.innerHTML=selection.innerHTML;
 		}
 	});
 	
-	//在管理条目页面中，修改条目分类：显示所有分类
+	//页面初始化 显示默认分类的条目
+	showArticleListByCate(0,u_id);
+	
+	//[在管理条目页面中 修改条目分类]：显示所有分类
 	function refreshCateSelection(obj,selection){
 		//1.造dom
 		//Object {id: "22", name: "html", u_id: "2", u_rank: "1", count: 0}
 		var oOption=document.createElement('option');
 		oOption.setAttribute('value',obj['id']);
-		oOption.innerHTML=obj['name'];
+		oOption.innerHTML=obj['name']+'('+ obj['count'] +')';
 		if(obj['u_rank']==-1){
 			oOption.setAttribute('selected','selected');
 		}
@@ -108,26 +130,112 @@ window.onload=function(){
 		selection.appendChild(oOption);
 	}
 	
-	//如果改变条目，则显示
+	//如果改变目录，则刷新条目
 	$('cateList').onchange=function(){
 		var cate_id=this.value;
-		showArticleListByCate(cate_id);
+		showArticleListByCate(cate_id,u_id);
 	}
 	
 	//显示该目录下的条目
-	function showArticleListByCate(cate_id){
+	function showArticleListByCate(cate_id,u_id){
 		//1.请求json
+		var ajax=new Ajax();
+		var url='cateAction.php?a=artilist&u_id='+u_id+'&cate_id='+cate_id;
+		ajax.get(url,function(s){
+			var objs=eval("("+s+")");
+			if(objs.length==0){
+				nullNotice();
+				return;
+			}
+			
+			var oDiv=getTableHeader();
+			//2.循环
+			for(var i=0;i<objs.length;i++){
+				//3.组装dom
+				var obj=objs[i];
+				//Object {id: "4", title: "title of css1", modi_time: "1970-01-01 08:00:00", add_time: "2015-12-10 10:21:47"}
+				//console.log(obj);
+				var oTr=getArticleListDomByObj(obj,i%2==0);
+				//4.插入dom树
+				oDiv.appendChild(oTr);
+			}
+		});
 		
-		//2.循环
+		//获取表头
+		function getTableHeader(){
+			var oDiv=$('item');
+			var oTh1=document.createElement('th');
+				oTh1.innerHTML='选择';
+			var oTh2=document.createElement('th');
+				oTh2.innerHTML='条目标题';
+			var oTh3=document.createElement('th');
+				oTh3.innerHTML='添加日期';
+			var oTr1=document.createElement('tr');
+			oTr1.appendChild(oTh1);
+			oTr1.appendChild(oTh2);
+			oTr1.appendChild(oTh3);
+			oDiv.innerHTML='';
+			oDiv.appendChild(oTr1);
+			
+			return oDiv;
+		}
 		
-		//3.组装dom
+		//根据obj组装dom
+		function getArticleListDomByObj(obj,isEven){
+			var oInput=document.createElement('input');
+			oInput.setAttribute('type','checkbox');
+			oInput.setAttribute('class','checkbox');
+			oInput.setAttribute('id',obj['id']);
+			oInput.setAttribute('onclick','toggleClass(this,'+obj['id']+')');
+			//oInput.setAttribute('name','isSelect[]');
+			
+			var oTd=document.createElement('td');
+			oTd.appendChild(oInput);
+			var oTd2=document.createElement('td');
+			oTd2.innerHTML=obj['title'];
+			var oTd3=document.createElement('td');
+			oTd3.innerHTML=obj['add_time'];
+			
+			var oTr=document.createElement('tr');
+			oTr.setAttribute('id','tr'+obj['id']);
+			if(isEven)oTr.setAttribute('class','even');
+			oTr.appendChild(oTd);
+			oTr.appendChild(oTd2);
+			oTr.appendChild(oTd3);
+			return oTr;
+		}
 		
-		//4.插入dom树
 	}
-
+	
+	
+	$('btnChange').onclick=function(){
+		var list1=$('cateList');
+		var list2=$('newCateList');
+		//同一个目录下，不用移动
+		if(list1.value==list2.value){
+			alert('所选目录相同，无需移动！');
+			return;
+		}
+		
+		//如果没有选择条目，也不用移动
+		var arrCheckedId=[];
+		var aCheck=document.getElementsByClassName('checkbox');
+		for(var i=0;i<aCheck.length;i++){
+			var oCheck=aCheck[i];
+			if(oCheck.checked==true){
+				arrCheckedId.push(oCheck.id);
+			}
+		}
+		if(arrCheckedId.length==0){
+			alert('请选择需要移动的条目！');
+		}else
+		{
+			//console.log(arrCheckedId) 需要移动的article id
+			//changeCate(list1.value,list2.value,arrCheckedId)
+			alert('可以移动了');
+		}
+	
+	}
 }
 
 </script>
-
-
-

@@ -90,7 +90,7 @@ window.onload=function(){
 	var ajax=new Ajax();
 	ajax.get(url,function(s){
 		var objs=eval("("+s+")");
-		if(objs==[]){return;}
+		if(objs.length==0){return;}
 		showCate(objs);
 	});
 	

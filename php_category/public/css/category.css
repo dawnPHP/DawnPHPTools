@@ -48,7 +48,6 @@
 
 /*right细节*/
 .main .right .catalog{color:#aaa;margin-left:10px;} 
-.main .right .notice{color:#f00;text-align:center;} 
 .main .right .item{border-bottom:1px dashed #0096ff; padding:10px;} 
 .main .right .item a.title{font-size:25px;} 
 .main .right .item p{color:#aaa;} 
@@ -61,3 +60,5 @@
 .main .right .item .status .c2{width:50%;} 
 .main .right .item .status .c3{width:75%;} 
 .main .right .item .status .c4{width:100%;} 
+
+.notice{color:#f00;text-align:center;} 
