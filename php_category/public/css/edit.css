@@ -1,15 +1,16 @@
 *{font-family:'微软雅黑';}
-.category table{ list-style:none; border:1px; text-align:center;}
+.category table{list-style:none; border:1px; text-align:center;}
 .category table tr{margin:15px; background:#eee; height: 50px;}
-.category table tr.odd{background:#eee;}
-.category table tr.even{background:#fff;}
+.category table tr.odd{background:#fafafa;}
+.category table tr.even{background:#EBF7FF;}
 .category table tr td{min-width:250px; overflow:hidden;}
 .category input{padding:10px;margin:10px; border:0px; 
-	border-bottom:1px #000 solid;border-right:1px #000 solid;}
+	border-bottom:1px #000 solid;}
 .category input[type='text']{width:90%;height:100%;}
 
-.category input.btn{cursor: pointer; background:#fff;border:1px solid #0096ff;}
+.category input.btn{cursor:pointer; background:#fff;border:1px solid #0096ff;}
 .category input.btn:hover{background:#0096ff;color:#fff;}
 
 .category input.blue{background:#0096ff;color:#fff; border:1px solid #0096ff;}
-.category input.blue:hover{background:#0096ff;color:#fff;}
+.category input.blue:hover{ font-weight: bold;}
+.category .spanceWidth{ display:line-block; margin:0 20px;}

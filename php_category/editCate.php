@@ -63,7 +63,7 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 <script>
 var u_id=<?php echo (new Dawn())->sessionGet('uid');?>;
 var cate_id=-1;
-function $(s){return document.getElementById(s);}
+
 window.onload=function(){
 	//添加新分类
 	$('add').onclick=function(){

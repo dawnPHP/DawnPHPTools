@@ -1,5 +1,7 @@
+//==============================
+// tools	
 //==============================	
-
+//删除空格
 function trim(str){ //删除左右两端的空格 
 	return str.replace(/(^\s*)|(\s*$)/g, ""); 
 }
@@ -11,10 +13,15 @@ function ltrim(str){ //删除左边的空格
 function rtrim(str){ //删除右边的空格 
 	return str.replace(/(\s*$)/g,""); 
 }
+//选取
+function $(s){return document.getElementById(s);}
 
 
 
 
+
+//==============================	
+//dom操作，文档内部专用
 //==============================	
 	//根据jsons插入文章
 	function showArticle(objs){
