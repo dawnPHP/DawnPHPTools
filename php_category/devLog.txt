@@ -66,7 +66,7 @@ mysql> desc user;
 		[3no] index.php?cate_id=-2&u_id=2 回收站
 	-[11] 添加了是否修改属性（隐藏表单），不修改不能提交；
 		在所有input的onchange事件中如果修改则修改该属性；
-	-[12] 
+	-[12] 可以修改目录的排序了。
 	
 	
 	

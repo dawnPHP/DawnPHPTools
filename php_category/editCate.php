@@ -112,18 +112,15 @@ window.onload=function(){
 
 	//删除按钮
 	function deleteCate(cate_id){
-		//
+		//询问确认
+		var conf=confirm('你确定要删除该条目吗？');
+		if(!conf){return;}
 		var url='doEditCate.php?a=del&cate_id='+cate_id;
-		
+		//执行删除
 		var ajax2=new Ajax();
 		ajax2.get(url,function(s){
-			console.log(s);
-			//if(s)window.location.reload();
+			if(s)window.location.reload();
 		});
-		
-			alert(url);
-		return false;
-	
 	}
 </script>
 
