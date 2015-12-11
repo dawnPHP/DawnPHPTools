@@ -15,33 +15,22 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 
 <html>
 <head>
-<title>修改分类</title>
+<title>编辑分类</title>
 <link rel="stylesheet" href="public/css/category.css" />
+<link rel="stylesheet" href="public/css/edit.css" />
 <script src='public/js/ajaxObjPrototype.js'></script>
 <script src='public/js/dom.js'></script>
-<style>
-*{font-family:'微软雅黑';}
-.category table{ list-style:none; border:1px; text-align:center;}
-.category table tr{margin:15px; background:#eee; height: 50px;}
-.category table tr.odd{background:#eee;}
-.category table tr.even{background:#fff;}
-.category table tr td{min-width:250px; overflow:hidden;}
-.category input{padding:10px;margin:10px; border:0px; 
-	border-bottom:1px #000 solid;border-right:1px #000 solid;}
-.category input[type='text']{width:90%;height:100%;}
-.btnblue{background:#0096ff;color:#fff;}
-</style>
 </head>
 <body>
 
 <div class=header>
-<h1>管理&gt;目录</h1>
+<h1>管理&gt;编辑目录信息</h1>
 <pre>
 	可以增添、删除、修改目录名称。可以修改目录的显示顺序。	
 </pre>
 <div class='category'>
-<a href='index.php'><input type='button' value='&lt;&lt;返回首页' /></a>
-<input type='button' id='add' class='btnblue' value='添加分类' />
+<a href='index.php'><input type='button' class='btn' value='&lt;&lt;返回首页' /></a>
+<input type='button' id='add' class='btn blue' value='添加分类' />
 
 <form method='post' action='doEditCate.php?a=send'>
 <table>
@@ -59,15 +48,15 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 		<input type='hidden' name='id[]' value="<?php echo $row['id']?>" />
 		<td><input type='text' name='name[]' value="<?php echo $row['name']?>" /></td>	
 		<td><input type='text' name='u_rank[]' value="<?php echo $row['u_rank']?>" /> </td>
-		<td><input type='button' onclick='javascript:deleteCate(<?php echo $row['id'];?>);'value='删除' /></td>
+		<td><input type='button' class='btn' onclick='javascript:deleteCate(<?php echo $row['id'];?>);'value='删除' /></td>
 	</tr>
 <?php }?>
 	
 </table>
 	<input type='hidden' id='isModify' value=0 />
 	
-	<a href='index.php'><input type='button' value='&lt;&lt;返回首页(放弃修改)' /></a>
-	<input id='send' type='button' class='btnblue' value="提交修改" />   
+	<a href='index.php'><input type='button' class='btn' value='&lt;&lt;返回首页(放弃修改)' /></a>
+	<input id='send' type='button' class='btn blue' value="提交修改" />   
 </form>
 </div>
 
@@ -79,7 +68,7 @@ window.onload=function(){
 	//添加新分类
 	$('add').onclick=function(){
 		var new_cate=prompt('请输入新分类名字：');
-		if(new_cate==''){return;}
+		if(trim(new_cate)==''){return;}
 		var ajax=new Ajax();
 		ajax.get('doEditCate.php?a=add&name='+new_cate,function(s){
 			//console.log(s);
@@ -121,6 +110,8 @@ window.onload=function(){
 		ajax2.get(url,function(s){
 			if(s)window.location.reload();
 		});
+
+		return false;
 	}
 </script>
 
