@@ -82,7 +82,7 @@ window.onload=function(){
 		window.location='editCate.php';
 	}
 	oBtn_item.onclick=function(){
-		alert(this.innerHTML);
+		window.location='changeCate.php';
 	}	
 	
 	//请求目录
