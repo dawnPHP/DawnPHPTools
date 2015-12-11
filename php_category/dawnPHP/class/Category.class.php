@@ -71,13 +71,13 @@ c group by cate_id order by u_rank;',
 	
 	//return an object populated based on the record's name 
 	public static function getByUserId($u_id){
-		$uid=$_SESSION['uid'];
+		//$uid=$_SESSION['uid'];
 		//if($u_id!=$uid) return;
 		$query=sprintf('SELECT * FROM %scategory WHERE u_id="%s" order by u_rank asc;',DB_TBL_PREFIX,
 		mysql_real_escape_string($u_id,$GLOBALS['DB']));
 		$result=mysql_query($query,$GLOBALS['DB']); 
 
-		$countArr=self::cateCount($uid);
+		$countArr=self::cateCount($u_id);
 		$arr=array();
 
 		while($row=mysql_fetch_assoc($result)){
@@ -95,9 +95,9 @@ c group by cate_id order by u_rank;',
 		$arr[]=array(
 			'id'=>0,
 			'name'=>'默认分类',
-			'u_id'=>$uid,
+			'u_id'=>$u_id,
 			'u_rank'=>-1,
-			'count'=>$countArr['默认分类'],
+			'count'=>isset($countArr['默认分类'])?$countArr['默认分类']:0,
 			
 		);
 
@@ -170,11 +170,11 @@ c group by cate_id order by u_rank;',
 
 		if(mysql_query($query,$GLOBALS['DB'])){
 			//再修改文章表中的分类信息为0
-			$query2=sprintf(' update %sarticle set cate_id=0 where u_id=%d and cate_id=%d;', 
+			$query2=sprintf('update %sarticle set cate_id=0 where u_id=%d and cate_id=%d;', 
 				DB_TBL_PREFIX,
-				mysql_real_escape_string($id,$GLOBALS['DB']), 
-				mysql_real_escape_string($uid,$GLOBALS['DB']));
-			if(mysql_query($query,$GLOBALS['DB'])){
+				mysql_real_escape_string($uid,$GLOBALS['DB']), 
+				mysql_real_escape_string($id,$GLOBALS['DB']));
+			if(mysql_query($query2,$GLOBALS['DB'])){
 				return true; 
 			}else{
 				return false;

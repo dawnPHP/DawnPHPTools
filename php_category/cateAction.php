@@ -12,6 +12,7 @@ if($action==''){
 $uid=$dawn::get('u_id',-1);
 $cate_id=$dawn::get('cate_id',0);
 
+if(!isset($_SESSION['uid'])){die('Invalid visit!');}
 //当前用户名
 $cur_uid=$_SESSION['uid'];
 if($uid!=-1){

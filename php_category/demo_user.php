@@ -5,13 +5,13 @@ include('dawnPHP/mylib.php');
 
 echo '<pre>';
 //print_r($_SESSION);
+print_r(time());
 
-$aa=Category::cateCount(1);
-print_r($aa);
 
 /**
+$aa=Category::cateCount(1);
+print_r($aa);
 echo getcwd();
-print_r(time());
 Array
 (
     [uid] => 2

@@ -21,8 +21,11 @@ include('dawnPHP/mylib.php');
 	<h1>(php分类管理系统)php进度跟踪管理系统v1.0</h1>
 	<pre>
 	<a href='devLog.txt' target='_blank'>开发日志</a> | <a href='http://tieba.baidu.com/f?kw=php&fr=wwwt' target='_blank'>php吧</a> | index.php?cate_id=4&u_id=2
-	分类的增删改查。
-	左边分类，右边是条目。默认不分页。
+	分类的增删改查。 | 	左边分类，右边是条目。默认不分页。
+	
+	[1]index.php?cate_id=-1&u_id=2 所有条目
+	[2]index.php?cate_id=0&u_id=2 默认分类
+	[3no] index.php?cate_id=-2&u_id=2 回收站
 	</pre>
 </div>
 
@@ -43,7 +46,7 @@ include('dawnPHP/mylib.php');
 
 	<!-- 右侧开始 -->
 	<div class=right>
-		<span class='catalog'>所有类别</span>
+		<span class='catalog'> 条目列表:</span>
 		
 		<!--div class='item'>
 			<a class='title' href='detail.php?p_id=1' target="_blank">this is the title of item1</a>
@@ -62,10 +65,9 @@ include('dawnPHP/mylib.php');
 
 
 <script>
-var cate_id=<?php echo Dawn::get('cate_id','0'); ?>;
+var cate_id=<?php echo Dawn::get('cate_id','-1'); ?>;
 var u_id=<?php echo (new Dawn())->get('u_id',-1);?>;
 window.onload=function(){
-/*
 	//绑定事件
 	var oBtns=document.getElementsByClassName('left')[0].getElementsByClassName('btn')[0];
 	var oBtn_new=oBtns.getElementsByTagName('input')[0];//新建按钮
@@ -81,8 +83,7 @@ window.onload=function(){
 	}
 	oBtn_item.onclick=function(){
 		alert(this.innerHTML);
-	}
-*/	
+	}	
 	
 	//请求目录
 	var url='cateAction.php?a=category&u_id='+u_id;
@@ -93,18 +94,11 @@ window.onload=function(){
 		showCate(objs);
 	});
 	
-	
-	
-	
-	
-	
-	
 	//请求文章
 	var url2='cateAction.php?a=artilist&u_id='+u_id+'&cate_id='+cate_id;
 	var ajax2=new Ajax();
 	ajax2.get(url2,function(s){
 		var objs=eval("("+s+")");
-		if(objs==[]){return;}
 		showArticle(objs);
 	});
 	
