@@ -29,8 +29,8 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 	可以增添、删除、修改目录名称。可以修改目录的显示顺序。	
 </pre>
 <div class='category'>
-<a href='index.php'><input type='button' value='&lt;&lt;返回首页' /></a>
-<input type='button' id='add' class='btnblue' value='添加分类' />
+<a href='index.php'><input type='button' class='btn' value='&lt;&lt;返回首页' /></a>
+<input type='button' id='add' class='btn blue' value='添加分类' />
 
 <form method='post' action='doEditCate.php?a=send'>
 <table>
@@ -48,15 +48,15 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 		<input type='hidden' name='id[]' value="<?php echo $row['id']?>" />
 		<td><input type='text' name='name[]' value="<?php echo $row['name']?>" /></td>	
 		<td><input type='text' name='u_rank[]' value="<?php echo $row['u_rank']?>" /> </td>
-		<td><input type='button' onclick='javascript:deleteCate(<?php echo $row['id'];?>);'value='删除' /></td>
+		<td><input type='button' class='btn' onclick='javascript:deleteCate(<?php echo $row['id'];?>);'value='删除' /></td>
 	</tr>
 <?php }?>
 	
 </table>
 	<input type='hidden' id='isModify' value=0 />
 	
-	<a href='index.php'><input type='button' value='&lt;&lt;返回首页(放弃修改)' /></a>
-	<input id='send' type='button' class='btnblue' value="提交修改" />   
+	<a href='index.php'><input type='button' class='btn' value='&lt;&lt;返回首页(放弃修改)' /></a>
+	<input id='send' type='button' class='btn blue' value="提交修改" />   
 </form>
 </div>
 
@@ -68,7 +68,7 @@ window.onload=function(){
 	//添加新分类
 	$('add').onclick=function(){
 		var new_cate=prompt('请输入新分类名字：');
-		if(new_cate==''){return;}
+		if(trim(new_cate)==''){return;}
 		var ajax=new Ajax();
 		ajax.get('doEditCate.php?a=add&name='+new_cate,function(s){
 			//console.log(s);
@@ -106,11 +106,10 @@ window.onload=function(){
 		
 		var ajax2=new Ajax();
 		ajax2.get(url,function(s){
-			console.log(s);
-			//if(s)window.location.reload();
+			//console.log(s);
+			if(s)window.location.reload();
 		});
 		
-			alert(url);
 		return false;
 	
 	}
