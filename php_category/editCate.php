@@ -15,27 +15,16 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 
 <html>
 <head>
-<title>修改分类</title>
+<title>编辑分类</title>
 <link rel="stylesheet" href="public/css/category.css" />
+<link rel="stylesheet" href="public/css/edit.css" />
 <script src='public/js/ajaxObjPrototype.js'></script>
 <script src='public/js/dom.js'></script>
-<style>
-*{font-family:'微软雅黑';}
-.category table{ list-style:none; border:1px; text-align:center;}
-.category table tr{margin:15px; background:#eee; height: 50px;}
-.category table tr.odd{background:#eee;}
-.category table tr.even{background:#fff;}
-.category table tr td{min-width:250px; overflow:hidden;}
-.category input{padding:10px;margin:10px; border:0px; 
-	border-bottom:1px #000 solid;border-right:1px #000 solid;}
-.category input[type='text']{width:90%;height:100%;}
-.btnblue{background:#0096ff;color:#fff;}
-</style>
 </head>
 <body>
 
 <div class=header>
-<h1>管理&gt;目录</h1>
+<h1>管理&gt;编辑目录信息</h1>
 <pre>
 	可以增添、删除、修改目录名称。可以修改目录的显示顺序。	
 </pre>
