@@ -228,13 +228,42 @@ window.onload=function(){
 		}
 		if(arrCheckedId.length==0){
 			alert('请选择需要移动的条目！');
-		}else
-		{
-			//console.log(arrCheckedId) 需要移动的article id
-			//changeCate(list1.value,list2.value,arrCheckedId)
-			alert('可以移动了');
+			return;
 		}
+		
+		//console.log(arrCheckedId) 需要移动的article id
+		//changeCate(list1.value,list2.value,arrCheckedId)
+		//alert('可以移动了');
+		//1.请求json
+		var ajax=new Ajax();
+		var url='cateAction.php?a=change_cate';
+		
+			console.log();
+			var strCheckedId=arr2string(arrCheckedId,'id') 
+		var para='o_id='+list1.value+'&n_id='+list2.value+strCheckedId;
+		ajax.post(url,para,function(s){
+			if(s==true){
+				alert('修改分类成功！');
+				window.location.reload();
+			}else{
+				alert('修改分类失败，请重试或通知管理员！');
+			}
+		});
+
 	
+	}
+	
+	//数组变成字符串
+	function arr2string(arr,sufix){
+		var str='&';
+		var len=arr.length;
+		for(var i=0;i<len;i++){
+			str += sufix+'[]='+arr[i];
+			if(i!=len-1){
+				str += '&';
+			}
+		}
+		return str;
 	}
 }
 
