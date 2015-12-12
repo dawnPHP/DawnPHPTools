@@ -20,9 +20,9 @@ include('dawnPHP/mylib.php');
 <body>
 
 <div class=header>
-<h1>管理&gt;更新条目分类</h1>
+<h1>管理&gt;管理条目</h1>
 <pre>
-	可以更新条目的分类。	
+	功能：管理条目的分类：变更条目的分类。	
 </pre>
 <div class='category'>
 <a href='index.php'><input type='button' class=btn value='&lt;&lt;返回首页' /></a>
@@ -231,8 +231,6 @@ window.onload=function(){
 			return;
 		}
 		
-		//console.log(arrCheckedId) 需要移动的article id
-		//changeCate(list1.value,list2.value,arrCheckedId)
 		//alert('可以移动了');
 		//1.请求json
 		var ajax=new Ajax();

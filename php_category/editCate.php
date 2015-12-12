@@ -24,9 +24,9 @@ $rows=mysql_query($sql,$GLOBALS['DB']);
 <body>
 
 <div class=header>
-<h1>管理&gt;编辑目录信息</h1>
+<h1>管理&gt;管理分类</h1>
 <pre>
-	可以增添、删除、修改目录名称。可以修改目录的显示顺序。	
+	功能：增添、删除、修改目录名称，以及修改目录的显示顺序。	
 </pre>
 <div class='category'>
 <a href='index.php'><input type='button' class='btn' value='&lt;&lt;返回首页' /></a>

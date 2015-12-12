@@ -76,7 +76,7 @@ window.onload=function(){
 	var oBtn_item=oBtn_manage[1];//管理条目
 	
 	oBtn_new.onclick=function(){
-		alert(this.value);
+		window.location='newItem.php';
 	}
 	oBtn_cate.onclick=function(){
 		window.location='editCate.php';
