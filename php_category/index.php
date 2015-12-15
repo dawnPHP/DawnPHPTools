@@ -76,7 +76,7 @@ window.onload=function(){
 	var oBtn_item=oBtn_manage[1];//管理条目
 	
 	oBtn_new.onclick=function(){
-		alert(this.value);
+		window.location='newItem.php';
 	}
 	oBtn_cate.onclick=function(){
 		window.location='editCate.php';
@@ -90,7 +90,7 @@ window.onload=function(){
 	var ajax=new Ajax();
 	ajax.get(url,function(s){
 		var objs=eval("("+s+")");
-		if(objs==[]){return;}
+		if(objs.length==0){return;}
 		showCate(objs);
 	});
 	
@@ -105,8 +105,4 @@ window.onload=function(){
 }
 </script>
 
-<div class=footer>
-	&copy;2015 All rights reserved;
-</div>
-</body>
-</html>
+<?php include('footer.php');?>

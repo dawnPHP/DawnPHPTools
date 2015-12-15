@@ -31,4 +31,10 @@ switch ($action){
 		$articles=Article::getList($cur_uid,$cate_id);	
 		echo json_encode($articles);
 		break;
+	case 'change_cate':
+		//debug($_POST);
+		//要改变目录的条目id数组
+		echo Article::change_cate($_POST);
+		break;
+		
 }

@@ -1,0 +1,65 @@
+﻿微信开发
+
+学习前的准备工作：
+1.有一定的PHP+MySQL基础；
+2.有独立的服务器或空间（必须）
+	可以使用sina的SAE空间。
+3.有一个微信号；
+	如果你没有公众账号，且未经认证，建议别玩，因为你很难玩转。
+
+
+基础篇-微信公共账号的分类数据交互原理 API接入
+提升篇-常用普通接口 消息发送和接收 事件推送
+高级篇-常用高级接口 网页授权模板消息 
+实战篇-实战项目实践所学
+调理挺清晰 期待
+
+<?php $postdata = file_get_contents("php://input"); ?> 
+
+
+
+需要开发的功能：
+
+该项需要有开发能力才能进行
+开发者需要完成以下两步，来进行自动回复的开发
+1. 阅读自定义菜单接口文档，并在开发者中心获取AppID和AppSecret
+2. 通过自定义菜单接口，创建、修改和删除自定义菜单
+3. 阅读接入指南接口文档，并在开发者中心设置回调URL和Token,以接收自定义菜单的开发者事件推送
+
+微信开发官方文档：
+http://mp.weixin.qq.com/wiki/home/index.html
+微信资料大全：
+http://blog.csdn.net/clj9017/article/details/12057939
+微信开发100本书：
+http://www.cnblogs.com/txw1958/p/weixin-book.html
+方倍工作室-最全面最专业的微信公众平台开发教程
+http://www.cnblogs.com/txw1958/p/wxqa.html
+
+
+微信开发流程：
+http://blog.csdn.net/binsoft/article/details/38943869
+
+微信菜单：
+http://blog.csdn.net/binsoft/article/details/39674179
+	
+微信数据库操作：
+http://blog.csdn.net/binsoft/article/details/40343905
+官方文档，请参考：http://developer.baidu.com/wiki/index.php?title=docs/cplat/rt/mysql
+
+数据流
+http://www.2cto.com/weixin/201409/330280.html
+
+
+
+
+PHP实现微信公众平台开发—基础篇
+http://www.imooc.com/view/483?src=sug
+
+PHP实现微信公众平台开发—提升篇
+http://www.imooc.com/view/509
+
+
+微信公众号 php开发 未认证 菜单
+http://zhidao.baidu.com/link?url=O_K5abakE68NWMTSgtzukEMAMk2jo-dzuuWsuoOYtRIXb24PyDtCroI-hPyu4WoleERWXg7Cbhmw-rAckyUrabRgZnDWYqV3QpAOz3GoB87
+
+

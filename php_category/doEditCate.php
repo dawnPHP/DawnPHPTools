@@ -28,7 +28,18 @@ switch ($action){
 		break;
 	case 'add':
 		$name=Dawn::get('name');
-		echo Category::add($name,$uid);
+		$result = Category::add($name,$uid);
+		if($result){
+			echo "<script>alert('添加成功！');
+			window.location='editCate.php';
+			</script>";
+			exit();
+		}else{
+			echo '<a href="Location:editCate.php">点击返回</a>';
+			echo '<hr>';
+			die(mysql_error());
+		}
+		
 		break;
 	case 'send':
 		$result=Category::update($_POST);

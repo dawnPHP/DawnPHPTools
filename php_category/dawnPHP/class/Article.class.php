@@ -190,5 +190,39 @@ class Article{
 		mysql_free_result($result);
 		return $arr;
 	}
+	
+	//Article::change_cate($o_id,$n_id,$a_id);
+	//改变条目的目录
+	public static function change_cate($arr){
+		//1.获取数据
+		$o_id=$arr['o_id'];
+		$n_id=$arr['n_id'];
+		$a_ids=$arr['id'];
+
+		//2.组装sql语句
+		$len=count( $a_ids );
+		$query=sprintf('insert into %sarticle(id,cate_id) values',DB_TBL_PREFIX);
+		
+		for($i=0;$i<$len;$i++){
+			$query .= sprintf('( %d,%d)',
+			mysql_real_escape_string($a_ids[$i],$GLOBALS['DB']),
+			mysql_real_escape_string($n_id,$GLOBALS['DB'])
+			);
+			if($i!=$len-1){
+				$query .= ',';
+			}else{
+				$query .= 'ON DUPLICATE KEY UPDATE  cate_id=VALUES(cate_id);';
+			}
+		}
+		//debug($query);
+		//3.执行
+		mysql_query($query,$GLOBALS['DB']);
+		$result=mysql_affected_rows();
+		if($result>0){
+			return true; 
+		}else{
+			return false; 
+		}
+	}
 }
 ?> 
