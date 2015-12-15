@@ -23,7 +23,7 @@ include('dawnPHP/mylib.php');
 .main .new div.content textarea{padding:10px;margin:5px; height:200px;}
 .main .new div.cate select{min-width:300px;}
 .main .new div.submit input{width:100px;}
-.main .new div.submit span{color:red; border:1px solid #aaa; border-radius:10px; padding:2px 10px; opacity:0.5}
+.main .new div.submit span{ border:1px solid #aaa; border-radius:10px; padding:2px 10px; opacity:0.5}
 
 
 </style>
@@ -51,17 +51,15 @@ include('dawnPHP/mylib.php');
 		</div>
 		<div class=cate>
 			请选择分类：
-			<select id='select' name='cate_id'>
+			<select name='cate_id' id='cateList'>
 				<option value=0>默认分类</option>
-				<option value=2>xx2</option>
-				<option value=3>xx3</option>
 			</select>
 		</div>
 		<div class=tags>
 			请添加标签：该功能还在开发中。
 		</div>
 		<div class=submit>
-			<input type='button' id='send' value='提交'>
+			<input type='button' id='send'  class='btn blue' value='提交'>
 			<span id='hint'>提示文字</span>
 		</div>
 		
@@ -71,7 +69,34 @@ include('dawnPHP/mylib.php');
 </div>
 
 <script>
-	//
+var u_id=<?php echo $uid;?>;
+
+window.onload=function(){
+	//页面初始化 拉去下拉目录，当前显示为默认条目
+	var ajax=new Ajax();
+	//var url='doChangeCate.php?a=catelist';
+	var url='cateAction.php?a=category';
+	ajax.get(url,function(s){
+		var selection=$('cateList');
+		selection.innerHTML='';
+		var objs=eval("("+s+")");
+		if(objs.length==0){return;}
+		for(var i=0;i<objs.length;i++){
+			refreshCateSelection(objs[i],selection);
+		}
+	});
+	
+	//提交按钮
+	$('send').onclick=function(){
+		//1.检查是否为空
+		
+		//2.post方式提交
+		
+		//3.跳转回首页
+		
+	}
+	
+}
 </script>
 
 <?php include('footer.php');?>

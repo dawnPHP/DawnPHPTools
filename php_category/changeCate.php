@@ -50,7 +50,7 @@ include('dawnPHP/mylib.php');
 
 <form>
 <table id='item'>
-	<tr>
+	<!--tr>
 		<th>选择</th>
 		<th>条目标题</th>
 		<th>添加日期</th>
@@ -59,7 +59,7 @@ include('dawnPHP/mylib.php');
 		<td><input type='checkbox' onclick='toggleClass(this,4)' name='isSelect'></td>
 		<td>条目标题1王条目标题1军条目标题1亮</td>
 		<td>2015-12-11</td>
-	</tr>
+	</tr-->
 </table>
 </form>
 
@@ -116,19 +116,8 @@ window.onload=function(){
 	//页面初始化 显示默认分类的条目
 	showArticleListByCate(0,u_id);
 	
-	//[在管理条目页面中 修改条目分类]：显示所有分类
-	function refreshCateSelection(obj,selection){
-		//1.造dom
-		//Object {id: "22", name: "html", u_id: "2", u_rank: "1", count: 0}
-		var oOption=document.createElement('option');
-		oOption.setAttribute('value',obj['id']);
-		oOption.innerHTML=obj['name']+'('+ obj['count'] +')';
-		if(obj['u_rank']==-1){
-			oOption.setAttribute('selected','selected');
-		}
-		//2.插入selection
-		selection.appendChild(oOption);
-	}
+	//添加dom的函数在dom.js中
+	
 	
 	//如果改变目录，则刷新条目
 	$('cateList').onchange=function(){

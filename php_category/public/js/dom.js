@@ -135,3 +135,20 @@ function $(s){return document.getElementById(s);}
 		oUl.appendChild(oLi);
 
 	}
+	
+	
+	//在添加条目和移动条目中列出所有分类（条目数）
+	//[在管理条目页面中 修改条目分类]：显示所有分类
+	function refreshCateSelection(obj,selection){
+		//1.造dom
+		//Object {id: "22", name: "html", u_id: "2", u_rank: "1", count: 0}
+		var oOption=document.createElement('option');
+		oOption.setAttribute('value',obj['id']);
+		oOption.innerHTML=obj['name']+'('+ obj['count'] +')';
+		if(obj['u_rank']==-1){
+			oOption.setAttribute('selected','selected');
+		}
+		//2.插入selection
+		selection.appendChild(oOption);
+	}
+	
