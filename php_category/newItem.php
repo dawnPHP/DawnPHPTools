@@ -74,8 +74,4 @@ include('dawnPHP/mylib.php');
 	//
 </script>
 
-<div class=footer>
-	&copy;2015 All rights reserved;
-</div>
-</body>
-</html>
+<?php include('footer.php');?>
