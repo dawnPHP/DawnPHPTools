@@ -25,6 +25,8 @@ include('dawnPHP/mylib.php');
 .main .new div.submit input{width:100px;}
 .main .new div.submit span{ border:1px solid #aaa; border-radius:10px; padding:2px 10px; opacity:0.5}
 
+.main .new div.tags input{  padding:2px 10px; width:70%;}
+
 
 </style>
 </head>
@@ -42,7 +44,8 @@ include('dawnPHP/mylib.php');
 
 <div class=main>
 	
-	<div class=new>
+	<div class=new id='new'>
+		<form method='post' action='cateAction.php?a=newItem'>
 		<div class=title>
 			<input type=text name=title placeholder="请输入标题" />
 		</div>
@@ -56,7 +59,9 @@ include('dawnPHP/mylib.php');
 			</select>
 		</div>
 		<div class=tags>
-			请添加标签：该功能还在开发中。
+			请添加标签：
+			<input type='text' placeholder='该功能还在开发中' name='tags' class='tags' />
+			
 		</div>
 		<div class=submit>
 			<input type='button' id='send'  class='btn blue' value='提交'>
@@ -65,32 +70,42 @@ include('dawnPHP/mylib.php');
 		
 		<hr>
 		<a href='index.php'><input type='button' class='btn' value='&lt;&lt;返回首页(放弃修改)' /></a>
+		</form>
 	</div>
 </div>
 
 <script>
 var u_id=<?php echo $uid;?>;
 
+
 window.onload=function(){
 	//页面初始化 拉去下拉目录，当前显示为默认条目
-	var ajax=new Ajax();
-	//var url='doChangeCate.php?a=catelist';
-	var url='cateAction.php?a=category';
-	ajax.get(url,function(s){
-		var selection=$('cateList');
-		selection.innerHTML='';
-		var objs=eval("("+s+")");
-		if(objs.length==0){return;}
-		for(var i=0;i<objs.length;i++){
-			refreshCateSelection(objs[i],selection);
-		}
-	});
+	initCateList($('cateList'));
 	
 	//提交按钮
 	$('send').onclick=function(){
+		//获取dom
+		var f=document.forms[0];
+		oTitle=f.title;
+		oContent=f.content;
+		oCate=f.cate_id;
+		oTags=f.tags;
 		//1.检查是否为空
+		if(oTitle.value==''){
+			alert('标题不能为空！');
+			oTitle.focus();
+			return;
+		}
+		if(oContent.value==''){
+			alert('内容不能为空！');
+			oContent.focus();
+			return;
+		}
 		
 		//2.post方式提交
+		var ajax=new Ajax();
+		f.submit();
+		
 		
 		//3.跳转回首页
 		

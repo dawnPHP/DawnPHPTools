@@ -138,6 +138,27 @@ function $(s){return document.getElementById(s);}
 	
 	
 	//在添加条目和移动条目中列出所有分类（条目数）
+	//初始化下拉框中的分类
+	function initCateList(selection,newSelection){
+		var newSelection=newSelection||'';//如果没有值，则为空
+		//var selection=selection;
+		var ajax=new Ajax();
+		//var url='doChangeCate.php?a=catelist';
+		var url='cateAction.php?a=category';
+		ajax.get(url,function(s){
+			selection.innerHTML='';
+			var objs=eval("("+s+")");
+			if(objs.length==0){return;}
+			for(var i=0;i<objs.length;i++){
+				refreshCateSelection(objs[i],selection);
+				if(newSelection!=''){
+					newSelection.innerHTML=selection.innerHTML;
+				}
+			}
+		});
+	}
+	
+	//在添加条目和移动条目中列出所有分类（条目数）
 	//[在管理条目页面中 修改条目分类]：显示所有分类
 	function refreshCateSelection(obj,selection){
 		//1.造dom

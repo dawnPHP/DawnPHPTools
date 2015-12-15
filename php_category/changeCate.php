@@ -98,20 +98,7 @@ function nullNotice(){
 
 window.onload=function(){
 	//页面初始化 拉去下拉目录，当前显示为默认条目
-	var ajax=new Ajax();
-	//var url='doChangeCate.php?a=catelist';
-	var url='cateAction.php?a=category';
-	ajax.get(url,function(s){
-		var selection=$('cateList');
-		var newSelection=$('newCateList');
-		selection.innerHTML='';
-		var objs=eval("("+s+")");
-		if(objs.length==0){return;}
-		for(var i=0;i<objs.length;i++){
-			refreshCateSelection(objs[i],selection);
-			newSelection.innerHTML=selection.innerHTML;
-		}
-	});
+	initCateList($('cateList'),$('newCateList'));
 	
 	//页面初始化 显示默认分类的条目
 	showArticleListByCate(0,u_id);

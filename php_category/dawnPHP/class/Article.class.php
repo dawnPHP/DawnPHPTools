@@ -224,5 +224,37 @@ class Article{
 			return false; 
 		}
 	}
+	
+	//Article::add($o_id,$n_id,$a_id);
+	//新建条目
+	public static function add($uid,$title,$content,$cate_id,$tags){
+		//1.获取时间
+		$add_time=time();
+		//2.执行更新Article表
+		$query=sprintf('insert into %sarticle(title,content,add_time,u_id,cate_id) values("%s","%s",%d,%d,%d);',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($title,$GLOBALS['DB']),
+			mysql_real_escape_string($content,$GLOBALS['DB']),
+			mysql_real_escape_string($add_time,$GLOBALS['DB']),
+			mysql_real_escape_string($uid,$GLOBALS['DB']),
+			mysql_real_escape_string($cate_id,$GLOBALS['DB'])
+		);
+			
+		//debug($query);
+		$result = mysql_query($query, $GLOBALS['DB']);
+		
+
+//		lastlogin={$newTime} where aid={$aid};",$GLOBALS['DB']);
+		if($result){
+			if($tags!=''){
+				$a_id=mysql_insert_id();
+				return Tags::add($tags,$uid,$a_id);
+			}
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
 }
 ?> 
