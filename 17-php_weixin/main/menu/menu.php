@@ -17,4 +17,5 @@ echo '<hr>';
 $info=Menu::get($ACC_TOKEN,$data);
 print_r( $info );
 
+//因为没有花300元验证，所以没有菜单权限。
 //{"errcode":48001,"errmsg":"api unauthorized hint: [96DoGa0987vr22]"}

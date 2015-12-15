@@ -18,9 +18,21 @@ class ACC_TOKEN{
 		$result=json_decode($json,true);
 		//赋值给类的私有变量
 		$this->ACC_TOKEN=$result['access_token'];
+		
+		echo '<pre>';
+		print_r($result);
+		
+		/*
+		Array(
+			[access_token] => xxxx
+			[expires_in] => 7200  //单位:秒  2h
+		)*/
+		
+		
 	}
 	//提供方法
 	static function get(){
+		
 		$acc=new ACC_TOKEN();
 		return $acc->ACC_TOKEN;
 	}
