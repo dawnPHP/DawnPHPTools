@@ -6,14 +6,19 @@
 	可以使用sina的SAE空间。
 3.有一个微信号；
 	如果你没有公众账号，且未经认证，建议别玩，因为你很难玩转。
+	其实可以用测试号，可以使用所有接口：
+	微信接口测试，临时号：
+	http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
 
 
 基础篇-微信公共账号的分类数据交互原理 API接入
 提升篇-常用普通接口 消息发送和接收 事件推送
 高级篇-常用高级接口 网页授权模板消息 
 实战篇-实战项目实践所学
-调理挺清晰 期待
 
+
+问题记录：
+微信收发的是xml文件，不能使用常规post接受，需要如下方式接收post的原始数据：
 <?php $postdata = file_get_contents("php://input"); ?> 
 
 
@@ -61,5 +66,3 @@ http://www.imooc.com/view/509
 
 微信公众号 php开发 未认证 菜单
 http://zhidao.baidu.com/link?url=O_K5abakE68NWMTSgtzukEMAMk2jo-dzuuWsuoOYtRIXb24PyDtCroI-hPyu4WoleERWXg7Cbhmw-rAckyUrabRgZnDWYqV3QpAOz3GoB87
-
-
