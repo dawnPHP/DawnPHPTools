@@ -16,8 +16,10 @@
 	请填写接口配置信息，此信息需要你有自己的服务器资源，填写的URL需要正确响应微信发送的Token验证，请阅读消息接口使用指南。
 	URL:http://202.196.120.202/weixin/demo/index.php
 	Token:201412161997
-4.
-
+4.我的博客记录：
+	[0]微信号保密信息：http://firecloudphp.blog.163.com/blog/static/2508220702015111484428637/
+	[1]php实现微信公众平台开发-基础篇  http://firecloudphp.blog.163.com/blog/static/25082207020151114114419290/
+	[2]php实现微信公众平台开发-提升篇  http://firecloudphp.blog.163.com/blog/static/25082207020151115104615330/
 
 ===================================
 更新日志：

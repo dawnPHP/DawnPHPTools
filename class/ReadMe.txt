@@ -1,9 +1,9 @@
 ﻿theLatestVersion=
 {
-	Config:v1.0.0,
 	Dir: v1.0.3, 
 	File: v1.0.0, 
 	myAgentInfo:v1.0.0,
+	MyConfig:v1.0.0,
 	MyDebug: v1.0.2, 
 	UploadFile:v1.0.0,
 	ZoomImage:v1.0.0,
