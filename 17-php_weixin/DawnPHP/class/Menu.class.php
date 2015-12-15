@@ -1,4 +1,17 @@
 <?php
+/**=============================================
+ * class Menu 微信菜单类
+ *
+ * 操作微信菜单的增删改
+ * 类名时驼峰法，方法名是下划线法。
+ *
+ * @version		v1.0.0
+ * @revise		2015.12.15
+ * @date		2015.15.15
+ * @author		Dawn
+ * @email		JimmyMall@live.com
+ * @link		https://github.com/DawnEve/DawnPHPTools
+ =============================================*/
 class Menu{
 	private $info='';
 	
@@ -23,18 +36,12 @@ class Menu{
 			echo 'Errno'.curl_error($ch);
 		}
 
-		curl_close($ch);
-		
-		$this->info=$info;
+		curl_close($ch);		
+		$this->info=$info;//返回是否添加成功的json数据，如：
+		//{"errcode":48001,"errmsg":"api unauthorized hint: [qQs5La0718vr22]"}
 	}
-	//获取
-	static function get($ACC_TOKEN,$data){
-		//echo '<pre>';
-		//echo $ACC_TOKEN;
-		//echo '<hr>';
-		//echo $data;
-		//echo '<hr>';
-		
+	//添加菜单
+	static function add($ACC_TOKEN,$data){
 		$menu=new Menu($ACC_TOKEN,$data);
 		return $menu->info;
 	}
