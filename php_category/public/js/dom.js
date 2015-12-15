@@ -54,7 +54,11 @@ function $(s){return document.getElementById(s);}
 		
 		oSpan1=document.createElement('span');
 		oA1=document.createElement('a');
-		oA1.setAttribute('href','cateAction.php?a=del&a_id='+obj['id']);
+		//oA1.setAttribute('href','cateAction.php?a=del&a_id='+obj['id']);
+		oA1.setAttribute('href',"javascript:void(0);");
+		oA1.setAttribute('onclick',"del(this);");
+
+		oA1.setAttribute('title',obj['id']);
 		oA1.setAttribute('target','_blank');
 		oA1.innerHTML='删除';
 		oSpan1.appendChild(oA1);
@@ -80,6 +84,7 @@ function $(s){return document.getElementById(s);}
 		
 		oDiv=document.createElement('div');
 		oDiv.setAttribute('class','item');
+		oDiv.setAttribute('id','item'+obj['id']);
 		oDiv.appendChild(oA);
 		oDiv.appendChild(oP);
 		oDiv.appendChild(oDivStatus);

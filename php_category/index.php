@@ -103,6 +103,32 @@ window.onload=function(){
 	});
 	
 }
+
+function del(obj){
+	var id=obj.title;
+	//1.ajax删除
+	var ajax=new Ajax();
+	var url="cateAction.php?a=del&a_id="+id;
+	
+	ajax.get(url,function(){
+		//2.回调函数中删除dom
+		var dom=$('item'+id);
+		dom.parentElement.removeChild(dom);
+		//3.在分类汇总中减少1
+		var oCur=document.getElementsByClassName('current')[0];
+		oA=oCur.getElementsByTagName('a')[0];
+		var str=oA.innerHTML;
+		//正则表达式匹配()中的数字
+		var n1=str.indexOf('(')+1;
+		var n2=str.indexOf(')');
+		
+		var t1=str.substring(0,n1);
+		var t2=str.substring(n1,n2);
+		var t3=str.substring(n2);
+		
+		oA.innerHTML=t1 + (t2-1)+t3;
+	});
+}
 </script>
 
 <?php include('footer.php');?>

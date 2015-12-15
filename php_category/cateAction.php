@@ -59,5 +59,16 @@ switch ($action){
 			die('<a href="index.php">回到首页</a>');
 		}
 		break;
+	case 'del':
+		//删除文章
+		//debug($_POST);
+		$a_id=Dawn::get('a_id','');
+		if($a_id==''){
+			header("Location:index.php");
+			exit();
+		}
+		//进行删除
+		Article::delete($_SESSION['uid'],$a_id);
+		break;
 		
 }

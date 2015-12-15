@@ -254,7 +254,24 @@ class Article{
 		}else{
 			return false;
 		}
+	}
+	
+	//删除条目
+	public static function delete($uid,$a_id){
+		//1.执行删除Article表的条目
+		$query=sprintf('delete from %sarticle where u_id=%d and id=%d;',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($uid,$GLOBALS['DB']),
+			mysql_real_escape_string($a_id,$GLOBALS['DB'])
+		);
+			
 		
+		mysql_query($query, $GLOBALS['DB']);
+		if(mysql_affected_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
 ?> 
