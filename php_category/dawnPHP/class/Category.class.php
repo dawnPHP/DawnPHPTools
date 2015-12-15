@@ -233,7 +233,6 @@ c group by cate_id order by u_rank;',
 			}
 		}
 
-		
 		mysql_query($query,$GLOBALS['DB']);
 		$result=mysql_affected_rows();
 		

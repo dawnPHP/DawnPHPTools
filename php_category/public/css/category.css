@@ -1,5 +1,11 @@
 *{margin:0;padding:0;}
-.header, .main, .footer{ margin:5px auto;width:1000px;}
+.wrapper {
+    width: 1000px;
+    margin: 0px auto;
+    clear: both;
+    position: relative;
+}
+.header, .main{ margin:5px auto;width:1000px;}
 .main{
 	border:1px solid #eee;padding:5px;
 	overflow:hidden;
@@ -20,12 +26,18 @@
 	min-height:500px;
 	float:right;
 }
-.footer{text-align:center;color:#aaa; padding:20px 5px;border:1px solid #eee;
-	border-top: 2px solid #0096ff;
-	border-bottom: 2px solid #0096ff;
-	background:#ECF7FF;
-	opacity:0.5;
+
+
+.footer {
+    height: 150px;
+    width: 100%;
+    background: #141414;
+    position: relative;
+    color: #fff;
+    padding-top: 25px;
 }
+.footer p {line-height: 20px;}
+
 /*a细节*/
 .main  a{ padding:0px; margin:0px 7px; color:#0096ff; text-decoration:none;}
 .main  a:hover{ text-decoration:underline; }
@@ -48,7 +60,6 @@
 
 /*right细节*/
 .main .right .catalog{color:#aaa;margin-left:10px;} 
-.main .right .notice{color:#f00;text-align:center;} 
 .main .right .item{border-bottom:1px dashed #0096ff; padding:10px;} 
 .main .right .item a.title{font-size:25px;} 
 .main .right .item p{color:#aaa;} 
@@ -61,3 +72,5 @@
 .main .right .item .status .c2{width:50%;} 
 .main .right .item .status .c3{width:75%;} 
 .main .right .item .status .c4{width:100%;} 
+
+.notice{color:#f00;text-align:center;} 

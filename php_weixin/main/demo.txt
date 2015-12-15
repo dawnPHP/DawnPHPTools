@@ -1,0 +1,12 @@
+﻿微信接口测试，临时号：
+http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
+
+测试号信息
+appID:wx527dd89a15670d7e
+appsecret:d4624c36b6795d1d99dcf0547af5443d
+
+
+请填写接口配置信息，此信息需要你有自己的服务器资源，填写的URL需要正确响应微信发送的Token验证，请阅读消息接口使用指南。
+URL:http://202.196.120.202/weixin/demo/index.php
+Token:201412161997
+
