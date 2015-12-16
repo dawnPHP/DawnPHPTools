@@ -68,7 +68,7 @@ switch ($action){
 			exit();
 		}
 		//进行删除
-		Article::delete($_SESSION['uid'],$a_id);
+		echo Article::delete($_SESSION['uid'],$a_id);
 		break;
 		
 }

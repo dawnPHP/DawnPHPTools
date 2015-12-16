@@ -109,7 +109,6 @@ function getNoticeDom(){
 
 //根据jsons插入文章
 function showArticle(objs){
-console.log(objs.length);
 	//1.获取右侧父元素，并初始化
 	var oRight=document.getElementsByClassName('right')[0];
 	oRight.innerHTML="<span class='catalog'> 条目列表:</span>";
@@ -223,6 +222,10 @@ function refreshCateSelection(obj,selection){
 
 //删除条目：通过a_id
 function delItem(a_id){
+	//再次征求用户意见
+	
+	if(!confirm('警告：确实要删除该记录吗？['+a_id+']')){return;}
+
 	//1.获取元素
 	var oRight=document.getElementsByClassName('right')[0];
 	var nItemLength=oRight.getElementsByClassName('item').length;
@@ -231,18 +234,22 @@ function delItem(a_id){
 	var ajax=new Ajax();
 	var url="cateAction.php?a=del&a_id="+a_id;
 	
-	ajax.get(url,function(){
-		//1.1.如果是最后一个元素，直接初始化空数组
-		if(nItemLength==1){
-			showArticle([]);
+	ajax.get(url,function(isDelete){
+		if(isDelete){
+			//1.1.如果是最后一个元素，直接初始化空数组
+			if(nItemLength==1){
+				showArticle([]);
+			}else{
+				//否则仅仅去掉当前元素
+				//1.2.回调函数中删除dom
+				var dom=$('item'+a_id);
+				dom.parentElement.removeChild(dom);
+			}
+			
+			//1.3.重新初始化分类
+			initCate(u_id);//u_id调用全局变量todo
 		}else{
-			//否则仅仅去掉当前元素
-			//1.2.回调函数中删除dom
-			var dom=$('item'+a_id);
-			dom.parentElement.removeChild(dom);
+			alert('删除失败！请和管理员联系。');
 		}
-		
-		//1.3.重新初始化分类
-		initCate(u_id);//u_id调用全局变量todo
 	});
 }
