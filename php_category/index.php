@@ -85,50 +85,14 @@ window.onload=function(){
 		window.location='changeCate.php';
 	}	
 	
-	//请求目录
-	var url='cateAction.php?a=category&u_id='+u_id;
-	var ajax=new Ajax();
-	ajax.get(url,function(s){
-		var objs=eval("("+s+")");
-		if(objs.length==0){return;}
-		showCate(objs);
-	});
+
+	//初始化目录
+	initCate(u_id);
 	
-	//请求文章
-	var url2='cateAction.php?a=artilist&u_id='+u_id+'&cate_id='+cate_id;
-	var ajax2=new Ajax();
-	ajax2.get(url2,function(s){
-		var objs=eval("("+s+")");
-		showArticle(objs);
-	});
-	
+	//初始化文章
+	initArticle(u_id,cate_id);
 }
 
-function del(obj){
-	var id=obj.title;
-	//1.ajax删除
-	var ajax=new Ajax();
-	var url="cateAction.php?a=del&a_id="+id;
-	
-	ajax.get(url,function(){
-		//2.回调函数中删除dom
-		var dom=$('item'+id);
-		dom.parentElement.removeChild(dom);
-		//3.在分类汇总中减少1
-		var oCur=document.getElementsByClassName('current')[0];
-		oA=oCur.getElementsByTagName('a')[0];
-		var str=oA.innerHTML;
-		//正则表达式匹配()中的数字
-		var n1=str.indexOf('(')+1;
-		var n2=str.indexOf(')');
-		
-		var t1=str.substring(0,n1);
-		var t2=str.substring(n1,n2);
-		var t3=str.substring(n2);
-		
-		oA.innerHTML=t1 + (t2-1)+t3;
-	});
-}
 </script>
 
 <?php include('footer.php');?>
