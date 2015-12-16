@@ -46,7 +46,7 @@ include('dawnPHP/mylib.php');
 
 	<!-- 右侧开始 -->
 	<div class=right>
-		<span class='catalog'> 条目列表:</span>
+		
 		
 		<!--div class='item'>
 			<a class='title' href='detail.php?p_id=1' target="_blank">this is the title of item1</a>

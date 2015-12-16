@@ -26,7 +26,8 @@ function $(s){return document.getElementById(s);}
 
 //初始化文章
 function initArticle(u_id,cate_id){
-	var cate_id=cate_id||-1;	//默认参数
+	var cate_id=cate_id!=undefined?cate_id:-1;	//默认参数
+
 	var url='cateAction.php?a=artilist&u_id='+u_id+'&cate_id='+cate_id;
 	var ajax=new Ajax();
 	ajax.get(url,function(s){
@@ -82,7 +83,6 @@ function showCate(objs){
 
 //根据obj创建dom并返回
 function getCateDom(obj,isCurrent){
-
 	var isCurrent=isCurrent||false;
 	//2.创建目录dom
 	var oA=document.createElement('a');
@@ -99,19 +99,24 @@ function getCateDom(obj,isCurrent){
 	return oLi;
 }
 
+//获取提示dom元素
+function getNoticeDom(){
+	var oDiv=document.createElement('div');
+	oDiv.setAttribute('class','notice');
+	oDiv.innerHTML='该分类下条目数为0！';
+	return oDiv;
+}
 
 //根据jsons插入文章
 function showArticle(objs){
-	//1.获取右侧父元素，并清空
+console.log(objs.length);
+	//1.获取右侧父元素，并初始化
 	var oRight=document.getElementsByClassName('right')[0];
-	oRight.innerHTML='';
+	oRight.innerHTML="<span class='catalog'> 条目列表:</span>";
 	//2.如果没有条目
 	if(objs.length==0){
 		//2.1.没有条目时，造一个提示
-		var oDiv=document.createElement('div');
-		oDiv.setAttribute('class','notice');
-		oDiv.innerHTML='该分类下条目数为0！';
-		
+		var oDiv=getNoticeDom();
 		//2.2.插入文档结构中
 		oRight.appendChild(oDiv);
 		//2.3.直接返回
@@ -218,15 +223,26 @@ function refreshCateSelection(obj,selection){
 
 //删除条目：通过a_id
 function delItem(a_id){
+	//1.获取元素
+	var oRight=document.getElementsByClassName('right')[0];
+	var nItemLength=oRight.getElementsByClassName('item').length;
+	
 	//1.ajax删除
 	var ajax=new Ajax();
 	var url="cateAction.php?a=del&a_id="+a_id;
 	
 	ajax.get(url,function(){
-		//2.回调函数中删除dom
-		var dom=$('item'+a_id);
-		dom.parentElement.removeChild(dom);//如果没有元素怎么办？
-		//3.重新加载分类
+		//1.1.如果是最后一个元素，直接初始化空数组
+		if(nItemLength==1){
+			showArticle([]);
+		}else{
+			//否则仅仅去掉当前元素
+			//1.2.回调函数中删除dom
+			var dom=$('item'+a_id);
+			dom.parentElement.removeChild(dom);
+		}
+		
+		//1.3.重新初始化分类
 		initCate(u_id);//u_id调用全局变量todo
 	});
 }
