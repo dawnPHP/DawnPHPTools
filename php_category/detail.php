@@ -58,7 +58,7 @@ if($a_id==''){
 			<p class='flow_right'><a href='index.php'>后一篇</a>&gt;</p>
 			<p class='flow_left'>&lt;<a href='index.php'>前一篇</a></p>
 		</div>
-	
+
 		<div id=title>
 			这是标题
 		</div>
@@ -66,18 +66,18 @@ if($a_id==''){
 			<p class=box><span id=add_time>2015-10-25 10:10:10</span></p>
 			<p class=box>分类:<a id=cate href='index.php'>默认分类</a></p>
 			<p class=box id=tags>标签:<a href='index.php'>tag1</a><a href='index.php'>tag2</a></p>
-			<p class='box last'>更新于:<span id=modi_time>2015-10-25 10:10:10</span></p>
+			<p class='box last' id=modi_time_p>更新于:<span id=modi_time>2015-10-25 10:10:10</span></p>
 		</div>
 		<p class=clear></p>
-		<div class=content>
+		<div class=content id=content>
 			这是正文内容
 		</div>
 
 		<div class=control>
 			<span class='box'>阅读(<span class=''>0</span>)</span>
 			<span class='box'>评论(<span class=''>0</span>)</span>
-			<span class='box'><a href='index.php'>编辑</a></span>
-			<span class='box last'><a href='index.php'>删除</a></span>
+			<span class='box'><a id='edit' href='javascript:void(0);'>编辑</a></span>
+			<span class='box last'><a id='delete' href='javascript:void(0);'>删除</a></span>
 		</div>
 		<div class='context'>
 			<p class='flow_right'><a href='index.php'>后一篇</a>&gt;</p>
@@ -101,8 +101,10 @@ window.onload=function(){
 	var ajax=new Ajax();
 	var url='cateAction.php?a=detail&u_id='+u_id+'&a_id='+a_id;
 	ajax.get(url,function(str){
-		//console.log(str);
 		objs=eval("("+str+")");
+		if(objs[0].length==0){//如果没有主体信息，则直接造一个
+			objs[0]={id: "", title: "", content: "<p style='color:red'>该条目不存在，<a href='index.php'>点击回到首页</a></p>", modi_time: null, add_time: "",cate_id:''};
+		};
 		insertDetailPage(objs,oDetail);
 	});
 	
@@ -113,20 +115,23 @@ window.onload=function(){
 		
 		//1.处理main数据
 		//Object {id: "2", title: "title of html2", content: "content of html2", modi_time: null, add_time: "2015-12-10 09:48:27"…}
-		
+
 		$('title').innerHTML=main['title'];//标题
 		$('add_time').innerHTML=main['add_time'];//创建时间
 		
 		$('cate').innerHTML=main['cate_id'];//分类todo 获得分类名
 		$('cate').setAttribute('href','index.php?cate_id='+u_id);//修改url
 		
+		$('content').innerHTML=main['content'];//正文
+		
 		//标签没有 todo
 		$('tags').innerHTML="标签：无";//标签
 		
 		//更新日期
-		$('modi_time').innerHTML=main['add_time'];
 		if(main['modi_time']!=null){
 			$('modi_time').innerHTML=main['modi_time'];
+		}else{
+			 $('modi_time_p').remove();
 		}
 		
 		
@@ -141,7 +146,15 @@ window.onload=function(){
 		aContext[1].innerHTML=aContext[0].innerHTML;
 	}
 	
+	//编辑
+	$('edit').onclick=function(){
+		window.location='edit.php?a_id='+a_id;
+	}
 	
+	//删除
+	$('delete').onclick=function(){
+		delItem(a_id,true);
+	}
 	
 }
 </script>

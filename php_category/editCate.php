@@ -116,5 +116,4 @@ window.onload=function(){
 </script>
 
 </div>
-</body>
-<html>
+<?php include('footer.php');?>

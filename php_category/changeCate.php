@@ -24,7 +24,10 @@ include('dawnPHP/mylib.php');
 <pre>
 	功能：管理条目的分类：变更条目的分类。	
 </pre>
-<div class='category'>
+</div>
+
+
+<div class='category wrapper'>
 <a href='index.php'><input type='button' class=btn value='&lt;&lt;返回首页' /></a>
 
 <span class='spanceWidth'></span>
@@ -242,3 +245,5 @@ window.onload=function(){
 }
 
 </script>
+
+<?php include('footer.php');?>

@@ -237,14 +237,11 @@ function refreshCateSelection(obj,selection){
 
 
 //删除条目：通过a_id
-function delItem(a_id){
-	//再次征求用户意见
-	
-	if(!confirm('警告：确实要删除该记录吗？['+a_id+']')){return;}
+function delItem(a_id,delItemOnly){
+	var delItemOnly=delItemOnly||false;//是否仅仅删除条目
 
-	//1.获取元素
-	var oRight=document.getElementsByClassName('right')[0];
-	var nItemLength=oRight.getElementsByClassName('item').length;
+	//再次征求用户意见
+	if(!confirm('警告：确实要删除该记录吗？['+a_id+']')){return;}
 	
 	//1.ajax删除
 	var ajax=new Ajax();
@@ -252,6 +249,15 @@ function delItem(a_id){
 	
 	ajax.get(url,function(isDelete){
 		if(isDelete){
+			//在detail页面中删除后跳转到主页
+			if(delItemOnly){
+				location='index.php';
+				return;
+			}
+			
+			//1.获取元素
+			var oRight=document.getElementsByClassName('right')[0];
+			var nItemLength=oRight.getElementsByClassName('item').length;
 			//1.1.如果是最后一个元素，直接初始化空数组
 			if(nItemLength==1){
 				showArticle([]);

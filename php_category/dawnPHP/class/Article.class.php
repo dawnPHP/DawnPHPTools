@@ -287,9 +287,14 @@ class Article{
 		$result=mysql_query($query, $GLOBALS['DB']);
 		//主体信息
 		$row=mysql_fetch_assoc($result);
-		$row['add_time']=date("Y-m-d H:i:s", $row['add_time']);
-		if($row['modi_time']!=''){
-			$row['modi_time']=date("Y-m-d H:i:s", $row['modi_time']);
+		//如果是空集，直接返回空数组
+		if($row==false){
+			$row = array();
+		}else{
+			$row['add_time']=date("Y-m-d H:i:s", $row['add_time']);
+			if($row['modi_time']!=''){
+				$row['modi_time']=date("Y-m-d H:i:s", $row['modi_time']);
+			}
 		}
 
 		//返回主体信息
