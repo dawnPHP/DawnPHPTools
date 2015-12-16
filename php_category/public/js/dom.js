@@ -16,7 +16,23 @@ function rtrim(str){ //删除右边的空格
 //选取
 function $(s){return document.getElementById(s);}
 
+//time秒后跳转到url中
+function jump(url,time){
+	document.write('添加成功，正在跳转...');
+	setTimeout(function(){
+		window.location=url;
+	},time);
+}
 
+//检查是否为空
+function isEmpty(obj,desc){
+	if(obj.value==''){
+		alert(desc+'不能为空！');
+		obj.focus();
+		return true;
+	}
+	return false;
+}
 
 
 

@@ -88,27 +88,32 @@ window.onload=function(){
 		var f=document.forms[0];
 		oTitle=f.title;
 		oContent=f.content;
-		oCate=f.cate_id;
-		oTags=f.tags;
+		//oCate=f.cate_id;
+		//oTags=f.tags;
+
 		//1.检查是否为空
-		if(oTitle.value==''){
-			alert('标题不能为空！');
-			oTitle.focus();
-			return;
-		}
-		if(oContent.value==''){
-			alert('内容不能为空！');
-			oContent.focus();
-			return;
-		}
+		if(isEmpty(oTitle,'标题')) return;
+		if(isEmpty(oContent,'内容')) return;
 		
 		//2.post方式提交
 		var ajax=new Ajax();
-		f.submit();
+		var url='cateAction.php?a=newItem';
+		//拼凑参数
+		var para='title='+f.title.value
+		 + '&content='+f.content.value
+		 + '&cate_id='+f.cate_id.value
+		 + '&tags='+f.tags.value;
 		
-		
-		//3.跳转回首页
-		
+		ajax.post(url,para,function(str){
+			var str=trim(str);
+			if(str==false){
+				alert('添加失败！请告知管理员。');
+			}else{
+				alert('添加成功！['+str+']');
+				window.location='detail.php?a_id='+str;
+			}
+		});
+		//3.跳转回首页 jump('http://baidu.com',3000);
 	}
 	
 }

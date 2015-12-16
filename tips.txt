@@ -53,6 +53,17 @@ date("Y-m-d H:i:s", time());
 header("Location:result/index.htm");
 exit();
 
+6.js倒计时跳转。
+<script>
+jump('http://baidu.com',3000);
+function jump(url,time){
+	document.write('添加成功，正在跳转...');
+	setTimeout(function(){
+		window.location=url;
+	},time);
+}
+</script>
+
 ===================================
 ========= html to php =============
 ===================================

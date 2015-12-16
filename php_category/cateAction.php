@@ -48,17 +48,11 @@ switch ($action){
 		$tags=$dawn::post('tags','');
 		$uid=$_SESSION['uid'];
 		//作出判断，排除空值
-		
-		//进行插入
-		$result = Article::add($uid,$title,$content,$cate_id,$tags);
-		if($result){
-			header("Location:index.php");
-			exit();
-		}else{
-			echo mysql_error() . '<hr>';
-			die('<a href="index.php">回到首页</a>');
-		}
+
+		//插入数据库中
+		echo Article::add($uid,$title,$content,$cate_id,$tags);
 		break;
+		
 	case 'del':
 		//删除文章
 		//debug($_POST);

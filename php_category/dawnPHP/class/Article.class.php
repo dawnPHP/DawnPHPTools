@@ -242,15 +242,17 @@ class Article{
 			
 		//debug($query);
 		$result = mysql_query($query, $GLOBALS['DB']);
-		
+
 
 //		lastlogin={$newTime} where aid={$aid};",$GLOBALS['DB']);
 		if($result){
+			$a_id=mysql_insert_id();
+			
+			//处理标签
 			if($tags!=''){
-				$a_id=mysql_insert_id();
 				return Tags::add($tags,$uid,$a_id);
 			}
-			return true;
+			return $a_id;
 		}else{
 			return false;
 		}
@@ -264,7 +266,6 @@ class Article{
 			mysql_real_escape_string($uid,$GLOBALS['DB']),
 			mysql_real_escape_string($a_id,$GLOBALS['DB'])
 		);
-			
 		
 		mysql_query($query, $GLOBALS['DB']);
 		if(mysql_affected_rows()>0){
