@@ -1,5 +1,18 @@
 <?php
-class wechat
+/**=============================================
+ * WeChat 微信类
+ *
+ * 集成一些微信常用操作
+ * 类名时驼峰法，方法名是下划线法。
+ *
+ * @version		v1.0.0
+ * @revise		2015.12.15
+ * @date		2015.15.15
+ * @author		Dawn
+ * @email		JimmyMall@live.com
+ * @link		https://github.com/DawnEve/DawnPHPTools
+ =============================================*/
+class WeChat
 {
     //验证签名
     public function valid()

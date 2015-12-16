@@ -55,7 +55,7 @@
 }
 .main .left ul li a{display:block; text-decoration:none; color:#0096ff;}
 .main .left ul li.current{background:#ddd;}
-.main .left ul li.default{background:#efffef; margin-top:10px;}
+.main .left ul li#default{ margin:10px 0;}
 .main .left ul li a:hover{text-decoration:underline;}
 
 /*right细节*/

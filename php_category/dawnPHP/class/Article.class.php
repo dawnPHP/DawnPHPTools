@@ -173,7 +173,7 @@ class Article{
 			mysql_real_escape_string($uid,$GLOBALS['DB']),
 			mysql_real_escape_string($cate_id,$GLOBALS['DB']));
 		}
-		
+
 		$result=mysql_query($query,$GLOBALS['DB']);
 		
 		$arr=array();
@@ -223,6 +223,111 @@ class Article{
 		}else{
 			return false; 
 		}
+	}
+	
+	//Article::add($o_id,$n_id,$a_id);
+	//新建条目
+	public static function add($uid,$title,$content,$cate_id,$tags){
+		//1.获取时间
+		$add_time=time();
+		//2.执行更新Article表
+		$query=sprintf('insert into %sarticle(title,content,add_time,u_id,cate_id) values("%s","%s",%d,%d,%d);',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($title,$GLOBALS['DB']),
+			mysql_real_escape_string($content,$GLOBALS['DB']),
+			mysql_real_escape_string($add_time,$GLOBALS['DB']),
+			mysql_real_escape_string($uid,$GLOBALS['DB']),
+			mysql_real_escape_string($cate_id,$GLOBALS['DB'])
+		);
+
+		$result = mysql_query($query, $GLOBALS['DB']);
+		if($result){
+			$a_id=mysql_insert_id();
+			
+			//处理标签
+			if($tags!=''){
+				return Tags::add($tags,$uid,$a_id);
+			}
+			return $a_id;
+		}else{
+			return false;
+		}
+	}
+	
+	//删除条目
+	public static function delete($uid,$a_id){
+		//1.执行删除Article表的条目
+		$query=sprintf('delete from %sarticle where u_id=%d and id=%d;',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($uid,$GLOBALS['DB']),
+			mysql_real_escape_string($a_id,$GLOBALS['DB'])
+		);
+		
+		mysql_query($query, $GLOBALS['DB']);
+		if(mysql_affected_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	
+	
+	//获取条目详细信息
+	public static function detail($uid,$a_id){
+		$arr=array();
+		//1.执行查询Article表的条目
+		$query=sprintf('select * from %sarticle where  id=%d;',
+			//u_id=%d and
+			DB_TBL_PREFIX,
+			//mysql_real_escape_string($uid,$GLOBALS['DB']),
+			mysql_real_escape_string($a_id,$GLOBALS['DB'])
+		);
+		
+		$result=mysql_query($query, $GLOBALS['DB']);
+		//主体信息
+		$row=mysql_fetch_assoc($result);
+		//如果是空集，直接返回空数组
+		if($row==false){
+			$row = array();
+		}else{
+			$row['add_time']=date("Y-m-d H:i:s", $row['add_time']);
+			if($row['modi_time']!=''){
+				$row['modi_time']=date("Y-m-d H:i:s", $row['modi_time']);
+			}
+		}
+
+		//返回主体信息
+		$arr[]=$row;
+		mysql_free_result($result);
+		
+		
+		//获取上文信息；
+		$query=sprintf('select id,title from %sarticle where u_id=%d and id<%d order by id DESC limit 1;',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($uid,$GLOBALS['DB']),
+			mysql_real_escape_string($a_id,$GLOBALS['DB'])
+		);
+		$result=mysql_query($query, $GLOBALS['DB']);
+		$row=mysql_fetch_assoc($result);
+
+		$arr[]=$row;
+		mysql_free_result($result);
+		
+		//获取下文信息；
+		$query2= sprintf('select id,title from %sarticle where u_id=%d and id>%d order by id ASC limit 1;',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($uid,$GLOBALS['DB']),
+			mysql_real_escape_string($a_id,$GLOBALS['DB'])
+		);
+		$result=mysql_query($query2, $GLOBALS['DB']);
+		$row=mysql_fetch_assoc($result);
+
+		$arr[]=$row;
+		mysql_free_result($result);
+		
+		//返回数组
+		return $arr;
 	}
 }
 ?> 

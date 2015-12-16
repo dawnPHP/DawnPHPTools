@@ -1,7 +1,10 @@
 <?php
+
+//»ñÈ¡ACC_TOKEN
+
 include '../MyDebug.class.php';
 include 'Secret.class.php';
 include 'ACC_TOKEN.class.php';
 
-$acc=ACC_TOKEN::get();
-print_r( $acc );
+$ACC_TOKEN=ACC_TOKEN::get();
+print_r( $ACC_TOKEN );

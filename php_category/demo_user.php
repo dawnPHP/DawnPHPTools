@@ -3,9 +3,17 @@ session_start();
 define("BathPath","D:/xampp/htdocs/php/DawnPHPTools/php_category/dawnPHP/");
 include('dawnPHP/mylib.php');
 
+/*
+$_SESSION['uid'] = 2;
+$_SESSION['username'] = '王军亮';
+$_SESSION['lastlogin'] = 1449571811;
+$_SESSION['usergroup'] = 2;
+$_SESSION['lastBrowseTime'] = 1449571919;
+*/
+
 echo '<pre>';
-//print_r($_SESSION);
-print_r(time());
+print_r($_SESSION);
+//print_r(time());
 
 
 /**
