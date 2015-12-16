@@ -40,5 +40,10 @@ class Dawn{
 	 
 		return $array;
 	}
+	
+	//出错后显示 返回首页
+	public static function died(){
+		die('Invalid visit.<br><a href="index.php">返回首页</a>');
+	}
 
 }

@@ -24,7 +24,10 @@ include('dawnPHP/mylib.php');
 <pre>
 	功能：管理条目的分类：变更条目的分类。	
 </pre>
-<div class='category'>
+</div>
+
+
+<div class='category wrapper'>
 <a href='index.php'><input type='button' class=btn value='&lt;&lt;返回首页' /></a>
 
 <span class='spanceWidth'></span>
@@ -50,7 +53,7 @@ include('dawnPHP/mylib.php');
 
 <form>
 <table id='item'>
-	<tr>
+	<!--tr>
 		<th>选择</th>
 		<th>条目标题</th>
 		<th>添加日期</th>
@@ -59,7 +62,7 @@ include('dawnPHP/mylib.php');
 		<td><input type='checkbox' onclick='toggleClass(this,4)' name='isSelect'></td>
 		<td>条目标题1王条目标题1军条目标题1亮</td>
 		<td>2015-12-11</td>
-	</tr>
+	</tr-->
 </table>
 </form>
 
@@ -98,37 +101,13 @@ function nullNotice(){
 
 window.onload=function(){
 	//页面初始化 拉去下拉目录，当前显示为默认条目
-	var ajax=new Ajax();
-	//var url='doChangeCate.php?a=catelist';
-	var url='cateAction.php?a=category';
-	ajax.get(url,function(s){
-		var selection=$('cateList');
-		var newSelection=$('newCateList');
-		selection.innerHTML='';
-		var objs=eval("("+s+")");
-		if(objs.length==0){return;}
-		for(var i=0;i<objs.length;i++){
-			refreshCateSelection(objs[i],selection);
-			newSelection.innerHTML=selection.innerHTML;
-		}
-	});
+	initCateList($('cateList'),$('newCateList'));
 	
 	//页面初始化 显示默认分类的条目
 	showArticleListByCate(0,u_id);
 	
-	//[在管理条目页面中 修改条目分类]：显示所有分类
-	function refreshCateSelection(obj,selection){
-		//1.造dom
-		//Object {id: "22", name: "html", u_id: "2", u_rank: "1", count: 0}
-		var oOption=document.createElement('option');
-		oOption.setAttribute('value',obj['id']);
-		oOption.innerHTML=obj['name']+'('+ obj['count'] +')';
-		if(obj['u_rank']==-1){
-			oOption.setAttribute('selected','selected');
-		}
-		//2.插入selection
-		selection.appendChild(oOption);
-	}
+	//添加dom的函数在dom.js中
+	
 	
 	//如果改变目录，则刷新条目
 	$('cateList').onchange=function(){
@@ -266,3 +245,5 @@ window.onload=function(){
 }
 
 </script>
+
+<?php include('footer.php');?>

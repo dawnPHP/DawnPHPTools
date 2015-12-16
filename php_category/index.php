@@ -46,7 +46,7 @@ include('dawnPHP/mylib.php');
 
 	<!-- 右侧开始 -->
 	<div class=right>
-		<span class='catalog'> 条目列表:</span>
+		
 		
 		<!--div class='item'>
 			<a class='title' href='detail.php?p_id=1' target="_blank">this is the title of item1</a>
@@ -85,24 +85,14 @@ window.onload=function(){
 		window.location='changeCate.php';
 	}	
 	
-	//请求目录
-	var url='cateAction.php?a=category&u_id='+u_id;
-	var ajax=new Ajax();
-	ajax.get(url,function(s){
-		var objs=eval("("+s+")");
-		if(objs.length==0){return;}
-		showCate(objs);
-	});
+
+	//初始化目录
+	initCate(u_id);
 	
-	//请求文章
-	var url2='cateAction.php?a=artilist&u_id='+u_id+'&cate_id='+cate_id;
-	var ajax2=new Ajax();
-	ajax2.get(url2,function(s){
-		var objs=eval("("+s+")");
-		showArticle(objs);
-	});
-	
+	//初始化文章
+	initArticle(u_id,cate_id);
 }
+
 </script>
 
 <?php include('footer.php');?>

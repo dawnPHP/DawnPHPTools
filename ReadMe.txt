@@ -26,6 +26,8 @@
 
 [autoload]	15-php_autoload_class(可以带namespace)
 [ORM]	16-php_user_model_dawnPHP（我的OOP框架、ORM模型）
+[wechat][微信]	17-php_weixin（微信开发）
+[config]	18-php_config_class（基于数组）
 
 -----------------------------------
 ===================================
@@ -52,6 +54,9 @@
 [2015-11-24]	14-php_short_tags
 [2015-12-08]	15-php_autoload_class(可以带namespace)
 [2015-12-09]	16-php_user_model_dawnPHP（我的OOP框架、ORM模型）
+[2015-12-15]	17-php_weixin（微信开发）
+[2015-12-15]	18-php_config_class（基于数组）
+
 
 -----------------------------------
 ===================================
@@ -67,6 +72,8 @@
 13-php_getUserInfo	{myAgentInfo: v1.0.0}
 15-php_autoload_class(可以带namespace)
 16-php_user_model_dawnPHP（我的OOP框架、ORM模型）dawnPHP v0.1.0
+17-php_weixin（微信开发） {MyDebug: v1.0.2}
+18-php_config_class（基于数组） {Config: v1.0.0}
 
 -----------------------------------
 ===================================

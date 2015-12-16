@@ -7,7 +7,7 @@
 .category input{padding:10px;margin:10px; border:0px; 
 	border-bottom:1px #000 solid;}
 .category input[type='text']{width:90%;height:100%;}
-.category .spanceWidth{ display:line-block; margin:0 15px;}
+.category .spanceWidth{ display:line-block; margin:0 10px;}
 .category .bold{background-color: #ffffd5!important; border-color: rgba(255,255,255,.6);}
 
 
@@ -17,3 +17,18 @@ input.btn:hover{background:#0096ff;color:#fff;}
 
 input.blue{background:#0096ff;color:#fff; border:1px solid #0096ff;}
 input.blue:hover{ font-weight: bold;}
+
+
+/*添加新条目*/
+.main .new{border:1px solid #fefefe; padding:2px;}
+.main .new div{border-top:1px solid #fefefe;
+	padding:2px;margin:5px;
+}
+.main .new div input{padding:10px;margin:5px; width:100%;}
+.main .new div.content textarea{padding:10px;margin:5px; height:200px;}
+.main .new div.cate select{min-width:300px;}
+.main .new div.submit input{width:100px;}
+.main .new div.submit span{ border:1px solid #aaa; border-radius:10px; padding:2px 10px; opacity:0.5}
+
+.main .new div.tags input{  padding:2px 10px; width:70%;}
+
