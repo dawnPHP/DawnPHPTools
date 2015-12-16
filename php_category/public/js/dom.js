@@ -23,9 +23,10 @@ function $(s){return document.getElementById(s);}
 //==============================	
 //dom操作，文档内部专用
 //==============================
-	
+
 //初始化文章
 function initArticle(u_id,cate_id){
+	var cate_id=cate_id||-1;	//默认参数
 	var url='cateAction.php?a=artilist&u_id='+u_id+'&cate_id='+cate_id;
 	var ajax=new Ajax();
 	ajax.get(url,function(s){
@@ -79,7 +80,7 @@ function showCate(objs){
 	}
 }
 
-//根据obj创建dom并插入到ul中
+//根据obj创建dom并返回
 function getCateDom(obj,isCurrent){
 
 	var isCurrent=isCurrent||false;
@@ -92,7 +93,7 @@ function getCateDom(obj,isCurrent){
 		oLi.setAttribute('class','current');
 	}
 	if(obj['u_rank']==-1){
-		oLi.setAttribute('class','default');
+		oLi.setAttribute('id','default');
 	}
 	oLi.appendChild(oA);
 	return oLi;
@@ -101,73 +102,77 @@ function getCateDom(obj,isCurrent){
 
 //根据jsons插入文章
 function showArticle(objs){
+	//1.获取右侧父元素，并清空
+	var oRight=document.getElementsByClassName('right')[0];
+	oRight.innerHTML='';
+	//2.如果没有条目
 	if(objs.length==0){
+		//2.1.没有条目时，造一个提示
 		var oDiv=document.createElement('div');
 		oDiv.setAttribute('class','notice');
 		oDiv.innerHTML='该分类下条目数为0！';
 		
-		//3.插入文档结构中
-		var oRight=document.getElementsByClassName('right')[0];
+		//2.2.插入文档结构中
 		oRight.appendChild(oDiv);
-
+		//2.3.直接返回
 		return;
 	}
-	//1.对objs循环
+	//3.如果有元素
+	//3.1.对objs循环
 	for(var i=0;i<objs.length;i++){
-		var obj=objs[i];
-		insertArticleDom(obj);
+		//3.2创建dom对象
+		var oDiv=getArticleDom(objs[i]);
+		//3.3插入父文档流
+		oRight.appendChild(oDiv);
 	}
 }
 
 //根据obj插入文章dom
-function insertArticleDom(obj){
-	//2.创建目录dom
+function getArticleDom(obj){
+	//2.创建文章dom
 	var oA=document.createElement('a');
 	oA.setAttribute('class','title');
 	oA.setAttribute('href','detail.php?a_id='+obj['id']);
 	oA.setAttribute('target','_blank');
 	oA.innerHTML=obj['title'];
 	
-	oSpan1=document.createElement('span');
-	oA1=document.createElement('a');
+	var oSpan1=document.createElement('span');
+	var oA1=document.createElement('a');
 	//oA1.setAttribute('href','cateAction.php?a=del&a_id='+obj['id']);
 	oA1.setAttribute('href',"javascript:void(0);");
 	oA1.setAttribute('onclick',"delItem("+obj['id']+");");
-
-	oA1.setAttribute('title',obj['id']);
+	//oA1.setAttribute('title',obj['id']);
 	oA1.setAttribute('target','_blank');
 	oA1.innerHTML='删除';
 	oSpan1.appendChild(oA1);
 	
-	oSpan2=document.createElement('span');
+	var oSpan2=document.createElement('span');
 	oA2=document.createElement('a');
 	oA2.setAttribute('href','edit.php?a_id='+obj['id']);
 	oA2.setAttribute('target','_blank');
 	oA2.innerHTML='修改';
 	oSpan2.appendChild(oA2);
 	
-	oP=document.createElement('p');
+	var oP=document.createElement('p');
 	oP.innerHTML=obj['add_time'];
 	oP.appendChild(oSpan1);
 	oP.appendChild(oSpan2);
 	
-	oDivBar=document.createElement('div');
+	var oDivBar=document.createElement('div');
 	oDivBar.setAttribute('class','bar c1');
 	
-	oDivStatus=document.createElement('div');
+	var oDivStatus=document.createElement('div');
 	oDivStatus.setAttribute('class','status');
 	oDivStatus.appendChild(oDivBar);
 	
-	oDiv=document.createElement('div');
+	var oDiv=document.createElement('div');
 	oDiv.setAttribute('class','item');
 	oDiv.setAttribute('id','item'+obj['id']);
 	oDiv.appendChild(oA);
 	oDiv.appendChild(oP);
 	oDiv.appendChild(oDivStatus);
 	
-	//3.插入文档结构中
-	var oRight=document.getElementsByClassName('right')[0];
-	oRight.appendChild(oDiv);
+	return oDiv;
 }
 
 	
@@ -220,7 +225,7 @@ function delItem(a_id){
 	ajax.get(url,function(){
 		//2.回调函数中删除dom
 		var dom=$('item'+a_id);
-		dom.parentElement.removeChild(dom);
+		dom.parentElement.removeChild(dom);//如果没有元素怎么办？
 		//3.重新加载分类
 		initCate(u_id);//u_id调用全局变量todo
 	});
