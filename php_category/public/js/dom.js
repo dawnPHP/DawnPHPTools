@@ -269,3 +269,54 @@ function delItem(a_id){
 		}
 	});
 }
+
+
+//
+//创建上下文菜单：detail页面
+function getContextDom(uDom,dDom){
+	//1.left 
+	if(uDom['id']==undefined){
+		uDom= {id: "", title: "已经是第一篇",'status':'start'};
+	}
+	oA2=document.createElement('a');
+	if(uDom['status']==undefined){
+		oA2.setAttribute('href','detail.php?a_id='+uDom['id']);
+	}
+	oA2.innerHTML=uDom['title'];
+
+
+	oP2=document.createElement('p');
+	oP2.setAttribute('class','flow_left');
+
+	if(uDom['status']==undefined){
+		oT2=document.createTextNode('<');
+		oP2.appendChild(oT2);
+	}
+
+	oP2.appendChild(oA2);
+	
+	//2.right
+	if(dDom['id']==undefined){
+		dDom= {id: "", title: "已经是最后一篇",status:'end'};
+	}
+	
+	oA=document.createElement('a');
+	if(dDom['status']==undefined){
+		oA.setAttribute('href','detail.php?a_id='+dDom['id']);
+	}
+	oA.innerHTML=dDom['title'];
+
+	oP=document.createElement('p');
+	oP.setAttribute('class','flow_right');
+	oP.appendChild(oA);
+
+	if(dDom['status']==undefined){
+		oT=document.createTextNode('>');
+		oP.appendChild(oT);
+	}
+
+	//3.0 返回
+	return [oP,oP2];
+}
+	
+	

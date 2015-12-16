@@ -173,7 +173,7 @@ class Article{
 			mysql_real_escape_string($uid,$GLOBALS['DB']),
 			mysql_real_escape_string($cate_id,$GLOBALS['DB']));
 		}
-		
+
 		$result=mysql_query($query,$GLOBALS['DB']);
 		
 		$arr=array();
@@ -239,12 +239,8 @@ class Article{
 			mysql_real_escape_string($uid,$GLOBALS['DB']),
 			mysql_real_escape_string($cate_id,$GLOBALS['DB'])
 		);
-			
-		//debug($query);
+
 		$result = mysql_query($query, $GLOBALS['DB']);
-
-
-//		lastlogin={$newTime} where aid={$aid};",$GLOBALS['DB']);
 		if($result){
 			$a_id=mysql_insert_id();
 			
@@ -273,6 +269,60 @@ class Article{
 		}else{
 			return false;
 		}
+	}
+	
+	
+	
+	//获取条目详细信息
+	public static function detail($uid,$a_id){
+		$arr=array();
+		//1.执行查询Article表的条目
+		$query=sprintf('select * from %sarticle where  id=%d;',
+			//u_id=%d and
+			DB_TBL_PREFIX,
+			//mysql_real_escape_string($uid,$GLOBALS['DB']),
+			mysql_real_escape_string($a_id,$GLOBALS['DB'])
+		);
+		
+		$result=mysql_query($query, $GLOBALS['DB']);
+		//主体信息
+		$row=mysql_fetch_assoc($result);
+		$row['add_time']=date("Y-m-d H:i:s", $row['add_time']);
+		if($row['modi_time']!=''){
+			$row['modi_time']=date("Y-m-d H:i:s", $row['modi_time']);
+		}
+
+		//返回主体信息
+		$arr[]=$row;
+		mysql_free_result($result);
+		
+		
+		//获取上文信息；
+		$query=sprintf('select id,title from %sarticle where u_id=%d and id<%d order by id DESC limit 1;',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($uid,$GLOBALS['DB']),
+			mysql_real_escape_string($a_id,$GLOBALS['DB'])
+		);
+		$result=mysql_query($query, $GLOBALS['DB']);
+		$row=mysql_fetch_assoc($result);
+
+		$arr[]=$row;
+		mysql_free_result($result);
+		
+		//获取下文信息；
+		$query2= sprintf('select id,title from %sarticle where u_id=%d and id>%d order by id ASC limit 1;',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($uid,$GLOBALS['DB']),
+			mysql_real_escape_string($a_id,$GLOBALS['DB'])
+		);
+		$result=mysql_query($query2, $GLOBALS['DB']);
+		$row=mysql_fetch_assoc($result);
+
+		$arr[]=$row;
+		mysql_free_result($result);
+		
+		//返回数组
+		return $arr;
 	}
 }
 ?> 

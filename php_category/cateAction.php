@@ -34,6 +34,14 @@ switch ($action){
 		$articles=Article::getList($cur_uid,$cate_id);	
 		echo json_encode($articles);
 		break;
+	case 'detail':
+		//返回文章详细信息
+		$a_id=Dawn::get('a_id','');
+		//判断是否为空
+		
+		$cate=Article::detail($uid,$a_id);	
+		echo json_encode($cate);
+		break;
 	case 'change_cate':
 		//debug($_POST);
 		//要改变目录的条目id数组
@@ -55,7 +63,6 @@ switch ($action){
 		
 	case 'del':
 		//删除文章
-		//debug($_POST);
 		$a_id=Dawn::get('a_id','');
 		if($a_id==''){
 			header("Location:index.php");

@@ -92,9 +92,19 @@ mysql> desc user;
 		[3] fix[删除条目时唯一条目怎么不显示提示？]通过优化delItem函数。
 	-[5] 删除条目前弹出确认框。
 	-[6] 添加后跳转到详细信息页面。
-4.显示详细信息。
+4.显示详细信息页面
+	-[1] 根据添加页面制作显示页面。详情显示页面。
+	-
+	
+	===========================
+	mysql上一条 下一条：http://blog.csdn.net/tengdazhang770960436/article/details/39996705
+	SELECT * FROM `user` where userId>3 ORDER BY userId ASC LIMIT 0,1;
+	SELECT * FROM `user` where userId<3 ORDER BY userId desc LIMIT 0,1;
+	===========================
 
-修改页面的功能
+
+
+	- 修改页面的功能
 	
 	
 	

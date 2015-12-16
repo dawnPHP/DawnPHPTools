@@ -14,21 +14,6 @@ include('dawnPHP/mylib.php');
 <link rel="stylesheet" href="public/css/edit.css" />
 <script src='public/js/ajaxObjPrototype.js'></script>
 <script src='public/js/dom.js'></script>
-<style>
-.main .new{border:1px solid #fefefe; padding:2px;}
-.main .new div{border-top:1px solid #fefefe;
-	padding:2px;margin:5px;
-}
-.main .new div input{padding:10px;margin:5px; width:100%;}
-.main .new div.content textarea{padding:10px;margin:5px; height:200px;}
-.main .new div.cate select{min-width:300px;}
-.main .new div.submit input{width:100px;}
-.main .new div.submit span{ border:1px solid #aaa; border-radius:10px; padding:2px 10px; opacity:0.5}
-
-.main .new div.tags input{  padding:2px 10px; width:70%;}
-
-
-</style>
 </head>
 
 <body>
