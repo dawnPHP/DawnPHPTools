@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 //自定义的微信操作类（保密内容）
 //http://mp.weixin.qq.com/wiki/6/13dd4f521070e946f6ba12cedadba9a2.html
 
@@ -16,18 +16,22 @@ class WeChat{
 	}
 	
 	//curl函数是用来访问http、https、ftp、ssh等协议的
-	public function _request($curl,$https=true,$method='get',$data='null'){
+	public function _request($curl,$https=true,$method='get',$data=null){
 		$ch=curl_init();
 		curl_setopt($ch, CURLOPT_URL, $curl);
 		curl_setopt($ch, CURLOPT_HEADER, false);//是否需要头部
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);//是否转发到变量，否则输出
+		
 		if($https){
 			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
 			curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,true);
 		}
 		if($method=='POST'){
 			curl_setopt($ch,CURLOPT_POST,true); 
-			curl_setopt($ch,CURLOPT_POSTFIELDS,$data);//传输的值
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+			 
+			//curl_setopt($ch,CURLOPT_POST,true); 
+			//curl_setopt($ch,CURLOPT_POSTFIELDS,$data);//传输的值
 		}
 		$content=curl_exec($ch);
 		curl_close($ch);
@@ -72,12 +76,13 @@ class WeChat{
 		}
 		//网址
 		$url='https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=' . $this->_getAccessToken();
+		
 		//post请求
 		$content= $this->_request($url,true,'POST',$data);
 		//解码
-		$json=json_decode($content);
-		print_r($content);
-		return $json->ticket;
+		$obj=json_decode($content);
+		//返回ticket
+		return $obj->ticket;
 	}
 	
 	//获取二维码图
@@ -101,10 +106,12 @@ class WeChat{
 * 场景就是一个编号。
 */
 $wc=new WeChat('wx527dd89a15670d7e','d4624c36b6795d1d99dcf0547af5443d','');
-//echo $wc->_getTicket(1);
+echo $wc->_getTicket(1);
+//{"ticket":"gQFS7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1QwWE9VaVBsU253enFhd3h2R3ZwAAIE1SByVgMEgDoJAA==","expire_seconds":604800,"url":"http:\/\/weixin.qq.com\/q\/T0XOUiPlSnwzqawxvGvp"}
+//gQFS7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1QwWE9VaVBsU253enFhd3h2R3ZwAAIE1SByVgMEgDoJAA==
 
-header('Content-type:image/jpeg');
-echo $wc->_getQRCode(1);
+//header('Content-type:image/jpeg');
+//echo $wc->_getQRCode(1);
 //权限不够{"errcode":48001,"errmsg":"api unauthorized hint: [Qy0125vr23]"}
 //===============================
 
