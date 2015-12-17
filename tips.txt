@@ -64,6 +64,11 @@ function jump(url,time){
 }
 </script>
 
+
+7.输出图像前加header
+header('Content-type:image/jpeg');
+
+
 ===================================
 ========= html to php =============
 ===================================
