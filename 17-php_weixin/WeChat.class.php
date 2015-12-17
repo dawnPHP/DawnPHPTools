@@ -96,8 +96,7 @@ class WeChat{
 		//get请求
 		$content= $this->_request($url);
 		return $content;
-	} 
-	
+	}
 }
 
 //===============================
