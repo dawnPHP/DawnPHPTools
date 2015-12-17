@@ -65,9 +65,9 @@ function jump(url,time){
 </script>
 
 
-7.输出图像前加header
+7.输出图像前加header，同时清空缓冲区
+ob_end_clean();
 header('Content-type:image/jpeg');
-
 
 ===================================
 ========= html to php =============

@@ -33,5 +33,5 @@ http://mp.weixin.qq.com/wiki/home/index.html
 
 001-curl 访问 百度。
 002-get_QRCode_ticket.php
-
+003-get_QRCode_image.php
 
