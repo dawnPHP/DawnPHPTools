@@ -125,7 +125,8 @@ class WeChat{
 		$data='keyword=' . $keyword;
 		$content = $this->_request($url,false,'POST',$data);
 		$obj=json_decode($content);
-		return $obj->answer;	
+		return htmlspecialchars( $obj->answer );	
+		//return $obj->answer;	
 	}
 	
 	

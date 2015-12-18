@@ -60,5 +60,6 @@ http://mp.weixin.qq.com/wiki/home/index.html
 005 - 一个基本可用的版本。准备开发聊天机器人。
 	006 - wechat类responseMsg方法中：判断文件类型，
 	007 - 第三方聊天机器人 JimmyTalk v1.0
+		视频中演讲者没做出效果，原因是该用get，他用了post。
 ------------------
 ===============================

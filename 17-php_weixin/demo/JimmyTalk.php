@@ -25,7 +25,7 @@ switch($keyword){
 		$answer='功能4 联系我们';
 		break;
 	case '5':
-		$answer='功能5 建议与意见';
+		$answer='<b>功能5</b> 建议与意见\n回复中不支持html标记。';
 		break;
 	default:
 		$answer="[该指令不能识别或还在开发中]\n请直接回复指令:\n1 查看地图; 2 查询酒店; \n3 查看天气; 4 联系我们; ";
