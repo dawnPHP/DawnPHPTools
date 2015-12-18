@@ -13,5 +13,5 @@ define('TOKEN','201412161997');
 
 //实例化，回应
 $wc=new WeChat(APPID, APPSECRET, TOKEN);
-echo $wc->_get_jsapi_ticket();
+echo $wc->valid_js();
 ?>

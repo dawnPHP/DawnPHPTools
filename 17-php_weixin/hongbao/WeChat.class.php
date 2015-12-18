@@ -279,8 +279,94 @@ class WeChat{
 		//{"errcode":0,"errmsg":"ok","ticket":"kgt8ON7yVITDhtdwci0qedkX_mGbPPUI03UhkSzirYvQUCI5o_OWmWL8myAxjtYTYZGRRO8q5LXojJrM1ZdhOQ","expires_in":7200}
 		//返回access_token
 		return $obj->ticket;
-	
 	}
+	
+	
+	//jsapi签名算法：没有实现，不知道干什么用。  wjl todo
+	function valid_js(){
+		//1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后
+		
+		// you must define TOKEN by yourself
+        if (!defined("TOKEN")) {
+            throw new Exception('TOKEN is not defined!');
+        }
+        
+        $signature = $_GET["signature"];
+        		
+        $noncestr = $_GET["nonce"];
+		$jsapi_ticket=$this->_get_jsapi_ticket();
+        $timestamp = $_GET["timestamp"];
+		$url='http://mp.weixin.qq.com?params=value';
+		
+		
+		$tmpArr = array($noncestr, $jsapi_ticket, $timestamp, $url);
+        // use SORT_STRING rule
+		sort($tmpArr, SORT_STRING);
+		$tmpStr = implode( $tmpArr );
+		$tmpStr_sha1 = sha1( $tmpStr );
+		echo $tmpStr_sha1;
+		echo '<hr>' .$signature;
+	}
+	
+	
+	
+	/****************************************************
+     * 微信带证书提交数据 - 微信红包使用
+     ****************************************************/
+
+    public function wxHttpsRequestPem($url, $vars, $second=30,$aHeader=array()){
+        $ch = curl_init();
+        //超时时间
+        curl_setopt($ch,CURLOPT_TIMEOUT,$second);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
+        //这里设置代理，如果有的话
+        //curl_setopt($ch,CURLOPT_PROXY, '10.206.30.98');
+        //curl_setopt($ch,CURLOPT_PROXYPORT, 8080);
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
+ 
+        //以下两种方式需选择一种
+ 
+        //第一种方法，cert 与 key 分别属于两个.pem文件
+        //默认格式为PEM，可以注释
+        curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
+        curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'/apiclient_cert.pem');
+        //默认格式为PEM，可以注释
+        curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
+        curl_setopt($ch,CURLOPT_SSLKEY,getcwd().'/apiclient_key.pem');
+ 
+        curl_setopt($ch,CURLOPT_CAINFO,'PEM');
+        curl_setopt($ch,CURLOPT_CAINFO,getcwd().'/rootca.pem');
+ 
+        //第二种方式，两个文件合成一个.pem文件
+        //curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'/all.pem');
+ 
+        if( count($aHeader) >= 1 ){
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $aHeader);
+        }
+ 
+        curl_setopt($ch,CURLOPT_POST, 1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$vars);
+        $data = curl_exec($ch);
+        if($data){
+            curl_close($ch);
+            return $data;
+        }
+        else {
+            $error = curl_errno($ch);
+            echo "call faild, errorCode:$error\n"; 
+            curl_close($ch);
+            return false;
+        }
+    }
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

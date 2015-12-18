@@ -2,6 +2,10 @@
 define("BathPath","D:/xampp/htdocs/php/DawnPHPTools/17-php_weixin/DawnPHP/");
 include('../dawnPHP/mylib.php');
 
+//============================
+// 1.添加菜单不成功时，请清除config.txt文件，再试。
+// 2.新添加的菜单24小时后才会看到效果，快速更新界面的方式：取消关注，再重新关注。
+//============================
 
 //执行微信菜单的添加、删除（没有实现）功能
 //菜单数据

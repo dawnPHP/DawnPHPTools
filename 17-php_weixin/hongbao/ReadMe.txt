@@ -26,14 +26,55 @@
 v0.008 开发红包功能。
 	[1] 获取 jsapi_ticket
 	http://mp.weixin.qq.com/wiki/11/74ad127cc054f6b80759c40f77ec03db.html
-	[2] ---获得jsapi_ticket之后，就可以生成JS-SDK权限验证的签名了。
+	[2]no---获得jsapi_ticket之后，就可以生成JS-SDK权限验证的签名了。
+		不知道干啥用的。没有实现。
+	
+	[3] 商户平台，红包接口：
+		官方：https://pay.weixin.qq.com/wiki/doc/api/cash_coupon.php?chapter=13_5
+		介绍：http://www.tiandiyoyo.com/2015/03/wechat_hongbao_by_php/
+		
+	
+	
+微信支付类：http://www.jb51.net/article/63299.htm
+		http://www.oschina.net/code/snippet_2276613_46605
+微信红包API接口（PHP） http://www.jyboke.com/web/55.html
+
+微信红包发放类：http://www.tiandiyoyo.com/2015/03/wechat_hongbao_api_for_php/
+
+
+微信红包随机生成算法（PHP版）{预先生成所有的红包}http://justcoding.iteye.com/blog/2210361
+红包算法（一次一算，太累）：http://justcoding.iteye.com/blog/2210359
+
+微信js-sdk说明：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html#.E6.AD.A5.E9.AA.A4.E4.B8.80.EF.BC.9A.E7.BB.91.E5.AE.9A.E5.9F.9F.E5.90.8D
+
+
+
+具体而言，网页授权流程分为四步：
+http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html
+
+
+微信支付途径：https://pay.weixin.qq.com/wiki/doc/api/index.html
+微信支付：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=3_1
 
 
 
 
 ---------------------------
-阿里云一年多少钱？
-29元最低的配置哦 不过对于学习够用了
+一年多少钱？
+阿里云 29元/月 最低的配置哦 不过对于学习够用了
+https://help.aliyun.com/document_detail/ecs/shopping-guide/buy-instance/price.html
+
+百度云 32元/月 
+http://bce.baidu.com/doc/BCH/Pricing.html#.E5.8C.85.E5.B9.B4.E5.8C.85.E6.9C.88.E8.AE.A1.E8.B4.B9
+
+腾讯云 10元/月？？？没硬盘？
+http://www.qcloud.com/product/cvm.html#price
+
+
+猪八戒的红包功能悬赏100元：
+http://task.zhubajie.com/5523429/
+
+
 
 ---------------------------
 微信支付
@@ -41,6 +82,9 @@ http://mp.weixin.qq.com/wiki/11/74ad127cc054f6b80759c40f77ec03db.html
 
 请注意该接口只能在你配置的支付目录下调用，同时需确保支付目录在JS接口安全域名下。
 微信支付开发文档：https://pay.weixin.qq.com/wiki/doc/api/index.html
+
+
+
 
 
 
