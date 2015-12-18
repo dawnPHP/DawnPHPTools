@@ -30,17 +30,25 @@ http://mp.weixin.qq.com/wiki/home/index.html
 返回一个json。
 
 
+下载官方实例程序
 第一次接入需要验证服务器是你的。
 就是修改token后，调用官方提供的代码中的valid方法。
+
+以后只要使用responseMsg方法就可以完成和微信用户的交互。
+通过接受微信平台发送的xml文件中的MsgType判断微信用户发送的内容。
+
+
+
 
 
 
 
 ===============================
-开发版本记录
+学习微信开发 版本记录
 ------------------
 001-curl 访问 百度。
 002-get_QRCode_ticket.php
 003-get_QRCode_image.php
+004-merge_with_3methodFromWX.php 合并了微信官方版demo的3个方法
 ------------------
 ===============================
