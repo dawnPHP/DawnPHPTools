@@ -50,5 +50,8 @@ http://mp.weixin.qq.com/wiki/home/index.html
 002-get_QRCode_ticket.php
 003-get_QRCode_image.php
 004-merge_with_3methodFromWX.php 合并了微信官方版demo的3个方法
+005-一个基本可用的版本。准备开发聊天机器人。
+
+
 ------------------
 ===============================

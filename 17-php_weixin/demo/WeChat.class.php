@@ -57,14 +57,11 @@ class WeChat{
                 {
 					//============================
 					switch($keyword){
-						case '帮助':
-							$contentStr = "1 查看地图; 2 查询酒店; \n3 查看天气; 4 查询联系方式; ";
-							break;
 						case '1':
 							$contentStr = "查看地图在开发中";
 							break;
 						default:
-							$contentStr = "[该指令不能识别或还在开发中]\n请直接回复数字指令.\n回复 帮助 查询指令信息。";
+							$contentStr = "[该指令不能识别或还在开发中]\n请直接回复指令:\n1 查看地图; 2 查询酒店; \n3 查看天气; 4 查询联系方式; ";
 							break;
 					}
                 }else{
