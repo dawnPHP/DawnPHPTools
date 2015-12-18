@@ -21,6 +21,19 @@
 	[1]php实现微信公众平台开发-基础篇  http://firecloudphp.blog.163.com/blog/static/25082207020151114114419290/
 	[2]php实现微信公众平台开发-提升篇  http://firecloudphp.blog.163.com/blog/static/25082207020151115104615330/
 
+5.文件夹demo中：聊天机器人的JimmyTalk
+	详细记录：demo/微信笔记2.txt
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 ===================================
 更新日志：
 

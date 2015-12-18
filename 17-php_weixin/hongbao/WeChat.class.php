@@ -4,7 +4,7 @@
 
 //合并官方3方法后的类。
 //include('DawnPHP/class/MyDebug.class.php');
-//v0.007
+//v0.008
 class WeChat{
 	private $_appid;
 	private $_appsecret;
@@ -43,7 +43,7 @@ class WeChat{
 				
 				//判断微信服务器发过来的文件类型
 				//http://mp.weixin.qq.com/wiki/17/fc9a27730e07b9126144d9c96eaf51f9.html
-				MyDebug::f($postObj->MsgType);
+				//MyDebug::f($postObj->MsgType);
 				switch($postObj->MsgType){
 					case "event"://0 事件
 						$this->_doEvent($postObj);
@@ -108,8 +108,9 @@ class WeChat{
 					$contentStr = "[该指令不能识别或还在开发中]\n请直接回复指令:\n1 查看地图; 2 查询酒店; \n3 查看天气; 4 查询联系方式; ";
 					break;
 				default:
+					$contentStr = "[该指令不能识别或还在开发中]\n请直接回复指令:\n1 查看地图; 2 查询酒店; \n3 查看天气; 4 查询联系方式; ";
 					//调用第三方聊天机器人接口
-					$contentStr = $this->_the3parth('http://202.196.120.202/weixin/demo/JimmyTalk.php',$keyword);//
+					//$contentStr = $this->_the3parth('http://202.196.120.202/weixin/demo/JimmyTalk.php',$keyword);//
 					break;
 			}
 		}else{
@@ -251,6 +252,42 @@ class WeChat{
 		curl_close($ch);
 		return $content;
 	}
+	
+	
+	//--------------------------------
+	//---获取jsapi_ticket的方法----------------
+	//--------------------------------
+	
+	public function _get_jsapi_ticket(){
+		$file='./jsapi_ticket.txt';
+		//文件存在，且不超时。保险起见，用比7200小的值
+		if(file_exists($file) && (time() - filemtime($file))<7000){
+			$content=file_get_contents($file);
+		}else{
+			//否则，重新请求微信服务器获取jsapi_ticket
+			$curl=sprintf('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=%s&type=jsapi', $this->_getAccessToken() );
+			
+			//获得新str
+			$content=$this->_request($curl);
+			//保存str到文件
+			file_put_contents($file,$content);
+		}
+		
+		//从str到json解码。
+		$obj=json_decode($content);//从str到json解码。
+		//echo $content . '<hr>';
+		//{"errcode":0,"errmsg":"ok","ticket":"kgt8ON7yVITDhtdwci0qedkX_mGbPPUI03UhkSzirYvQUCI5o_OWmWL8myAxjtYTYZGRRO8q5LXojJrM1ZdhOQ","expires_in":7200}
+		//返回access_token
+		return $obj->ticket;
+	
+	}
+	
+	
+	
+	
+	//--------------------------------
+	//---获取AccessToken方法----------
+	//--------------------------------
 	
 	//获取accessToken
 	public function _getAccessToken(){
