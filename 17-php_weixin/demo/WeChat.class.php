@@ -40,43 +40,165 @@ class WeChat{
                    the best way is to check the validity of xml by yourself */
                 libxml_disable_entity_loader(true);
               	$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-                $fromUsername = $postObj->FromUserName;
-                $toUsername = $postObj->ToUserName;
-                $keyword = trim($postObj->Content);
-                $time = time();
-                $textTpl = "<xml>
-							<ToUserName><![CDATA[%s]]></ToUserName>
-							<FromUserName><![CDATA[%s]]></FromUserName>
-							<CreateTime>%s</CreateTime>
-							<MsgType><![CDATA[%s]]></MsgType>
-							<Content><![CDATA[%s]]></Content>
-							<FuncFlag>0</FuncFlag>
-							</xml>";             
-           		$msgType = "text";
-				if(!empty( $keyword ))
-                {
-					//============================
-					switch($keyword){
-						case '1':
-							$contentStr = "查看地图在开发中";
-							break;
-						default:
-							$contentStr = "[该指令不能识别或还在开发中]\n请直接回复指令:\n1 查看地图; 2 查询酒店; \n3 查看天气; 4 查询联系方式; ";
-							break;
-					}
-                }else{
-                	$contentStr="Input something...";
-                }
 				
-				//============================
-				$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-				echo $resultStr;
-
+				//判断微信服务器发过来的文件类型
+				//http://mp.weixin.qq.com/wiki/17/fc9a27730e07b9126144d9c96eaf51f9.html
+				MyDebug::f($postObj->MsgType);
+				switch($postObj->MsgType){
+					case "event"://0 事件
+						$this->_doEvent($postObj);
+						break;
+					case 'text'://1 文本消息
+						$this->_doText($postObj);
+						break;
+					case 'image'://2 图片消息
+						$this->_doImage($postObj);
+						break;
+					case 'voice'://3 语音消息
+						$this->_doVoice($postObj);
+						break;
+					case 'video'://4 视频消息
+						$this->_doVideo($postObj);
+						break;
+					case 'shortvideo'://5 小视频消息
+						$this->_doShortvideo($postObj);
+						break;
+					case 'location'://6 地理位置消息
+						$this->_doLocation($postObj);
+						break;
+					case 'link'://7 链接消息
+						$this->_doLink($postObj);
+						break;
+					default:
+						echo 'something wrong';
+						$this->logger($postStr);
+						exit();
+				}
         }else {
         	echo "";
         	exit;
         }
     }
+	
+	//1.处理文本消息
+	function _doText($postObj){
+		MyDebug::f($postObj);
+		
+		$fromUsername = $postObj->FromUserName;
+		$toUsername = $postObj->ToUserName;
+		$keyword = trim($postObj->Content);
+		$time = time();
+		$textTpl = "<xml>
+					<ToUserName><![CDATA[%s]]></ToUserName>
+					<FromUserName><![CDATA[%s]]></FromUserName>
+					<CreateTime>%s</CreateTime>
+					<MsgType><![CDATA[%s]]></MsgType>
+					<Content><![CDATA[%s]]></Content>
+					<FuncFlag>0</FuncFlag>
+					</xml>";             
+		$msgType = "text";
+		if(!empty( $keyword ))
+		{
+			//============================
+			switch($keyword){
+				case '1':
+					$contentStr = "查看地图在开发中 from doText";
+					break;
+				case '帮助':
+					$contentStr = "[该指令不能识别或还在开发中]\n请直接回复指令:\n1 查看地图; 2 查询酒店; \n3 查看天气; 4 查询联系方式; ";
+					break;
+				default:
+					//调用第三方聊天机器人接口
+					$contentStr = $this->_the3parth('http://202.196.120.202/weixin/demo/JimmyTalk.php',$keyword);//
+					break;
+			}
+		}else{
+			$contentStr="Input something...";
+		}
+		//============================
+		$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+		echo $resultStr;
+	}
+	
+	//从第三方接口获取反馈
+	function _the3parth($url, $keyword){
+		$data='keyword=' . $keyword;
+		$content = $this->_request($url,false,'POST',$data);
+		$obj=json_decode($content);
+		return $obj->answer;	
+	}
+	
+	
+	
+	//1.处理图片消息
+	function _doImage($postObj){
+		MyDebug::f($postObj);
+		
+		$fromUsername = $postObj->FromUserName;
+		$toUsername = $postObj->ToUserName;
+		$keyword = trim($postObj->Content);
+		$time = time();
+		
+		$imageTpl="<xml>
+ <ToUserName><![CDATA[%s]]></ToUserName>
+ <FromUserName><![CDATA[%s]]></FromUserName>
+ <CreateTime>%s</CreateTime>
+ <MsgType><![CDATA[%s]]></MsgType>
+ <PicUrl><![CDATA[%s]]></PicUrl>
+ <MediaId><![CDATA[%s]]></MediaId>
+ <MsgId>%s</MsgId>
+ </xml>";
+		
+		$textTpl = "<xml>
+					<ToUserName><![CDATA[%s]]></ToUserName>
+					<FromUserName><![CDATA[%s]]></FromUserName>
+					<CreateTime>%s</CreateTime>
+					<MsgType><![CDATA[%s]]></MsgType>
+					<Content><![CDATA[%s]]></Content>
+					<FuncFlag>0</FuncFlag>
+					</xml>";             
+		$msgType = "text";
+		if(!empty( $keyword ))
+		{
+			//============================
+			switch($keyword){
+				case '1':
+					$contentStr = "查看地图在开发中 from doText";
+					break;
+				default:
+					$contentStr = "[该指令不能识别或还在开发中]\n请直接回复指令:\n1 查看地图; 2 查询酒店; \n3 查看天气; 4 查询联系方式; ";
+					break;
+			}
+		}else{
+			$contentStr="Input something...";
+		}
+		//============================
+		$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+		echo $resultStr;
+	}
+	
+	//0 事件
+	function _doEvent($postObj){ MyDebug::f($postObj->Event);}
+	//1 文本消息
+	//function _doText($postObj){ }
+	//2 图片消息
+	//function _doImage($postObj){ }
+	//3 语音消息
+	function _doVoice($postObj){ MyDebug::f($postObj);}
+	//4 视频消息
+	function _doVideo($postObj){ MyDebug::f($postObj);}
+	//5 小视频消息
+	function _doShortvideo($postObj){MyDebug::f($postObj); }
+	//6 地理位置消息
+	function _doLocation($postObj){ MyDebug::f($postObj);}
+	//7 链接消息
+	function _doLink($postObj){MyDebug::f($postObj); }
+	
+	
+	
+	//--------------------------------
+	//---官方的3个方法----------------
+	//--------------------------------
 	
 	//检查签名的官方函数
 	private function checkSignature()
