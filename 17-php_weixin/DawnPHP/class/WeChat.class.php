@@ -92,6 +92,7 @@ class WeChat
     private function receiveEvent($object)
     {
         $content = "";
+			MyDebug::f($object,'event.txt');
         switch ($object->Event)
         {
             case "subscribe":
@@ -104,7 +105,7 @@ class WeChat
             case "CLICK":
                 switch ($object->EventKey)
                 {
-                    case "COMPANY":
+                    case "tianQi":
                         $content = array();
                         $content[] = array("Title"=>"米欧光影工作室", "Description"=>"", "PicUrl"=>"http://miostudio.sinaapp.com/images/logo.png", "Url" =>"http://miostudio.sinaapp.com/");
                         break;

@@ -17,11 +17,11 @@ $data='
 		}]
 	},
 	{
-		"name":"苏州本地",
+		"name":"郑州本地",
 		"sub_button":[
 		{
 			"type":"click",
-			"name":"住在苏州",
+			"name":"住在郑州",
 			"key":"liveSuzhou"
 		}]
 	},

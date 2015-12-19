@@ -7,7 +7,7 @@
 3.有一个微信号；
 	如果你没有公众账号，且未经认证，建议别玩，因为你很难玩转。
 	其实可以用测试号，可以使用所有接口：
-	微信接口测试，临时号：
+	微信测试号：
 	http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
 
 
