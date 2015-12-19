@@ -4,7 +4,7 @@
 
 //合并官方3方法后的类。
 //include('DawnPHP/class/MyDebug.class.php');
-//v0.007
+//v0.008	118行 给出跳转函数函数
 class WeChat{
 	private $_appid;
 	private $_appsecret;
@@ -108,8 +108,22 @@ class WeChat{
 					$contentStr = "[该指令不能识别或还在开发中]\n请直接回复指令:\n1 查看地图; 2 查询酒店; \n3 查看天气; 4 查询联系方式; ";
 					break;
 				default:
+					//给出跳转函数函数
+					$redirect_uri='http://202.196.120.202/weixin/demo/aa.html';
+					$scope='snsapi_base';
+					$state='wjl888';
+					
+					$contentStr = sprintf('https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%sconnect_redirect=1#wechat_redirect',$this->_appid, $redirect_uri, $scope, $state);
+					
+					//$contentStr2='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx527dd89a15670d7e&redirect_uri=http%3a%2f%2f202.196.120.202%2fweixin%2fdemo%2faa.html&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
+					$contentStr=$redirect_uri;
+					
+					//test to do
+					MyDebug::f($contentStr,'url.txt');
+					
+					
 					//调用第三方聊天机器人接口
-					$contentStr = $this->_the3parth('http://202.196.120.202/weixin/demo/JimmyTalk.php',$keyword);//
+					//$contentStr = $this->_the3parth('http://202.196.120.202/weixin/demo/JimmyTalk.php',$keyword);//
 					break;
 			}
 		}else{

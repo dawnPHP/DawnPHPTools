@@ -29,10 +29,27 @@ v0.008 开发红包功能。
 	[2]no---获得jsapi_ticket之后，就可以生成JS-SDK权限验证的签名了。
 		不知道干啥用的。没有实现。
 	
-	[3] 商户平台，红包接口：
+	[3]no-- 商户平台，红包接口：
+		这是客服里的介绍：微信红包需要开微信支付http://kf.qq.com/faq/140225MveaUz150424uUBFRn.html
+	
+		1）接口发放
+	商户根据文档"【商户平台】现金红包API文档V2”进行开发，一次调用可以给一个指定用户发送一个指定金额的红包，满足多元化的运营需求；
+
+
+	
+	
 		官方：https://pay.weixin.qq.com/wiki/doc/api/cash_coupon.php?chapter=13_5
-		介绍：http://www.tiandiyoyo.com/2015/03/wechat_hongbao_by_php/
+		解说：http://www.tiandiyoyo.com/2015/03/wechat_hongbao_by_php/
+微信商户平台：https://pay.weixin.qq.com/wiki/doc/api/cash_coupon.php?chapter=10_4
+红包接口：https://pay.weixin.qq.com/wiki/doc/api/cash_coupon.php?chapter=13_5
 		
+	[4]-- 跳转  "scope参数错误或没有scope权限"
+		http://bbs.csdn.net/topics/391051153
+	
+	
+
+	
+	
 	
 	
 微信支付类：http://www.jb51.net/article/63299.htm

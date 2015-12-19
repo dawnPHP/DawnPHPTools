@@ -12,5 +12,6 @@ define('TOKEN','201412161997');
 
 //实例化，回应
 $wc=new WeChat(APPID, APPSECRET, TOKEN);
-$wc->responseMsg();
+//$wc->responseMsg();
+$wc->_getAccessToken();
 ?>
