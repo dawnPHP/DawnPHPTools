@@ -1,0 +1,189 @@
+
+===========================
+2015-12-18 12-37-20
+----------------------------
+SimpleXMLElement Object
+(
+    [0] => text
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-37-20
+----------------------------
+SimpleXMLElement Object
+(
+    [ToUserName] => gh_601f7cea9197
+    [FromUserName] => oLVn7vkJEZgmpSI6qgxUKYvbTcCo
+    [CreateTime] => 1450413397
+    [MsgType] => text
+    [Content] => 12
+    [MsgId] => 6229478106196312801
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-37-29
+----------------------------
+SimpleXMLElement Object
+(
+    [0] => text
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-37-29
+----------------------------
+SimpleXMLElement Object
+(
+    [ToUserName] => gh_601f7cea9197
+    [FromUserName] => oLVn7vkJEZgmpSI6qgxUKYvbTcCo
+    [CreateTime] => 1450413406
+    [MsgType] => text
+    [Content] => 3
+    [MsgId] => 6229478144851018478
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-37-33
+----------------------------
+SimpleXMLElement Object
+(
+    [0] => text
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-37-33
+----------------------------
+SimpleXMLElement Object
+(
+    [ToUserName] => gh_601f7cea9197
+    [FromUserName] => oLVn7vkJEZgmpSI6qgxUKYvbTcCo
+    [CreateTime] => 1450413410
+    [MsgType] => text
+    [Content] => 5
+    [MsgId] => 6229478162030887664
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-39-43
+----------------------------
+SimpleXMLElement Object
+(
+    [0] => text
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-39-43
+----------------------------
+SimpleXMLElement Object
+(
+    [ToUserName] => gh_601f7cea9197
+    [FromUserName] => oLVn7vkJEZgmpSI6qgxUKYvbTcCo
+    [CreateTime] => 1450413540
+    [MsgType] => text
+    [Content] => 好的
+    [MsgId] => 6229478720376636158
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-40-11
+----------------------------
+SimpleXMLElement Object
+(
+    [0] => text
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-40-11
+----------------------------
+SimpleXMLElement Object
+(
+    [ToUserName] => gh_601f7cea9197
+    [FromUserName] => oLVn7vkJEZgmpSI6qgxUKYvbTcCo
+    [CreateTime] => 1450413568
+    [MsgType] => text
+    [Content] => 5
+    [MsgId] => 6229478840635720450
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-40-44
+----------------------------
+SimpleXMLElement Object
+(
+    [0] => text
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-40-44
+----------------------------
+SimpleXMLElement Object
+(
+    [ToUserName] => gh_601f7cea9197
+    [FromUserName] => oLVn7vkJEZgmpSI6qgxUKYvbTcCo
+    [CreateTime] => 1450413601
+    [MsgType] => text
+    [Content] => 5
+    [MsgId] => 6229478982369641222
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-41-24
+----------------------------
+SimpleXMLElement Object
+(
+    [0] => text
+)
+
+
+===========================
+
+===========================
+2015-12-18 12-41-24
+----------------------------
+SimpleXMLElement Object
+(
+    [ToUserName] => gh_601f7cea9197
+    [FromUserName] => oLVn7vkJEZgmpSI6qgxUKYvbTcCo
+    [CreateTime] => 1450413641
+    [MsgType] => text
+    [Content] => 5
+    [MsgId] => 6229479154168333068
+)
+
+
+===========================

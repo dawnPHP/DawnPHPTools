@@ -1,4 +1,5 @@
 <?php
+session_start();
 define("BathPath","D:/xampp/htdocs/php/DawnPHPTools/php_category/dawnPHP/");
 include('dawnPHP/mylib.php');
 
@@ -20,15 +21,19 @@ include('dawnPHP/mylib.php');
 <div class='header'>
 	<h1>(php分类管理系统)php进度跟踪管理系统v1.0</h1>
 	<pre>
-	<a href='devLog.txt' target='_blank'>开发日志</a> | <a href='http://tieba.baidu.com/f?kw=php&fr=wwwt' target='_blank'>php吧</a> | index.php?cate_id=4&u_id=2
-	分类的增删改查。 | 	左边分类，右边是条目。默认不分页。
+	<a href='devLog.txt' target='_blank'>开发日志</a> | <a href='http://tieba.baidu.com/f?kw=php&fr=wwwt' target='_blank'>php吧</a> | <a href='demo_user.php'>登陆</a> | <a href='cateAction.php?a=logout'>退出</a> |	分类的增删改查。左边分类，右边是条目。默认不分页。
 	
 	[1]index.php?cate_id=-1&u_id=2 所有条目
 	[2]index.php?cate_id=0&u_id=2 默认分类
 	[3no] index.php?cate_id=-2&u_id=2 回收站
 	</pre>
 </div>
+<?php 
+if(!isset($_SESSION['uid'])){
+	die('还未登陆系统。请先登录。');
+}
 
+?>
 <div class=main>
 	<!-- 左侧开始 -->
 	<div class=left>

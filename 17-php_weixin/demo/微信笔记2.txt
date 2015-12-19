@@ -1,0 +1,65 @@
+﻿常见问题
+
+
+
+微信发送的都是xml数据，在后台是java或php没啥区别。
+
+微商，只要有企业号。
+支付功能：企业号一定有。
+
+学习时使用测试号。测试号是有有效时间的。
+微信测试号：http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
+======================
+传智播客
+时间2天：微信通信，二维码。
+
+关注公众号后，用户就有在本应用中的唯一openID。
+
+
+------------------
+微信开发官方文档：
+http://mp.weixin.qq.com/wiki/home/index.html
+
+------------------
+微信平台怎么相信第三方服务器？
+通过access_token。
+通过appId和appSecret获取access_token。
+有效期7200s，也就是2小时。过期需要重新请求。
+公众号调用微信接口时都需要access_token。
+是一个https协议。
+返回一个json。
+
+
+下载官方实例程序
+第一次接入需要验证服务器是你的。
+就是修改token后，调用官方提供的代码中的valid方法。
+
+以后只要使用responseMsg方法就可以完成和微信用户的交互。
+通过接受微信平台发送的xml文件中的MsgType判断微信用户发送的内容。
+
+
+消息类型
+1 文本消息 text
+2 图片消息 image
+3 语音消息 voice
+4 视频消息 video
+5 小视频消息 shortvideo
+6 地理位置消息 location
+7 链接消息 link
+
+
+
+
+===============================
+学习微信开发 版本记录
+------------------
+001-curl 访问 百度。
+002-get_QRCode_ticket.php
+003-get_QRCode_image.php
+004-merge_with_3methodFromWX.php 合并了微信官方版demo的3个方法
+005 - 一个基本可用的版本。准备开发聊天机器人。
+	006 - wechat类responseMsg方法中：判断文件类型，
+	007 - 第三方聊天机器人 JimmyTalk v1.0
+		视频中演讲者没做出效果，原因是该用get，他用了post。
+------------------
+===============================
