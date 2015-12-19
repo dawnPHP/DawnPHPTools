@@ -32,6 +32,8 @@ v0.008 开发红包功能。
 	[3]no-- 商户平台，红包接口：
 		这是客服里的介绍：微信红包需要开微信支付http://kf.qq.com/faq/140225MveaUz150424uUBFRn.html
 	
+	网页版accessToken：http://mp.weixin.qq.com/wiki/4/9ac2e7b1f1d22e9e57260f6553822520.html
+	
 		1）接口发放
 	商户根据文档"【商户平台】现金红包API文档V2”进行开发，一次调用可以给一个指定用户发送一个指定金额的红包，满足多元化的运营需求；
 
@@ -44,7 +46,7 @@ v0.008 开发红包功能。
 红包接口：https://pay.weixin.qq.com/wiki/doc/api/cash_coupon.php?chapter=13_5
 		
 	[4]-- 跳转  "scope参数错误或没有scope权限"
-		http://bbs.csdn.net/topics/391051153
+		网页样板：http://bbs.csdn.net/topics/391051153
 	
 	
 
