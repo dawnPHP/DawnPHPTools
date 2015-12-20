@@ -3,6 +3,16 @@
 php  ORM 实体关系映射(ORM):http://segmentfault.com/q/1010000000318125
 smarty
 thinkPHP/ci/yii/cakePHP/
+模板引擎
+静态化
+伪静态化
+路由
+
+跨域名单点登陆
+
+PHP设计模式系列 —— 适配器模式（Adapter / Wrapper）
+http://www.tuicool.com/articles/2eAbIvb
+
 
 
 ============New Words===============
