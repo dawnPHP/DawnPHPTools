@@ -29,6 +29,7 @@
 [wechat][微信]	17-php_weixin（微信开发）
 [config]	18-php_config_class（基于数组）
 [cURL]	19-php_cURL_domainPriceAPI(基于cURL采集数据)
+[目录]	20-php_category(基于目录的分类)
 
 -----------------------------------
 ===================================
@@ -58,6 +59,7 @@
 [2015-12-15]	17-php_weixin（微信开发）
 [2015-12-15]	18-php_config_class（基于数组）
 [2015-12-28]	19-php_cURL_domainPriceAPI(基于cURL采集数据)
+[2015-12-28]	20-php_category(基于目录的分类)
 
 
 -----------------------------------
@@ -77,6 +79,9 @@
 17-php_weixin（微信开发） {MyDebug: v1.0.2, cURL:比较初级}
 18-php_config_class（基于数组） {Config: v1.0.0}
 19-php_cURL_domainPriceAPI(基于cURL采集数据) {cURL:比较初级}
+
+比较推荐 20-php_category(基于目录的分类) 中类的结构，初步实现自动加载。
+
 
 -----------------------------------
 ===================================
