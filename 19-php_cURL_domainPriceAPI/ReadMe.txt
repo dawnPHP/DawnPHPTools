@@ -4,9 +4,10 @@ Log format for each tools:
 title: 19-php_cURL_domainPriceAPI(基于cURL采集数据)
 Description:基于cURL采集数据
 
-keywords:config、array
+keywords: cURL
 pros&cons: 
 	pros:使用了cURL。很好的欺骗服务器的工具。
+		实现了本地缓存json文件。
 	cons:
 
 version: v1.0.1

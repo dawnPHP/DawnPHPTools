@@ -28,6 +28,8 @@
 [ORM]	16-php_user_model_dawnPHP（我的OOP框架、ORM模型）
 [wechat][微信]	17-php_weixin（微信开发）
 [config]	18-php_config_class（基于数组）
+[cURL]	19-php_cURL_domainPriceAPI(基于cURL采集数据)
+[目录]	20-php_category(基于目录的分类)
 
 -----------------------------------
 ===================================
@@ -56,6 +58,8 @@
 [2015-12-09]	16-php_user_model_dawnPHP（我的OOP框架、ORM模型）
 [2015-12-15]	17-php_weixin（微信开发）
 [2015-12-15]	18-php_config_class（基于数组）
+[2015-12-28]	19-php_cURL_domainPriceAPI(基于cURL采集数据)
+[2015-12-28]	20-php_category(基于目录的分类)
 
 
 -----------------------------------
@@ -72,8 +76,12 @@
 13-php_getUserInfo	{myAgentInfo: v1.0.0}
 15-php_autoload_class(可以带namespace)
 16-php_user_model_dawnPHP（我的OOP框架、ORM模型）dawnPHP v0.1.0
-17-php_weixin（微信开发） {MyDebug: v1.0.2}
+17-php_weixin（微信开发） {MyDebug: v1.0.2, cURL:比较初级}
 18-php_config_class（基于数组） {Config: v1.0.0}
+19-php_cURL_domainPriceAPI(基于cURL采集数据) {cURL:比较初级}
+
+比较推荐 20-php_category(基于目录的分类) 中类的结构，初步实现自动加载。
+
 
 -----------------------------------
 ===================================
