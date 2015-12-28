@@ -1,0 +1,184 @@
+
+使用cURL采集数据  
+http://firecloudphp.blog.163.com/blog/static/2508220702015112744214269/
+
+
+
+有道是眼睛看到的都可以拿下来。
+
+需求：http://tieba.baidu.com/p/4234032244
+我猜测被4楼哥们抢走了。反正我做出来时发帖人说已经有人做出来了。
+
+六六 2015/12/26 18:25:47
+需求是抓取这个页面 http://www.west.cn/web/domaintrade/historyoftrade 的域名交易记录，每30分钟更新。
+案例参考chaomi.cc
+
+尝试1
+一看很简单，就是抓取然后匹配即可。
+	结果：很失败，用curl抓取后只有html框架，没有数据。
+	数据是后来用js填充的！直接抓取是不行了。
+
+尝试2
+接着找这个数据源。
+	打开chrome控制台，点network标签，只看XHR，发现2个，一个菜单一个历史。点击历史那一个文件：
+	
+
+点击之后弹出请求细节，可以看到请求地址。
+Request URL:http://www.west.cn/web/domaintrade/historyoftrade?have=&foreclose=&againforeclose=&type=&min_length=&max_length=&dom_ext=&p_type=&p_topmoney_low=&p_topmoney_top=&overtime_low=2015-12-01&overtime_top=2015-12-10&_csrf=cnBSTy41Q3pAFn8aXUcIKTs9ISZiByUfSgY2LWNXcw9GETkoH08mDA%3D%3D&page=1&pagesize=50
+
+图中.asp可见，该网站使用的asp技术。
+
+点击Response，发现服务器返回的确实是json数据：
+
+ 
+
+
+ 并且是get方式请求，很高兴，放到浏览器中直接访问是不是就行了？！
+
+	结果：很失望，放到浏览器出来的是页面，并不是期望中的json。
+	重复打开这个网页，比较几次的url发现，最后的_csrf值是不同的，这是什么规律呢？
+	可能是session_id之类的东西？不知道，不过可以试试。
+
+
+
+尝试3
+右击这个XHR连接，点重新请求XHR，结果成功请求一次。
+
+ 
+可以重复执行就好办，如果在这个页面直接执行是不是就解决了？
+编写了一个ajax请求，把返回值发送给本地服务器的php脚本，用php记录值。
+	结果：因为同源限制，不能发起ajax请求！
+	同源策略：必须是协议、域名、端口都相同才能发送ajax请求。
+	怎么突破同源策略呢？查资料，看网友们怎么说：
+	--  jsonp可以，但是这个我很熟悉，需要服务器配合在json外面裹标签，我无法修改对方的服务器，只好作罢。
+ 	--  nginx可以，反向代理，通过把ajax请求一个空文件夹，而这个文件夹用nginx请求服务器。这样gnix同时欺骗了浏览器和服务器，绕过了同源策略。但是无奈我没用过nginx，时间紧，这条路只好作罢。
+	-- chrome扩展可以，细节如下，不知道为什么，反正我是没有走通，不过倒是学会了编写chrome扩展。
+启动时关闭chrome的安全策略：
+http://blog.csdn.net/greatpresident/article/details/10158607
+
+如何禁用同源策略在Chrome扩展？ 
+http://codego.net/303126/
+您的manifest.json文件应该有你要找的权限的域：
+"permissions": [
+ " CodeGo.net 
+]
+
+编写chrome扩展程序：
+http://my.oschina.net/u/1162340/blog/170067
+http://www.cnblogs.com/onlyfu/p/4458025.html
+
+	-- ajax -> 本地服务器 -> 第三方服务器：这个方案其实回到了原点，我一开始也是期望能拿到json数据，走了一圈，没有别的方法，只好死磕了。
+	为什么没有拿到json而是返回很多html呢？
+	肯定是验证没有做好，没有成功欺骗服务器！
+	该网站下方写“*第三方平台若需要定期自动获取本平台的交易数据，请联系domainpm@west263.com，可提供api接口。须提供网址审核，否则不通过。”可见，网站做了适当优化，到底识别的是什么呢？
+
+
+尝试4
+	我们注意到右击XHR链接时，有一项是“Copy as cURL(CMD)”，猜测可能是Linux的curl命令。于是点击复制下来：
+curl "http://www.west.cn/web/domaintrade/historyoftrade?have=&foreclose=&againforeclose=&type=&min_length=&max_length=&dom_ext=&p_type=&p_topmoney_low=&p_topmoney_top=&overtime_low=2015-12-01&overtime_top=2015-12-10&_csrf=cnBSTy41Q3pAFn8aXUcIKTs9ISZiByUfSgY2LWNXcw9GETkoH08mDA"%"3D"%"3D&page=1&pagesize=50" -H "Cookie: param_history=a"%"3A17"%"3A"%"7Bs"%"3A1"%"3A"%"22r"%"22"%"3Bs"%"3A26"%"3A"%"22domaintrade"%"2Fhistoryoftrade"%"22"%"3Bs"%"3A12"%"3A"%"22overtime_low"%"22"%"3Bs"%"3A10"%"3A"%"222015-12-01"%"22"%"3Bs"%"3A12"%"3A"%"22overtime_top"%"22"%"3Bs"%"3A10"%"3A"%"222015-12-10"%"22"%"3Bs"%"3A4"%"3A"%"22have"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A9"%"3A"%"22foreclose"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A14"%"3A"%"22againforeclose"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A4"%"3A"%"22type"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A10"%"3A"%"22min_length"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A10"%"3A"%"22max_length"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A7"%"3A"%"22dom_ext"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A6"%"3A"%"22p_type"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A14"%"3A"%"22p_topmoney_low"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A14"%"3A"%"22p_topmoney_top"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A5"%"3A"%"22_csrf"%"22"%"3Bs"%"3A56"%"3A"%"22Z3F6c0FUTkNVF1cmMiYFEC48CRoNZigmXwceEQw2fjZTEBEUcC4rNQ"%"3D"%"3D"%"22"%"3Bs"%"3A3"%"3A"%"22hit"%"22"%"3Bs"%"3A1"%"3A"%"221"%"22"%"3Bs"%"3A4"%"3A"%"22page"%"22"%"3Bs"%"3A1"%"3A"%"221"%"22"%"3Bs"%"3A8"%"3A"%"22pagesize"%"22"%"3Bs"%"3A2"%"3A"%"2250"%"22"%"3B"%"7D; _csrf=8b8d4c1f5ce1410b20c5e1d2f02fa26e3326642fb7f8a17866a92f7b0fada6c4a"%"3A2"%"3A"%"7Bi"%"3A0"%"3Bs"%"3A5"%"3A"%"22_csrf"%"22"%"3Bi"%"3A1"%"3Bs"%"3A32"%"3A"%"222f-UsrKSIMsiL2fe8vdbMb0u4akg1zev"%"22"%"3B"%"7D; ASPSESSIONIDSCSBTSAS=IIHGKCDDOECGPENCNDDIGEMD; ads_n_tongji_ftime=2015-12-26"%"2020"%"3A56"%"3A55; ASPSESSIONIDSAQCRQBS=JLOIDBKDOBOBMAJDAKOJMGBC; menu_index=1; 53kf_953501_keyword=; kf_953501_keyword_ok=1; onliner_zdfq953501=0; _jzqa=1.3390163297430368000.1451185531.1451185531.1451185531.1; _jzqc=1; _jzqckmp=1; kfmenunewbox_state=open; _qzja=1.215947914.1451185531121.1451185531121.1451185531122.1451185531121.1451185531122.0.0.0.1.1; _qzjc=1; _qzjto=1.1.0; invite_53kf_totalnum_1=1; www_west_cn_=1; ASPSESSIONIDASCBQTRQ=NIOGLELDIAADFNJCLGJBMLFF; PHPSESSID=4a7e52n28pobd10r4vd4p60247; ads_n_tongji_ads_pre=; Hm_lvt_d0e33fc3fbfc66c95d9fdcc4c93a8288=1451139941,1451140090,1451140547,1451185164; Hm_lpvt_d0e33fc3fbfc66c95d9fdcc4c93a8288=1451205032" -H "Accept-Encoding: gzip, deflate, sdch" -H "Accept-Language: zh-CN,zh;q=0.8,en;q=0.6" -H "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36" -H "Accept: */*" -H "Referer: http://www.west.cn/web/domaintrade/historyoftrade" -H "X-Requested-With: XMLHttpRequest" -H "Connection: keep-alive" --compressed
+
+（如果没有安装curl请先安装，登陆管理员，Ubuntu是输入apt-get install curl即可。）
+
+打开Ubuntu终端，粘贴该语句，并加上管道输出到文本：
+	$ 粘贴的东西 > data.txt
+再用ls命令可见，data.txt文件已经创建：
+
+ 
+查看文件，我们久违的json终于出现了！
+
+ 
+拿到就好办，说明完全的cURL参数才可以拿到，如果定时调用Linux命令，把数据输出到\var\www\目录下，然后给出一个简易接口。这样也行，但是感觉还是太麻烦，同时没法交差。。。。估计对方没有Linux系统。
+
+
+
+尝试5
+怎么办呢？想到了最近微信开发中用到的php的cURL库，不知道能不能做得和Linux一样牛逼，至少欺骗住服务器。
+
+
+这个方案解决了问题。下图可见一分钟一次更新，且文件确实是需要的json数据。
+
+ 
+
+
+
+
+后续：
+1.还差最后的前台修饰，懒得做了，反正也没人要了。
+2.技术上只用到了2个PHP文件，前台需要访问了可以随时请求，不过为了避免请求过于集中，最好缓存到本地一份，时间超过30分钟了再请求更新。不过，这些也懒得做了。
+	-[1] 已经实现本地缓存。[2015-12-28]
+3.这个url起始还是需要临时更新的，我不确定能用多久，所以没在类中写死。
+4.这个参数列表有起始时间，有空可以玩玩，我也懒得整了。
+
+
+修补完善后后文件结构：
+
+|-iframe.html	原始网页文件，同时也是示例，请打开控制台观看
+|-ajax.js	自定义的ajax函数第二版：兼容post json数据。
+|-getData.php	ajax请求该文件，该文件请求类文件。
+|-class文件夹
+	|-MyCurl2.class.php curl的封装。
+	|-DomainPrice.class.php 获取域名数据的类，可以设定缓存时间。
+		该文件比对当前缓存时间，不超时就直接返回，
+		超时就重新获得第三方数据，同时缓存到本地。备份数据到data文件夹
+|-data	数据文件。
+|-CurrentPriceData.txt 当前数据，每隔一段时间更新一次。
+//==========================================================
+
+
+
+http://www.west.cn/web/domaintrade/historyoftrade?overtime_low=2015-12-20&overtime_top=2015-12-26&_csrf=TXEwZTF5SVUuEwFTRRZ8AAVBXTxpOz5nFToHA3UtMyIsHFwSSRoRJA%3D%3D&page=1&pagesize=50
+
+
+GET /web/domaintrade/historyoftrade?have=&foreclose=&againforeclose=&type=&min_length=&max_length=&dom_ext=&p_type=&p_topmoney_low=&p_topmoney_top=&overtime_low=2015-12-20&overtime_top=2015-12-26&_csrf=TXEwZTF5SVUuEwFTRRZ8AAVBXTxpOz5nFToHA3UtMyIsHFwSSRoRJA%3D%3D&page=1&pagesize=50 HTTP/1.1
+Host: www.west.cn
+Connection: keep-alive
+Cache-Control: max-age=0
+Accept: */*
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36
+Referer: http://www.west.cn/web/domaintrade/historyoftrade
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: _csrf=06db7f8dbe5ebf71aed4a0d8b0dab9e7e4135f5daba208dc28ab325b663e910ca%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22cb16to5UH0mYXBw2XK7fDTzwamlwxcXq%22%3B%7D; ASPSESSIONIDQAQAQSBT=HDKDKCDDNDMCEAGGMICFEPPP; ads_n_tongji_ftime=2015-12-26%2019%3A23%3A3; ads_n_tongji_ads_pre=; Hm_lvt_d0e33fc3fbfc66c95d9fdcc4c93a8288=1451128984; Hm_lpvt_d0e33fc3fbfc66c95d9fdcc4c93a8288=1451132465; kfmenunewbox_state=open; PHPSESSID=im51slf0flo4c1n45c0v0g86g5
+
+
+
+http://www.west.cn/web/domaintrade/historyoftrade?have=&foreclose=&againforeclose=&type=&min_length=&max_length=&dom_ext=&p_type=&p_topmoney_low=&p_topmoney_top=&overtime_low=2015-12-20&overtime_top=2015-12-26&_csrf=VE52U1drbDRmKFsGJBknZx0DBTobWQpRbDgSMRoJXEFgLx00ZhEJQg%3D%3D&page=1&pagesize=50
+
+
+
+
+http://www.west.cn/web/domaintrade/historyoftrade?have=&foreclose=&againforeclose=&type=&min_length=&max_length=&dom_ext=&p_type=&p_topmoney_low=&p_topmoney_top=&overtime_low=2015-12-20&overtime_top=2015-12-26&_csrf=T1lHSk5tNFR9P2ofPR9/BwYUNCMCX1Ixdy8jKAMPBCF7OCwtfxdRIg%3D%3D&page=1&pagesize=50
+
+
+http://www.west.cn/web/domaintrade/historyoftrade?have=&foreclose=&againforeclose=&type=&min_length=&max_length=&dom_ext=&p_type=&p_topmoney_low=&p_topmoney_top=&overtime_low=2015-12-20&overtime_top=2015-12-26&_csrf=TXEwZTF5SVUuEwFTRRZ8AAVBXTxpOz5nFToHA3UtMyIsHFwSSRoRJA%3D%3D&page=1&pagesize=50
+
+http://www.west.cn/web/domaintrade/historyoftrade?have=&foreclose=&againforeclose=&type=&min_length=&max_length=&dom_ext=&p_type=&p_topmoney_low=&p_topmoney_top=&overtime_low=2015-12-20&overtime_top=2015-12-26&_csrf=SU9jeGpFUkUqLVJOHipnEAF/DiEyByV3EQRUHi4RKDIoIg8PEiYKNA%3D%3D&page=1&pagesize=50
+
+
+
+//--------------------------------
+str=''{"list":[{"p_id":"2883469","p_domain":"%38%38%36%2E%68%6F%73%74","p_topmoney":"388","overtime":"2015-12-26 21:28:15","p_type":"1","paicount":"1","domLei":"2"},{"p_id":"1621846","p_domain":"%33%38%38%39%39%2E%62%69%64","p_topmoney":"9","overtime":"2015-12-26 21:26:46","p_type":"1","paicount":"1","domLei":"2"},{"p_id":"2478773","p_domain":"%62%71%78%62%2E%6D%65","p_topmoney":"15","overtime":"2015-12-26 21:20:24","p_type":"1","paicount":"1","domLei":"1"},{"p_id":"2478755","p_domain":"%62%71%68%62%2E%6D%65","p_topmoney":"15","overtime":"2015-12-26 21:20:23","p_type":"1","paicount":"1","domLei":"1"}],"totalpage":1000,"totalcount":50000,"status":1,"tj":["1","1135000","147","78490","11584601"]}';
+
+json=eval("("+str+")");
+cc0=json['list'][0]
+cc1=json['list'][1]
+
+
+//乱码问题
+decodeURI(cc1.p_domain)
+//=======================
+
+setInterval($.ajax('http://baidu.com', function(s){console.log(s)}),1000)
+1.注入一段js代码，然后实现ajax请求数据，同时请求写入我的php代码中。
+
+
+
+
+
+curl "http://www.west.cn/web/domaintrade/historyoftrade?overtime_low=2015-11-20&overtime_top=2015-11-26&have=&foreclose=&againforeclose=&type=&min_length=&max_length=&dom_ext=&p_type=&p_topmoney_low=&p_topmoney_top=&overtime_low=2015-12-01&overtime_top=2015-12-10&_csrf=Z3F6c0FUTkNVF1cmMiYFEC48CRoNZigmXwceEQw2fjZTEBEUcC4rNQ"%"3D"%"3D&hit=1&page=1&pagesize=50" -H "Cookie: param_history=a"%"3A17"%"3A"%"7Bs"%"3A1"%"3A"%"22r"%"22"%"3Bs"%"3A26"%"3A"%"22domaintrade"%"2Fhistoryoftrade"%"22"%"3Bs"%"3A12"%"3A"%"22overtime_low"%"22"%"3Bs"%"3A10"%"3A"%"222015-12-01"%"22"%"3Bs"%"3A12"%"3A"%"22overtime_top"%"22"%"3Bs"%"3A10"%"3A"%"222015-12-10"%"22"%"3Bs"%"3A4"%"3A"%"22have"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A9"%"3A"%"22foreclose"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A14"%"3A"%"22againforeclose"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A4"%"3A"%"22type"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A10"%"3A"%"22min_length"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A10"%"3A"%"22max_length"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A7"%"3A"%"22dom_ext"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A6"%"3A"%"22p_type"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A14"%"3A"%"22p_topmoney_low"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A14"%"3A"%"22p_topmoney_top"%"22"%"3Bs"%"3A0"%"3A"%"22"%"22"%"3Bs"%"3A5"%"3A"%"22_csrf"%"22"%"3Bs"%"3A56"%"3A"%"22Z3F6c0FUTkNVF1cmMiYFEC48CRoNZigmXwceEQw2fjZTEBEUcC4rNQ"%"3D"%"3D"%"22"%"3Bs"%"3A3"%"3A"%"22hit"%"22"%"3Bs"%"3A1"%"3A"%"221"%"22"%"3Bs"%"3A4"%"3A"%"22page"%"22"%"3Bs"%"3A1"%"3A"%"221"%"22"%"3Bs"%"3A8"%"3A"%"22pagesize"%"22"%"3Bs"%"3A2"%"3A"%"2250"%"22"%"3B"%"7D; PHPSESSID=0i3j88k21d9bd7ucu0qi29gqa1; _csrf=8b8d4c1f5ce1410b20c5e1d2f02fa26e3326642fb7f8a17866a92f7b0fada6c4a"%"3A2"%"3A"%"7Bi"%"3A0"%"3Bs"%"3A5"%"3A"%"22_csrf"%"22"%"3Bi"%"3A1"%"3Bs"%"3A32"%"3A"%"222f-UsrKSIMsiL2fe8vdbMb0u4akg1zev"%"22"%"3B"%"7D; ASPSESSIONIDSCSBTSAS=IIHGKCDDOECGPENCNDDIGEMD; ads_n_tongji_ftime=2015-12-26"%"2020"%"3A56"%"3A55; ads_n_tongji_ads_pre=; Hm_lvt_d0e33fc3fbfc66c95d9fdcc4c93a8288=1451134616,1451135917,1451135962; Hm_lpvt_d0e33fc3fbfc66c95d9fdcc4c93a8288=1451137696; kfmenunewbox_state=open" -H "Accept-Encoding: gzip, deflate, sdch" -H "Accept-Language: zh-CN,zh;q=0.8,en;q=0.6" -H "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36" -H "Accept: */*" -H "Referer: http://www.west.cn/web/domaintrade/historyoftrade?overtime_low=2015-11-20&overtime_top=2015-11-26" -H "X-Requested-With: XMLHttpRequest" -H "Connection: keep-alive" --compressed
+
+
+
+
+</pre>

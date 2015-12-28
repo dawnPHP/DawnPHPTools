@@ -1,36 +1,49 @@
-<style>
-.box,.box iframe{width:90%;height:80%; border:1px solid red;padding:10px;}
+<!Doctype html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+<head>
+	 <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+	 <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+	 <meta content=always name=referrer>
+	 <title>cURLé‡‡é›†æ•°æ®</title>
 
-</style>
+	<style>
+	.box,.box iframe{width:90%;height:80%; border:1px solid red;padding:10px;}
+	</style>
+</head>
+
+<body>
+<h1>cURLçš„ç”¨æ³•ï¼Œè¯·ä½¿ç”¨chromeå¹¶æŒ‰F12æ‰“å¼€æ§åˆ¶å°</h1>
+<p>æœ¬å®ä¾‹10sè¯·æ±‚ä¸€æ¬¡ã€‚</p>
+<p>åå°phpç¨‹åºæ˜¯5minæ›´æ–°æ•°æ®ä¸€æ¬¡ã€‚</p>
 
 <div class=box>
 	<iframe id=iframe1 src='http://www.west.cn/web/domaintrade/historyoftrade'></iframe>
 </div>
 
+
+</body>
+</html>
 <script>
 window.onload=function(){
-	//ÎÒµÄ×¢Èëº¯Êı
+	//æ³¨å…¥æˆ‘çš„å‡½æ•°
 	var js=document.createElement('script');
 	js.setAttribute('type','text/javascript');
-	js.setAttribute('src','core.js');
+	js.setAttribute('src','ajax.js');
 	document.scripts[0].parentNode.appendChild(js);
-	//Æô¶¯
+	//å¯åŠ¨
 	DataCollector.init();
 }
 
 
 
-
-
 //================================
-
-//×Ö·û´®µ½json
+//å­—ç¬¦ä¸²åˆ°json
 function getJson(s){
 	return eval("("+s+")");
 }
 
 
-//ÅÅ´íÎó
+//æ’é”™è¯¯
 function n(s){
 	console.log(s);
 }
@@ -39,22 +52,21 @@ function n(s){
 var DataCollector={
 	timer:'',
 	init: function(){
-		var url='saveData.php?a=set';
-		//1.¶¨Ê±ÇëÇóphpÍ¨¹ıcurl»ñÈ¡Êı¾İ
+		var url='getData.php?a=set';
+		//1.å®šæ—¶è¯·æ±‚phpé€šè¿‡curlè·å–æ•°æ®
 		timer=setInterval(function(){
 			ajax=new Ajax();	
 		
 			ajax.get(url, function(str){	
-				//´¦Àí³Éjson£¬ÏÔÊ¾Êı¾İ
+				//å¤„ç†æˆjsonï¼Œæ˜¾ç¤ºæ•°æ®
 				 json=getJson(str);
-				n( new Date()+': '+json.list.length);//ÏÔÊ¾Êı¾İÌõÊı
+				n( new Date()+': '+json.list.length);//æ˜¾ç¤ºæ•°æ®æ¡æ•°
 			});
-		},60000);//1800000ÊÇ°ëĞ¡Ê±¡£1000ms=1m¡£Ôò20 000ms=20s¡£
+		},10000);//å•ä½ä¸ºæ¯«ç§’ã€‚1800000æ˜¯åŠå°æ—¶ã€‚1000ms=1mã€‚åˆ™600 000ms=60s=1minã€‚
 	},
 
 	stop:function(){
 		clearInterval(timer);
 	}
 };
-
 </script>
