@@ -1,0 +1,72 @@
+<!Doctype html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+<head>
+	 <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+	 <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+	 <meta content=always name=referrer>
+	 <title>cURL采集数据</title>
+
+	<style>
+	.box,.box iframe{width:90%;height:80%; border:1px solid red;padding:10px;}
+	</style>
+</head>
+
+<body>
+<h1>cURL的用法，请使用chrome并按F12打开控制台</h1>
+<p>本实例10s请求一次。</p>
+<p>后台php程序是5min更新数据一次。</p>
+
+<div class=box>
+	<iframe id=iframe1 src='http://www.west.cn/web/domaintrade/historyoftrade'></iframe>
+</div>
+
+
+</body>
+</html>
+<script>
+window.onload=function(){
+	//注入我的函数
+	var js=document.createElement('script');
+	js.setAttribute('type','text/javascript');
+	js.setAttribute('src','ajax.js');
+	document.scripts[0].parentNode.appendChild(js);
+	//启动
+	DataCollector.init();
+}
+
+
+
+//================================
+//字符串到json
+function getJson(s){
+	return eval("("+s+")");
+}
+
+
+//排错误
+function n(s){
+	console.log(s);
+}
+
+//http://www.west.cn/web/domaintrade/historyoftrade?have=&foreclose=&againforeclose=&type=&min_length=&max_length=&dom_ext=&p_type=&p_topmoney_low=&p_topmoney_top=&overtime_low=2015-12-01&overtime_top=2015-12-10&_csrf=TjFYMjdsSXV8V3VnRB4CJgd8K1t7Xi8Qdkc8UHoOeQB6UDNVBhYsAw%3D%3D&page=1&pagesize=50
+var DataCollector={
+	timer:'',
+	init: function(){
+		var url='getData.php?a=set';
+		//1.定时请求php通过curl获取数据
+		timer=setInterval(function(){
+			ajax=new Ajax();	
+		
+			ajax.get(url, function(str){	
+				//处理成json，显示数据
+				 json=getJson(str);
+				n( new Date()+': '+json.list.length);//显示数据条数
+			});
+		},10000);//单位为毫秒。1800000是半小时。1000ms=1m。则600 000ms=60s=1min。
+	},
+
+	stop:function(){
+		clearInterval(timer);
+	}
+};
+</script>
