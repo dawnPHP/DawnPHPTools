@@ -1,0 +1,60 @@
+<style>
+.box,.box iframe{width:90%;height:80%; border:1px solid red;padding:10px;}
+
+</style>
+
+<div class=box>
+	<iframe id=iframe1 src='http://www.west.cn/web/domaintrade/historyoftrade'></iframe>
+</div>
+
+<script>
+window.onload=function(){
+	//我的注入函数
+	var js=document.createElement('script');
+	js.setAttribute('type','text/javascript');
+	js.setAttribute('src','core.js');
+	document.scripts[0].parentNode.appendChild(js);
+	//启动
+	DataCollector.init();
+}
+
+
+
+
+
+//================================
+
+//字符串到json
+function getJson(s){
+	return eval("("+s+")");
+}
+
+
+//排错误
+function n(s){
+	console.log(s);
+}
+
+//http://www.west.cn/web/domaintrade/historyoftrade?have=&foreclose=&againforeclose=&type=&min_length=&max_length=&dom_ext=&p_type=&p_topmoney_low=&p_topmoney_top=&overtime_low=2015-12-01&overtime_top=2015-12-10&_csrf=TjFYMjdsSXV8V3VnRB4CJgd8K1t7Xi8Qdkc8UHoOeQB6UDNVBhYsAw%3D%3D&page=1&pagesize=50
+var DataCollector={
+	timer:'',
+	init: function(){
+		var url='saveData.php?a=set';
+		//1.定时请求php通过curl获取数据
+		timer=setInterval(function(){
+			ajax=new Ajax();	
+		
+			ajax.get(url, function(str){	
+				//处理成json，显示数据
+				 json=getJson(str);
+				n( new Date()+': '+json.list.length);//显示数据条数
+			});
+		},60000);//1800000是半小时。1000ms=1m。则20 000ms=20s。
+	},
+
+	stop:function(){
+		clearInterval(timer);
+	}
+};
+
+</script>
