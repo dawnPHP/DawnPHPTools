@@ -1,12 +1,12 @@
-	
-http://blog.csdn.net/renfufei/article/details/48381093
-catalog  中文翻译为: 目录;
-category 中文翻译为: 类别;
-
-
-链接：http://www.zhihu.com/question/20459868/answer/18164336
-item category: 可以用来定义物料的类别,比如文具类,五金类
-item catalog: 用来描述这个物料具体有哪些性质,比如款号,色彩,尺码等
+-- 这是数据库细节。
+---- http://blog.csdn.net/renfufei/article/details/48381093
+---- catalog  中文翻译为: 目录;
+---- category 中文翻译为: 类别;
+---- 
+---- 
+---- 链接：http://www.zhihu.com/question/20459868/answer/18164336
+---- item category: 可以用来定义物料的类别,比如文具类,五金类
+---- item catalog: 用来描述这个物料具体有哪些性质,比如款号,色彩,尺码等
 
 CREATE TABLE `article` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
