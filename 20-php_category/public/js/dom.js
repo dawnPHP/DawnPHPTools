@@ -16,6 +16,9 @@ function rtrim(str){ //删除右边的空格
 //选取
 function $(s){return document.getElementById(s);}
 
+//输出
+function n(s){ console.log(s);}
+
 //time秒后跳转到url中
 function jump(url,time){
 	document.write('添加成功，正在跳转...');
@@ -200,9 +203,11 @@ function getArticleDom(obj){
 	
 	
 //在添加条目和移动条目中列出所有分类（条目数）
-//初始化下拉框中的分类
-function initCateList(selection,newSelection){
+//初始化下拉框中的分类.
+//最后一个id为可选，表示当前项
+function initCateList(selection,newSelection,id){
 	var newSelection=newSelection||'';//如果没有值，则为空
+	var id=id||null;
 	//var selection=selection;
 	var ajax=new Ajax();
 	//var url='doChangeCate.php?a=catelist';
@@ -212,7 +217,7 @@ function initCateList(selection,newSelection){
 		var objs=eval("("+s+")");
 		if(objs.length==0){return;}
 		for(var i=0;i<objs.length;i++){
-			refreshCateSelection(objs[i],selection);
+			refreshCateSelection(objs[i],selection,id);
 			if(newSelection!=''){
 				newSelection.innerHTML=selection.innerHTML;
 			}
@@ -222,14 +227,23 @@ function initCateList(selection,newSelection){
 
 //在添加条目和移动条目中列出所有分类（条目数）
 //[在管理条目页面中 修改条目分类]：显示所有分类
-function refreshCateSelection(obj,selection){
+function refreshCateSelection(obj,selection,id){
 	//1.造dom
 	//Object {id: "22", name: "html", u_id: "2", u_rank: "1", count: 0}
 	var oOption=document.createElement('option');
 	oOption.setAttribute('value',obj['id']);
 	oOption.innerHTML=obj['name']+'('+ obj['count'] +')';
-	if(obj['u_rank']==-1){
-		oOption.setAttribute('selected','selected');
+	
+	//设置分类
+	var id=id||null;
+	if(id!=null){
+		if(id==obj['id']){
+			oOption.setAttribute('selected','selected');
+		}
+	}else{
+		if(obj['u_rank']==-1){
+			oOption.setAttribute('selected','selected');
+		}
 	}
 	//2.插入selection
 	selection.appendChild(oOption);

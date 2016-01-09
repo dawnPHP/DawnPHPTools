@@ -95,5 +95,23 @@ switch ($action){
 		}
 		//进行删除
 		echo Article::delete($_SESSION['uid'],$a_id);
-		break;		
+		break;
+	case 'saveItem':
+		//更新文章
+		//debug($_POST);
+		
+		//新建数据
+		$id=$dawn::post('id','');
+		$title=$dawn::post('title','');
+		$content=$dawn::post('content','');
+		$cate_id=$dawn::post('cate_id',0);
+		$tags=$dawn::post('tags','');
+		$uid=$_SESSION['uid'];
+		
+		//更新数据库
+		echo Article::save($id,$uid,$title,$content,$cate_id,$tags);
+		break;
+	default:
+		echo 'error...';
+		die();
 }

@@ -49,7 +49,7 @@ class Article{
 	}
 	
 	//save the record to the database 
-	public function save(){
+	public function save22(){
 		//update existing Article's information 
 		if($this->aid){
 			$query = sprintf('UPDATE %sArticle SET title = "%s", ' . 
@@ -243,6 +243,35 @@ class Article{
 		$result = mysql_query($query, $GLOBALS['DB']);
 		if($result){
 			$a_id=mysql_insert_id();
+			
+			//处理标签
+			if($tags!=''){
+				return Tags::add($tags,$uid,$a_id);
+			}
+			return $a_id;
+		}else{
+			return false;
+		}
+	}
+	
+	//更新条目
+	public static function save($id,$uid,$title,$content,$cate_id,$tags){
+		//1.获取时间
+		$modi_time=time();
+		//2.执行更新Article表
+		$query=sprintf('update %sarticle set title="%s",content="%s",modi_time=%d,cate_id=%d where id=%d and u_id=%d;',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($title,$GLOBALS['DB']),
+			mysql_real_escape_string($content,$GLOBALS['DB']),
+			$modi_time,
+			mysql_real_escape_string($cate_id,$GLOBALS['DB']),
+			mysql_real_escape_string($id,$GLOBALS['DB']),
+			mysql_real_escape_string($uid,$GLOBALS['DB'])
+		);
+
+		$result = mysql_query($query, $GLOBALS['DB']);
+		if($result){
+			$a_id=$id;
 			
 			//处理标签
 			if($tags!=''){

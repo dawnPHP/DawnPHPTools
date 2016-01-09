@@ -9,8 +9,8 @@ define("BathPath",getcwd() . '/dawnPHP/');
 include('dawnPHP/mylib.php');
 
 //获取条目详细数据
-$a_id=Dawn::get('a_id','');
-if($a_id==''){
+$a_id=Dawn::get('a_id',null);
+if($a_id==null){
 	Dawn::died();
 }
 ?>
