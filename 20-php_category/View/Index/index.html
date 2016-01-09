@@ -1,0 +1,71 @@
+<div class=main>
+	<!-- 左侧开始 -->
+	<div class=left>
+		<div class=btn>
+			<input type='button' value='新建条目'>
+			<p><a href='javascript:void(0);'>管理分类</a> | 
+			<a href='javascript:void(0);'>管理条目</a></p>
+		</div>
+		<span>分类</span>
+		<ul>
+			<!--li class=current><a href='index.php?cate_id=0'>所有分类(100)</a></li>
+			<li><a href='index.php?cate_id=1'>分类1(10)</a></li-->
+		</ul>
+	</div>
+
+	<!-- 右侧开始 -->
+	<div class=right>
+		
+		
+		<!--div class='item'>
+			<a class='title' href='detail.php?p_id=1' target="_blank">this is the title of item1</a>
+			<p>
+				2015-11-29 11:08
+				<span><a href='action.php?a=del&p_id=1' target="_blank">删除</a></span>
+				<span><a href='edit.php?p_id=1' target="_blank">修改</a></span>
+			</p>
+			<div class='status'>
+				<div class='bar c1'></div>
+			</div>
+		</div-->
+	</div>
+</div>
+
+
+
+<script>
+var cate_id=<?php echo Dawn::get('cate_id','-1'); ?>;
+var u_id=<?php echo Dawn::get('u_id',-1);?>;
+var curr_u_id=<?php echo $_SESSION['user']['uid']; ?>;
+
+if(u_id<0){
+	u_id=curr_u_id;
+}
+
+window.onload=function(){
+	//绑定事件
+	var oBtns=document.getElementsByClassName('left')[0].getElementsByClassName('btn')[0];
+	var oBtn_new=oBtns.getElementsByTagName('input')[0];//新建按钮
+	var oBtn_manage=oBtns.getElementsByTagName('p')[0].getElementsByTagName('a');
+	var oBtn_cate=oBtn_manage[0];//管理分类
+	var oBtn_item=oBtn_manage[1];//管理条目
+	
+	oBtn_new.onclick=function(){
+		window.location='newItem.php';
+	}
+	oBtn_cate.onclick=function(){
+		window.location='editCate.php';
+	}
+	oBtn_item.onclick=function(){
+		window.location='changeCate.php';
+	}	
+	
+
+	//初始化目录
+	initCate(u_id);
+	
+	//初始化文章
+	initArticle(u_id,cate_id);
+}
+
+</script>

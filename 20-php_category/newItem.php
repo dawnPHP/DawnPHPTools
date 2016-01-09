@@ -1,9 +1,9 @@
 <?php
 session_start();
-if(!isset($_SESSION['uid'])){
+if(!isset($_SESSION['user'])){
 	die('Invalid visit.');
 }
-$uid=$_SESSION['uid'];
+$uid=$_SESSION['user']['uid'];
 
 define("BathPath",getcwd() . '/dawnPHP/');
 include('dawnPHP/mylib.php');

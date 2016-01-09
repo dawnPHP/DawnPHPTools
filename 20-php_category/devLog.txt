@@ -1,13 +1,19 @@
-﻿category system
-using class
-
+﻿name:(php分类管理系统)php进度跟踪管理系统v1.0 
+name(en):category system using class
 js/php熟手交流群 369578518
 
 --------------------------------
-UI学习：http://www.itbull.cn/
+UI参考：http://www.itbull.cn/
 --------------------------------
-
-
+变量约定：
+	分类的增删改查。左边分类，右边是条目。默认不分页。
+	[1]index.php?cate_id=-1&u_id=2 所有条目
+	[2]index.php?cate_id=0&u_id=2 默认分类
+	[3no] index.php?cate_id=-2&u_id=2 回收站
+其他用户约定：
+	$uid为待查看者uid
+	$cur_uid为登陆用户的uid；
+--------------------------------
 第一版本：
 1.前台页面和样式
 	-[1] 初步搞定html，添加美化css
@@ -122,7 +128,7 @@ insert into user(username,password,email,regdate,usergroup) values
 	
 	
 	-- 在没登录的时候给出所有用户。按权限分组。
-	
+	--多用户怎么解决？
 	
 	===========================
 	mysql上一条 下一条：http://blog.csdn.net/tengdazhang770960436/article/details/39996705
@@ -135,7 +141,7 @@ insert into user(username,password,email,regdate,usergroup) values
 	[1] 修改库的引入方式，绝对路径不写死。
 
 7.修改页面的功能。
-	
+8.美化登陆页面。页头和页脚独立成视图文件。
 	
 	
 	修改分类:怎么ajax单页面内修改目录表? 

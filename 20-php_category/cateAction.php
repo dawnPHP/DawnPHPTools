@@ -30,6 +30,9 @@ if($action=='login'){
 	if(count($user)>0){
 		$_SESSION['user']=$user;
 		echo '登陆成功。';
+		//跳转回首页
+		header("Location:index.php");
+		exit();
 	}else{
 		echo '登陆失败！';
 	}
@@ -103,11 +106,11 @@ switch ($action){
 		$content=Dawn::post('content','');
 		$cate_id=Dawn::post('cate_id',0);
 		$tags=Dawn::post('tags','');
-		$uid=$_SESSION['uid'];
+
 		//作出判断，排除空值
 
 		//插入数据库中
-		echo Article::add($uid,$title,$content,$cate_id,$tags);
+		echo Article::add($cur_uid,$title,$content,$cate_id,$tags);
 		break;
 		
 	case 'del':

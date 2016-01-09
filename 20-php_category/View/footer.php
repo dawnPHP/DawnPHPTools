@@ -7,8 +7,7 @@
 		<p>电　　话：　158-9014-9335</p>
 		<p>邮　　箱：　469004330@qq.com</p>
 		<p>地　　址：　郑州市科学大道100号</p>
-		<p>ICP 备案：　豫ICP备15048336号 
-			 <a href='http://www.itbull.cn/' target='_blank'>美工参考itBull</a> </p>
+		<p>ICP 备案：　豫ICP备15048336号</p>
 	</div>
 </div>
 </body>

@@ -1,9 +1,9 @@
 <?php
 session_start();
-if(!isset($_SESSION['uid'])){
-	Dawn::died();
+if(!isset($_SESSION['user']['uid'])){
+	die('Invalid visit!');
 }
-$uid=$_SESSION['uid'];
+$uid=$_SESSION['user']['uid'];
 
 define("BathPath",getcwd() . '/dawnPHP/');
 include('dawnPHP/mylib.php');
@@ -11,7 +11,7 @@ include('dawnPHP/mylib.php');
 //获取条目详细数据
 $a_id=Dawn::get('a_id',null);
 if($a_id==null){
-	Dawn::died();
+	die('Invalid visit!');
 }
 ?>
 <html>
