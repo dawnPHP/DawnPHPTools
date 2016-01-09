@@ -54,9 +54,7 @@
 	cursor: pointer;
     font-size: 18px;
 	
-    background: #E4393C;
-    color: #fff;
-    border:1px solid #E4393C;
+   padding:0px;
 }
 .login .btn.white{
 	background: #fff;
@@ -128,3 +126,4 @@
 	background-color:#0096ff;
 	color:#fff;
 }
+.topAction p{font-size: 15px;}

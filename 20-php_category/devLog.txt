@@ -143,6 +143,7 @@ insert into user(username,password,email,regdate,usergroup) values
 7.修改页面的功能。
 8.美化登陆页面。页头和页脚独立成视图文件。
 	[1]登陆、首页、修改article、详情、删除、新建条目视图正常；
+	[2] 还有2个管理视图：管理分类、管理条目。已经可用。
 	
 	修改分类:怎么ajax单页面内修改目录表? 
 			如果删除掉一个目录项，则对应的文章怎么处理？[ok 2.8.3]
