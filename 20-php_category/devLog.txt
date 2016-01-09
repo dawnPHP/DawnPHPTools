@@ -99,6 +99,27 @@ mysql> desc user;
 5. 登陆功能：不登录不让看，但是没时间写登陆，先写一个凑合的页面。
 	-[1] 一键登陆，一键退出。目前就一个用户。
 	-[2] 随时可以退出，取消退出后再退出报错。
+	-[3] 初步实现登陆功能。
+添加用户数据，
+配置文件中：	分组时，2为管理员，1为用户。
+数据库中：
+CREATE TABLE `user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` char(15) NOT NULL DEFAULT '',
+  `password` char(40) NOT NULL DEFAULT '',
+  `email` varchar(40) NOT NULL DEFAULT '',
+  `regdate` int(10) unsigned NOT NULL DEFAULT '0',
+  `lastlogin` int(10) unsigned NOT NULL DEFAULT '0',
+  `usergroup` int(10) unsigned NOT NULL DEFAULT '0',
+  `session_id` char(30) NOT NULL,
+  `portrait` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+insert into user(username,password,email,regdate,usergroup) values
+('王军亮','7c4a8d09ca3762af61e59520943dc26494f8941b',"jimmyMall@live.com",1452332327,2),
+('张三丰','7c4a8d09ca3762af61e59520943dc26494f8941b',"zhangsf@qq.com",1452330327,1);
+	[4] --登陆记录sessionid和登陆时间。。。
+	
 	
 	-- 在没登录的时候给出所有用户。按权限分组。
 	

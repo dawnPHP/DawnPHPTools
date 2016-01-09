@@ -9,6 +9,10 @@ include('dawnPHP/mylib.php');
 3.
 
 */
+$user=null;
+if(isset($_SESSION['user'])){
+	$user=$_SESSION['user'];
+}
 ?>
 <html>
 <head>
@@ -20,17 +24,28 @@ include('dawnPHP/mylib.php');
 <body>
 <div class='header'>
 	<h1>(php分类管理系统)php进度跟踪管理系统v1.0</h1>
+	<a href='devLog.txt' target='_blank'>开发日志</a> | 
+	<a href='http://tieba.baidu.com/f?kw=php&fr=wwwt' target='_blank'>php吧</a> | 
+<?php if($user){ 
+	echo '您好，[' . $_SESSION['user']['username'] . ' ('. $user_group[$_SESSION['user']['usergroup']] .')]';
+?>
+	| <a href='cateAction.php?a=logout'>退出</a>
+<?php }else{?>
+	<a href='demo_user.php'>登陆</a>
+<?php }?>
+
 	<pre>
-	<a href='devLog.txt' target='_blank'>开发日志</a> | <a href='http://tieba.baidu.com/f?kw=php&fr=wwwt' target='_blank'>php吧</a> | <a href='demo_user.php'>登陆</a> | <a href='cateAction.php?a=logout'>退出</a> |	分类的增删改查。左边分类，右边是条目。默认不分页。
-	
-	[1]index.php?cate_id=-1&u_id=2 所有条目
-	[2]index.php?cate_id=0&u_id=2 默认分类
-	[3no] index.php?cate_id=-2&u_id=2 回收站
+		分类的增删改查。左边分类，右边是条目。默认不分页。
+		[1]index.php?cate_id=-1&u_id=2 所有条目
+		[2]index.php?cate_id=0&u_id=2 默认分类
+		[3no] index.php?cate_id=-2&u_id=2 回收站
 	</pre>
 </div>
 <?php 
-if(!isset($_SESSION['uid'])){
-	die('还未登陆系统。请先登录。');
+
+if(!isset($_SESSION['user'])){
+	include('view/login.html');
+	die();
 }
 
 ?>
@@ -71,7 +86,13 @@ if(!isset($_SESSION['uid'])){
 
 <script>
 var cate_id=<?php echo Dawn::get('cate_id','-1'); ?>;
-var u_id=<?php echo (new Dawn())->get('u_id',-1);?>;
+var u_id=<?php echo Dawn::get('u_id',-1);?>;
+var curr_u_id=<?php echo $_SESSION['user']['uid']; ?>;
+
+if(u_id<0){
+	u_id=curr_u_id;
+}
+
 window.onload=function(){
 	//绑定事件
 	var oBtns=document.getElementsByClassName('left')[0].getElementsByClassName('btn')[0];

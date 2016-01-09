@@ -3,28 +3,48 @@ session_start();
 define("BathPath",getcwd() . '/dawnPHP/');
 include('dawnPHP/mylib.php');
 
-$dawn=new Dawn();
-
-$action=$dawn::get('a','');
+//获取操作名
+$action=Dawn::get('a','');
 if($action==''){
-	die('Invalid visit');
+	die('Invalid visit!');
 }
-$uid=$dawn::get('u_id',-1);
+
+//获取用户id
+$uid=Dawn::get('u_id',-1);
 if($uid==-1){
-	if(isset($_SESSION['uid'])){
-		$uid=$_SESSION['uid'];
+	if(isset($_SESSION['user']['uid'])){
+		$uid=$_SESSION['user']['uid'];
 	}else{
 		$uid=null;
 	}
 }
-$cate_id=$dawn::get('cate_id',0);
+
+//获取目录id
+$cate_id=Dawn::get('cate_id',0);
+
+//登陆
+if($action=='login'){
+	//debug($_POST);
+
+	$user=User::login(Dawn::post('usr'), Dawn::post('psw'));
+	if(count($user)>0){
+		$_SESSION['user']=$user;
+		echo '登陆成功。';
+	}else{
+		echo '登陆失败！';
+	}
+	
+	//跳转回首页
+	echo '<a href="index.php">返回首页</a>';
+	exit();
+}
 
 //如果是退出，随时可以退出
 if($action=='logout'){
 	//退出干三件事：
-	if($_SESSION['uid']){
+	if($_SESSION['user']){
 		//1.清除数组中的会话信息
-		$_SESSION['uid']=null;//或其他全局用户变量
+		$uer=null;//或其他全局用户变量
 		$_SESSION=array();//清空session
 		
 		//2.清除cookie
@@ -39,12 +59,16 @@ if($action=='logout'){
 	exit();
 }
 
+//如果没登录，不能进行后续操作
+if(!isset($_SESSION['user']['uid'])){die('Invalid visit!');}
 
-if(!isset($_SESSION['uid'])){die('Invalid visit!');}
 //当前用户名
-$cur_uid=$_SESSION['uid'];
+$cur_uid=$_SESSION['user']['uid'];
+
+
+//这一条去掉，不知道影响多少？
 if($uid!=-1){
-	$cur_uid=$uid;
+	//$cur_uid=$uid;
 }
 
 
@@ -75,10 +99,10 @@ switch ($action){
 	case 'newItem':
 		//debug($_POST);
 		//新建条目
-		$title=$dawn::post('title','');
-		$content=$dawn::post('content','');
-		$cate_id=$dawn::post('cate_id',0);
-		$tags=$dawn::post('tags','');
+		$title=Dawn::post('title','');
+		$content=Dawn::post('content','');
+		$cate_id=Dawn::post('cate_id',0);
+		$tags=Dawn::post('tags','');
 		$uid=$_SESSION['uid'];
 		//作出判断，排除空值
 
@@ -101,11 +125,11 @@ switch ($action){
 		//debug($_POST);
 		
 		//新建数据
-		$id=$dawn::post('id','');
-		$title=$dawn::post('title','');
-		$content=$dawn::post('content','');
-		$cate_id=$dawn::post('cate_id',0);
-		$tags=$dawn::post('tags','');
+		$id=Dawn::post('id','');
+		$title=Dawn::post('title','');
+		$content=Dawn::post('content','');
+		$cate_id=Dawn::post('cate_id',0);
+		$tags=Dawn::post('tags','');
 		$uid=$_SESSION['uid'];
 		
 		//更新数据库
