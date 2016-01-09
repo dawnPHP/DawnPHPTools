@@ -1,6 +1,6 @@
 <?php
 session_start();
-define("BathPath","D:/xampp/htdocs/php/DawnPHPTools/php_category/dawnPHP/");
+define("BathPath",getcwd() . '/dawnPHP/');
 include('dawnPHP/mylib.php');
 
 

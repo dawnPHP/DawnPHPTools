@@ -5,7 +5,7 @@ if(!isset($_SESSION['uid'])){
 }
 $uid=$_SESSION['uid'];
 
-define("BathPath","D:/xampp/htdocs/php/DawnPHPTools/php_category/dawnPHP/");
+define("BathPath",getcwd() . '/dawnPHP/');
 include('dawnPHP/mylib.php');
 
 //获取数据
