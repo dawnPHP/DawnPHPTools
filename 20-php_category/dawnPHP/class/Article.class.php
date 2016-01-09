@@ -324,6 +324,8 @@ class Article{
 			if($row['modi_time']!=''){
 				$row['modi_time']=date("Y-m-d H:i:s", $row['modi_time']);
 			}
+			//获取分类信息
+			$row['cate_name']=Category::getNameById($row['cate_id']);
 		}
 
 		//返回主体信息

@@ -39,6 +39,19 @@ class Category{
 		return $cate;
 	}
 
+	//从分类id获取分类名
+	public static function getNameById($cate_id){
+		$query=sprintf('SELECT name FROM %scategory WHERE id=%d;',DB_TBL_PREFIX,$cate_id);
+		$result=mysql_query($query,$GLOBALS['DB']);
+			
+		if(mysql_num_rows($result)){
+			$row=mysql_fetch_assoc($result); 
+			return $row['name']; 
+		}
+		mysql_free_result($result);
+		return false;
+	}
+	
 	//获得该用户的所有目录信息
 	public static function getByUserId3($u_id){
 		$query=sprintf('select *,count(c.id) as count from 

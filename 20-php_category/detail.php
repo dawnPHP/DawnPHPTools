@@ -27,7 +27,6 @@ if($a_id==null){
 <div class='header'>
 	<h1>详情&gt;条目信息</h1>
 		<a href='index.php'><input type='button' class=btn value='&lt;&lt;返回首页' /></a>
-
 </div>
 <style>
 .main .box{color:#ccc; line-height: 20px; font-size: 12px;
@@ -119,8 +118,8 @@ window.onload=function(){
 		$('title').innerHTML=main['title'];//标题
 		$('add_time').innerHTML=main['add_time'];//创建时间
 		
-		$('cate').innerHTML=main['cate_id'];//分类todo 获得分类名
-		$('cate').setAttribute('href','index.php?cate_id='+u_id);//修改url
+		$('cate').innerHTML=main['cate_name'];//获得分类名
+		$('cate').setAttribute('href','index.php?cate_id='+main['cate_id']);//修改url
 		
 		$('content').innerHTML=main['content'];//正文
 		
