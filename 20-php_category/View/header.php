@@ -1,6 +1,7 @@
-﻿<html>
+<html>
 <head>
 <link rel="stylesheet" href="public/css/category.css" />
+<link rel="stylesheet" href="public/css/edit.css" />
 <script src='public/js/ajaxObjPrototype.js'></script>
 <script src='public/js/dom.js'></script>
 </head>
@@ -14,7 +15,7 @@
 	<a href='http://tieba.baidu.com/f?kw=php&fr=wwwt' target='_blank' title='问题咨询'>php吧</a> | 
 	<a href='http://www.itbull.cn/' target='_blank' title='参考itBull'>美工</a> |
 <?php if($user){ 
-	echo '您好，[' . $_SESSION['user']['username'] . ' ('. $user_group[$_SESSION['user']['usergroup']] .')]';
+	echo '您好，[<a href="ucenter.php">' . $_SESSION['user']['username'] . '</a> ('. $user_group[$_SESSION['user']['usergroup']] .')]';
 ?>
 	| <a href='cateAction.php?a=logout' title='点击退出系统'>退出</a>
 <?php }else{?>

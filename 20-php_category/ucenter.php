@@ -14,12 +14,6 @@ if(isset($_SESSION['user'])){
 
 //引入视图
 include('View/header.php');
-
-if(!isset($_SESSION['user'])){
-	include('view/Index/login.html');
-}else{
-	include('view/Index/index.html');
-}
-
+include('view/Index/ucenter.html');
 include('View/footer.php');
 ?>

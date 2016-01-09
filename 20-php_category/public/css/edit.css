@@ -13,7 +13,7 @@
 
 /*button*/
 input.btn{padding: 10px;margin: 10px; cursor:pointer; background:#fff;border:1px solid #0096ff;}
-input.btn:hover{background:#0096ff;color:#fff;}
+input.btn:hover{background:#0096ff;color:#fff;border:1px solid #fff;}
 
 input.blue{background:#0096ff;color:#fff; border:1px solid #0096ff;}
 input.blue:hover{ font-weight: bold;}

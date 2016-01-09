@@ -8,7 +8,7 @@
 .header{
 	background:#000;color:#fff;
 	height:60px;line-height:60px;
-	margin-bottom:5px;
+	
 }
 .header .menu{color: #9d9d9d;
     font-size: 16px; float: right;
@@ -118,4 +118,13 @@
 .main .right .item .status .c3{width:75%;} 
 .main .right .item .status .c4{width:100%;} 
 
-.notice{color:#f00;text-align:center;} 
+.notice{color:#f00;text-align:center;}
+
+/*顶部提示条*/
+.topAction{
+	font-size: 32px;
+    font-weight: bold;
+    font-family: "黑体";
+	background-color:#0096ff;
+	color:#fff;
+}

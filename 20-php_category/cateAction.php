@@ -121,7 +121,7 @@ switch ($action){
 			exit();
 		}
 		//进行删除
-		echo Article::delete($_SESSION['uid'],$a_id);
+		echo Article::delete($cur_uid,$a_id);
 		break;
 	case 'saveItem':
 		//更新文章
@@ -133,10 +133,9 @@ switch ($action){
 		$content=Dawn::post('content','');
 		$cate_id=Dawn::post('cate_id',0);
 		$tags=Dawn::post('tags','');
-		$uid=$_SESSION['uid'];
 		
 		//更新数据库
-		echo Article::save($id,$uid,$title,$content,$cate_id,$tags);
+		echo Article::save($id,$cur_uid,$title,$content,$cate_id,$tags);
 		break;
 	default:
 		echo 'error...';
