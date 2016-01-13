@@ -5,8 +5,21 @@
     clear: both;
     position: relative;
 }
-.header, .main{ margin:5px auto;width:1000px;}
+.header{
+	background:#000;color:#fff;
+	height:60px;line-height:60px;
+	
+}
+.header .menu{color: #9d9d9d;
+    font-size: 16px; float: right;
+}
+.header .title{    font-size: 32px;
+    font-weight: bold;
+    font-family: "黑体";}
+.header a{color:#fff;}
+
 .main{
+	width:1000px;margin: 5px auto;
 	border:1px solid #eee;padding:5px;
 	overflow:hidden;
 	border-top: 2px solid #eee;
@@ -27,6 +40,35 @@
 	float:right;
 }
 
+/*颜色*/
+.login{padding: 50px 0;}
+
+.white{color:white;}
+.redBG{background:#E4393C;}
+
+.login .btn{
+    width: 100px;
+    height: 30px;
+    margin: 10px;
+
+	cursor: pointer;
+    font-size: 18px;
+	
+   padding:0px;
+}
+.login .btn.white{
+	background: #fff;
+    color: #E4393C;
+}
+.login .btn:hover{
+	font-weight: bold;
+}
+
+
+/*盒子模型样式*/
+.banner{padding:50px 0; font-size: 72px;font-family: 微软雅黑;}
+.banner span{font-size: 50px;font-weight: bold;}
+.banner p{font-size: 30px;}
 
 .footer {
     height: 150px;
@@ -35,11 +77,12 @@
     position: relative;
     color: #fff;
     padding-top: 25px;
+	margin-top:5px;
 }
 .footer p {line-height: 20px;}
 
 /*a细节*/
-.main  a{ padding:0px; margin:0px 7px; color:#0096ff; text-decoration:none;}
+.main  a{ padding:0px; margin:0px; color:#0096ff; text-decoration:none;}
 .main  a:hover{ text-decoration:underline; }
 
 /*left细节*/
@@ -73,4 +116,14 @@
 .main .right .item .status .c3{width:75%;} 
 .main .right .item .status .c4{width:100%;} 
 
-.notice{color:#f00;text-align:center;} 
+.notice{color:#f00;text-align:center;}
+
+/*顶部提示条*/
+.topAction{
+	font-size: 32px;
+    font-weight: bold;
+    font-family: "黑体";
+	background-color:#0096ff;
+	color:#fff;
+}
+.topAction p{font-size: 15px;}

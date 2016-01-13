@@ -1,13 +1,19 @@
-﻿category system
-using class
-
+﻿name:(php分类管理系统)php进度跟踪管理系统v1.0 
+name(en):category system using class
 js/php熟手交流群 369578518
 
 --------------------------------
-UI学习：http://www.itbull.cn/
+UI参考：http://www.itbull.cn/
 --------------------------------
-
-
+变量约定：
+	分类的增删改查。左边分类，右边是条目。默认不分页。
+	[1]index.php?cate_id=-1&u_id=2 所有条目
+	[2]index.php?cate_id=0&u_id=2 默认分类
+	[3no] index.php?cate_id=-2&u_id=2 回收站
+其他用户约定：
+	$uid为待查看者uid
+	$cur_uid为登陆用户的uid；
+--------------------------------
 第一版本：
 1.前台页面和样式
 	-[1] 初步搞定html，添加美化css
@@ -95,11 +101,34 @@ mysql> desc user;
 4.显示详细信息页面
 	-[1] 根据添加页面制作显示页面。详情显示页面。
 	-[2] 实现删除功能。为其他2个页面增加footer。
-
+	-[3] 详情页面分类现实的是id。已经修改Article类，从Category类获取了分类名。
 5. 登陆功能：不登录不让看，但是没时间写登陆，先写一个凑合的页面。
 	-[1] 一键登陆，一键退出。目前就一个用户。
-	-[2]-- 在没登录的时候给出所有用户。按权限分组。
+	-[2] 随时可以退出，取消退出后再退出报错。
+	-[3] 初步实现登陆功能。
+添加用户数据，
+配置文件中：	分组时，2为管理员，1为用户。
+数据库中：
+CREATE TABLE `user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` char(15) NOT NULL DEFAULT '',
+  `password` char(40) NOT NULL DEFAULT '',
+  `email` varchar(40) NOT NULL DEFAULT '',
+  `regdate` int(10) unsigned NOT NULL DEFAULT '0',
+  `lastlogin` int(10) unsigned NOT NULL DEFAULT '0',
+  `usergroup` int(10) unsigned NOT NULL DEFAULT '0',
+  `session_id` char(30) NOT NULL,
+  `portrait` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+insert into user(username,password,email,regdate,usergroup) values
+('王军亮','7c4a8d09ca3762af61e59520943dc26494f8941b',"jimmyMall@live.com",1452332327,2),
+('张三丰','7c4a8d09ca3762af61e59520943dc26494f8941b',"zhangsf@qq.com",1452330327,1);
+	[4] --登陆记录sessionid和登陆时间。。。
 	
+	
+	-- 在没登录的时候给出所有用户。按权限分组。
+	--多用户怎么解决？
 	
 	===========================
 	mysql上一条 下一条：http://blog.csdn.net/tengdazhang770960436/article/details/39996705
@@ -107,11 +136,56 @@ mysql> desc user;
 	SELECT * FROM `user` where userId<3 ORDER BY userId desc LIMIT 0,1;
 	===========================
 
+6.框架优化：
+	11:00 2016-01-09 
+	[1] 修改库的引入方式，绝对路径不写死。
+
+7.修改页面的功能。
+8.美化登陆页面。页头和页脚独立成视图文件。
+	[1]登陆、首页、修改article、详情、删除、新建条目视图正常；
+	[2] 还有2个管理视图：管理分类、管理条目。已经可用。
+9.-添加属性控制按钮-增删改查	
+	属性键名表mykey
+		name：随便叫
+		类别：(0)text、(1)picture、(2)file
+		
+CREATE TABLE `mykey` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `type` int(2) NOT NULL DEFAULT 0,
+  `u_id` int(10) NOT NULL DEFAULT 1,
+  `rank` int(10) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;	
+insert into `mykey`(name,type,u_id,rank) values
+('HPLC',1,1,1),('MS',1,1,2),('MS_note',0,1,3),('rar',2,1,3),
+('HPLC',1,2,1),('MS',1,2,2),('MS_note',0,2,3),('rar',2,2,3);
+
+=========================
+属性值表myvalue
+CREATE TABLE `myvalue` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `a_id` int(10) NOT NULL DEFAULT 1,
+  `u_id` int(10) NOT NULL DEFAULT 1,
+  `add_time` varchar(30) NOT NULL DEFAULT '',
+  `modi_time` varchar(30) NOT NULL DEFAULT '',
+  `key_id` int(10) NOT NULL,
+  `text` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+insert into `myvalue`(u_id,a_id,add_time,key_id,text) values
+(1,42,1452681891,1,'upload/usr_1/001.jpg'),
+(1,42,1452686891,2,'upload/usr_1/001.jpg'),
+(1,42,1452684991,3,'some text here about MS'),
+(1,42,1452684991,4,'upload/usr_1/001.txt'),
+
+(2,33,1422681891,1,'upload/usr_2/002.jpg'),
+(2,33,1432684991,3,'some text here about MS002'),
+(2,33,1462684991,4,'upload/usr_2/002.txt');
 
 
-	- 修改页面的功能
-	
-	
+
+
 	
 	修改分类:怎么ajax单页面内修改目录表? 
 			如果删除掉一个目录项，则对应的文章怎么处理？[ok 2.8.3]

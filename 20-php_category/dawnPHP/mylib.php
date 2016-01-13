@@ -2,7 +2,7 @@
 /******************************************
 * 我自己的框架: dawnPHP v0.1.0
 * 
-* 需要把库文件的地址定义为常量 define("BathPath","D:/xampp/dawnPHP/");
+* 需要把库文件的地址定义为常量 define("BathPath",getcwd() . '/dawnPHP/');
 * 然后引用该库头文件 include('dawnPHP/mylib.php');
 ******************************************/
 
@@ -16,6 +16,9 @@ defined('BathPath') or die('BathPath not defined.');
 //3.设置时区
 date_default_timezone_set('PRC');
 //date_default_timezone_set('Asia/Shanghai');
+
+//引入配置文件
+include(BathPath . 'config.php');
 
 //4.定义css和js文件夹的上一级位置：
 $publicPath='public/';
