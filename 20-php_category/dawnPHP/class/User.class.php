@@ -22,16 +22,46 @@ class User{
 		}
 	}
 	
+	//实现登陆功能
+	static function login($username,$password){ 
+		$query=sprintf('SELECT * FROM %sUSER WHERE username="%s" and password="%s";',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($username,$GLOBALS['DB']),
+			sha1($password)
+		);
+		
+		$result=mysql_query($query,$GLOBALS['DB']);
+		$arr=array();
+		if(mysql_num_rows($result)){ 
+			$row=mysql_fetch_assoc($result);
+			$arr=array(
+				'uid'=>$row['id'],
+				'username'=>$row['username'],
+				'email'=>$row['email'],
+				'regdate'=>date('Y-m-d H:i:s',$row['regdate']),
+				'lastlogin'=>$row['lastlogin'],
+				'usergroup'=>$row['usergroup'],
+				'ssession_id'=>$row['session_id'],
+			);
+			if(isset($arr['lastlogin'])){
+				$arr['lastlogin']=date('Y-m-d H:i:s',$row['lastlogin']);
+			}
+		}
+		mysql_free_result($result); 
+		return $arr;
+	}
 	
 	
 	//return if username is valid format 
 	public static function validateUsername($username){ 
 		return preg_match('/^[A-Z0-9]{2,20}$/i',$username); 
 	}
+	
 	//return if email address is valid format 
 	public static function validateEmailAddr($email){ 
 		return filter_var($email,FILTER_VALIDATE_EMAIL); 
 	}
+	
 	//return an object populated based on the record‘s user id 
 	public static function getById($user_id){
 		$user=new User();

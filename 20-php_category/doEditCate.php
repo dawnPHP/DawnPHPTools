@@ -1,11 +1,12 @@
 ﻿<?php
 session_start();
-if(!isset($_SESSION['uid'])){
+if(!isset($_SESSION['user']['uid'])){
 	die('Invalid visit.');
 }
-$uid=$_SESSION['uid'];
+$user=$_SESSION['user'];
+$uid=$_SESSION['user']['uid'];
 
-define("BathPath","D:/xampp/htdocs/php/DawnPHPTools/php_category/dawnPHP/");
+define("BathPath",getcwd() . '/dawnPHP/');
 include('dawnPHP/mylib.php');
 
 //获取数据
