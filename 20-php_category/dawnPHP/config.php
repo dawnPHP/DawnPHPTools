@@ -5,3 +5,12 @@ $user_group=array(
 	2=>'管理员',
 );
 
+
+//上传的文件类别
+//(0)text、(1)picture、(2)file
+$file_type=array(
+	0=>'text',
+	1=>'picture',
+	2=>'file',
+);
+

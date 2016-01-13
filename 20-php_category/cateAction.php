@@ -87,7 +87,8 @@ switch ($action){
 		echo json_encode($articles);
 		break;
 	case 'detail':
-		//返回文章详细信息
+		//返回文章详细信息 
+		// 补充属性信息
 		$a_id=Dawn::get('a_id','');
 		//判断是否为空
 		

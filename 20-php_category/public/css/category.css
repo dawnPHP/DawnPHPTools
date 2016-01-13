@@ -82,7 +82,7 @@
 .footer p {line-height: 20px;}
 
 /*a细节*/
-.main  a{ padding:0px; margin:0px 7px; color:#0096ff; text-decoration:none;}
+.main  a{ padding:0px; margin:0px; color:#0096ff; text-decoration:none;}
 .main  a:hover{ text-decoration:underline; }
 
 /*left细节*/

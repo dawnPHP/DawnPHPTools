@@ -3,8 +3,10 @@
 	<div class=left>
 		<div class=btn>
 			<input type='button' value='新建条目'>
-			<p><a href='javascript:void(0);'>管理分类</a> | 
-			<a href='javascript:void(0);'>管理条目</a></p>
+			<p>管理: <a href='javascript:void(0);'>分类</a> | 
+				<a href='javascript:void(0);'>条目</a> | 
+				<a href='javascript:void(0);'>属性</a>
+			</p>
 		</div>
 		<span>分类</span>
 		<ul>
@@ -49,6 +51,7 @@ window.onload=function(){
 	var oBtn_manage=oBtns.getElementsByTagName('p')[0].getElementsByTagName('a');
 	var oBtn_cate=oBtn_manage[0];//管理分类
 	var oBtn_item=oBtn_manage[1];//管理条目
+	var oBtn_prop=oBtn_manage[2];//管理属性
 	
 	oBtn_new.onclick=function(){
 		window.location='newItem.php';
@@ -58,6 +61,9 @@ window.onload=function(){
 	}
 	oBtn_item.onclick=function(){
 		window.location='changeCate.php';
+	}
+	oBtn_prop.onclick=function(){
+		window.location='editProperty.php';
 	}	
 	
 
