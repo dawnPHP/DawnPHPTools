@@ -9,7 +9,7 @@
 <body>
 <div class='header'>
 	<div class=wrapper>
-	<span class=title>多肽管理系统v1.0</span>
+	<span class=title>实验进程管理系统v1.0</span>
 	<span class=menu>
 	<a href='devLog.txt' target='_blank' title='整个项目的详细记录'>开发日志</a> | 
 	<a href='http://tieba.baidu.com/f?kw=php&fr=wwwt' target='_blank' title='问题咨询'>php吧</a> | 

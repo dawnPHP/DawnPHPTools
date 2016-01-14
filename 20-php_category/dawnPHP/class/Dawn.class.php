@@ -42,8 +42,13 @@ class Dawn{
 	}
 	
 	//出错后显示 返回首页
-	public static function died(){
-		die('Invalid visit.<br><a href="index.php">返回首页</a>');
+	public static function died($text='Invalid visit.'){
+		die('<br>'.$text.'<a href="index.php">返回首页</a>');
+	}
+	
+	//返回上一页
+	public static function back(){
+		echo '<script type="text/javascript">window.history.back();</script>';
 	}
 
 }

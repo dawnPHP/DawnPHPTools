@@ -158,7 +158,7 @@ function getArticleDom(obj){
 	oA.setAttribute('href','detail.php?a_id='+obj['id']);
 	oA.setAttribute('target','_blank');
 	oA.innerHTML=obj['title'];
-	
+		
 	var oSpan1=document.createElement('span');
 	var oA1=document.createElement('a');
 	//oA1.setAttribute('href','cateAction.php?a=del&a_id='+obj['id']);
@@ -173,7 +173,7 @@ function getArticleDom(obj){
 	oA2=document.createElement('a');
 	oA2.setAttribute('href','edit.php?a_id='+obj['id']);
 	oA2.setAttribute('target','_blank');
-	oA2.innerHTML='修改';
+	oA2.innerHTML='编辑';
 	oSpan2.appendChild(oA2);
 	
 	var oP=document.createElement('p');

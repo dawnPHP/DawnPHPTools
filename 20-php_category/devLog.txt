@@ -158,8 +158,8 @@ CREATE TABLE `mykey` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;	
 insert into `mykey`(name,type,u_id,rank) values
-('HPLC',1,1,1),('MS',1,1,2),('MS_note',0,1,3),('rar',2,1,3),
-('HPLC',1,2,1),('MS',1,2,2),('MS_note',0,2,3),('rar',2,2,3);
+('HPLC',1,1,1),('MS',1,1,2),('MS_note',0,1,3),('rar',2,1,4),
+('HPLC',1,2,1),('MS',1,2,2),('MS_note',0,2,3),('rar',2,2,4);
 
 =========================
 属性值表myvalue
@@ -179,11 +179,21 @@ insert into `myvalue`(u_id,a_id,add_time,key_id,text) values
 (1,42,1452684991,3,'some text here about MS'),
 (1,42,1452684991,4,'upload/usr_1/001.txt'),
 
-(2,33,1422681891,1,'upload/usr_2/002.jpg'),
-(2,33,1432684991,3,'some text here about MS002'),
-(2,33,1462684991,4,'upload/usr_2/002.txt');
+(2,33,1422681891,6,'upload/usr_2/002.jpg'),
+(2,33,1432684991,7,'some text here about MS002'),
+(2,33,1462684991,8,'upload/usr_2/002.txt');
+============================================================
+发布新版本：在添加属性功能之前的版本。
+------------------------------------------------------------
+	- 加功能前添加标签：* [new tag]   v20thV0.1.9 -> v20thV0.1.9
+	- 基本的博客系统，可以登录缺少注册，缺少编辑器
+	commit fc9fd666f0fb316b1e476c05c655b0e7638b75e0
+Author: Dawn <JimmyMall@live.com>
+Date:   Wed Jan 13 20:10:18 2016 +0800
 
-
+    before v9 add property functions.
+============================================================
+	[1] 主页添加修改属性按钮，在detail页面显示、添加属性的值。
 
 
 	
