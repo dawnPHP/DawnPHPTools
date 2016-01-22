@@ -153,8 +153,10 @@ window.onload=function(){
 		var newBox=document.createElement('div');
 		newBox.setAttribute('id','newBox');
 		ctrlBox.appendChild( newBox );
-		//插入dom树
-		$('content').appendChild( ctrlBox );
+		//如果还有内容，则插入dom树
+		if(comBox.value!=-1){
+			$('content').appendChild( ctrlBox );
+		}
 		
 		
 		//标签没有 todo
@@ -228,11 +230,11 @@ function addProp(){
 
 //制作下拉框
 function getComBox(comBoxValue,comBox){
-	if(comBoxValue==undefined){return comBox;}
-	var len=comBoxValue.length;
-	if(len==0){
+	if(comBoxValue==undefined || 0==comBoxValue.length){
 		return comBox;
 	}
+	
+	var len=comBoxValue.length;
 	//开始创造一系列options
 	var opt='';
 	for(var i=0;i<len;i++){
