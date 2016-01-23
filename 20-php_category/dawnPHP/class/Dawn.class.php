@@ -50,5 +50,17 @@ class Dawn{
 	public static function back(){
 		echo '<script type="text/javascript">window.history.back();</script>';
 	}
+	
+	//定时返回
+	public static function goBackIn($time=5,$url='',$text='Access Denied!'){
+		echo "<script type='text/javascript' src='public/js/jump.js'></script>";
+		echo ('<h1>:(<br>'. $text .'</h1><h3>Jump to <a href="index.php">Home</a> page in <span id="jumpTo" style="color:red"></span> second(s).</h3>');
+		if($url==''){
+			echo "<script>jumpToUrl($time);</script>";
+		}else{
+			echo "<script>jumpToUrl($time, $url);</script>";
+		}
+		die();
+	}
 
 }

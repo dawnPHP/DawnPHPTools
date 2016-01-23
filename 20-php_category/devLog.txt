@@ -149,7 +149,8 @@ insert into user(username,password,email,regdate,usergroup) values
 	属性键名表mykey
 		name：随便叫
 		类别：(0)text、(1)picture、(2)file
-		
+=========================
+属性键表mykey
 CREATE TABLE `mykey` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
@@ -183,6 +184,32 @@ insert into `myvalue`(u_id,a_id,add_time,key_id,text) values
 (2,33,1422681891,6,'upload/usr_2/002.jpg'),
 (2,33,1432684991,7,'some text here about MS002'),
 (2,33,1462684991,8,'upload/usr_2/002.txt');
+
+mysql> desc mykey;
++-------+------------------+------+-----+---------+----------------+
+| Field | Type             | Null | Key | Default | Extra          |
++-------+------------------+------+-----+---------+----------------+
+| id    | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50)      | NO   |     |         |                |
+| type  | int(2)           | NO   |     | 0       |                |
+| u_id  | int(10)          | NO   |     | 1       |                |
+| rank  | int(10)          | NO   |     | 1       |                |
++-------+------------------+------+-----+---------+----------------+
+5 rows in set (0.19 sec)
+
+mysql> desc myvalue;
++-----------+------------------+------+-----+---------+----------------+
+| Field     | Type             | Null | Key | Default | Extra          |
++-----------+------------------+------+-----+---------+----------------+
+| id        | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| a_id      | int(10)          | NO   |     | 1       |                |
+| u_id      | int(10)          | NO   |     | 1       |                |
+| add_time  | varchar(30)      | NO   |     |         |                |
+| modi_time | varchar(30)      | NO   |     |         |                |
+| key_id    | int(10)          | NO   |     | NULL    |                |
+| text      | text             | YES  |     | NULL    |                |
++-----------+------------------+------+-----+---------+----------------+
+
 ============================================================
 发布新版本：在添加属性功能之前的版本。
 ------------------------------------------------------------
@@ -198,6 +225,12 @@ Date:   Wed Jan 13 20:10:18 2016 +0800
 	[2] git忽略upload文件夹
 	[3] add createElement(). 如果属性全显示，则隐藏添加按钮。
 	[4] 修改库引入方式，两句变一句。在库入口文件获取库文件的绝对路径。
+	[5] 上传失败返回，倒计时返回。通过
+		Dawn::goBackIn(5,'','上传出现错误！' . $arr[1]);调用js中jumpToUrl()函数实现。
+	
+	
+	上传文件夹的可移动性怎么实现？	
+	表名：newkey/newvalue
 	
 	点击修改属性
 	点击删除属性

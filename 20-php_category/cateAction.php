@@ -24,8 +24,6 @@ $cate_id=Dawn::get('cate_id',0);
 
 //登陆
 if($action=='login'){
-	//debug($_POST);
-
 	$user=User::login(Dawn::post('usr'), Dawn::post('psw'));
 	if(count($user)>0){
 		$_SESSION['user']=$user;
@@ -130,7 +128,6 @@ switch ($action){
 		break;
 	case 'saveItem':
 		//更新文章
-		//debug($_POST);
 		
 		//新建数据
 		$id=Dawn::post('id','');
@@ -149,7 +146,6 @@ switch ($action){
 		$key_id=Dawn::post('key_id','');
 		$text=Dawn::post('text','');
 		$type=Dawn::post('type','');//如果是文件，需要上传
-		
 		//Warning: POST Content-Length of 10975023 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
 		//http://stackoverflow.com/questions/6279897/post-content-length-exceeds-the-limit
 		//http://www.360doc.com/content/13/1210/11/14452132_336027836.shtml
@@ -168,7 +164,8 @@ switch ($action){
 			//执行上传
 			$arr = $upload1->upload_to('upload/usr_'.$cur_uid.'/',false);
 			if($arr[0]==0){
-				Dawn::died('上传出现错误！');
+				//Dawn::died('上传出现错误！' . $arr[1]);
+				Dawn::goBackIn(5,'','上传出现错误！' . $arr[1]);
 			}else{
 				$text=$arr[1];
 			}
@@ -190,7 +187,7 @@ switch ($action){
 			//执行上传
 			$arr = $upload1->upload_to('upload/usr_'.$cur_uid.'/',false);
 			if($arr[0]==0){
-				Dawn::died('上传出现错误！');
+				Dawn::goBackIn(5,'','上传出现错误！' . $arr[1]);
 			}else{
 				$text=$arr[1];
 			}
@@ -201,9 +198,20 @@ switch ($action){
 		if(!$result){
 			Dawn::died('添加属性失败。');
 		}
-		Dawn::back();
+		//Dawn::back();
 		
 		break;
+	case 'delValue'://删除属性值
+		//新建数据
+		$id=Dawn::post('id','');
+		//删除数据
+		$result=MyValue::save($id,$cur_uid);
+		
+		
+		
+		
+		break;
+		
 	default:
 		echo '<h1>oops！</h1>Something Error ...';
 		die();

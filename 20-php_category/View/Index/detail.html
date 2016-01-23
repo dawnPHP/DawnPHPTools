@@ -213,7 +213,7 @@ function addProp(){
 	dom +='<input name="type" type="hidden" value="'+type+'">';
 	switch(type){
 		case 0://text
-			dom +='<p>请输入文字：</p><textarea name="text" type="text" placeholder="please input some text"></textarea>';
+			dom +='<p>请输入文字：</p><textarea rows=4 cols=120 name="text" type="text" placeholder="please input some text"></textarea>';
 			break;
 		case 1://picture
 			dom +='<p>请选择图片(<2M; 支持格式：jpg/png/bmp/gif)：</p><input name="text" type="file" value="选择图片">';
@@ -271,8 +271,10 @@ function getPropEle(json){
 				var k=key['name'],
 					v=value['text'],
 					id=value['id'];
-				var alinkEdit='<a target="_blank" href="cateAction.php?a=editValue&v_id='+id+'">编辑</a>';
-				var alinkDelete='<a target="_blank" href="cateAction.php?a=delValue&v_id='+id+'">删除</a>';
+				
+				var alinkEdit='<a target="_blank" href="cateAction.php?a=editValue&v_id='+id+'&type='+key['type']+'">编辑</a>';
+				//var alinkDelete='<a target="_blank" href="cateAction.php?a=delValue&v_id='+id+'&type='+key['type']+'">删除</a>';
+				var alinkDelete='<a target="_blank" href="javascript:delValue('+id+')">删除</a>';
 				
 				switch (+key['type']){
 					case 0://文字
@@ -289,11 +291,34 @@ function getPropEle(json){
 				}
 			}
 		}
+		
 		if(!hasValue){
 			aNoValue.push(key);
 		}
 	}
 	return [dom,aNoValue];
+}
+
+//删除属性
+function delValue(id){
+	//确认是否删除
+	if(!confirm('确定要删除该属性值？')) return;
+	
+	//执行ajax删除
+	var ajax=new Ajax();
+	var url="cateAction.php?a=delValue&v_id="+id;
+	
+	ajax.get(url,function(str){
+		n(url);return; 
+		
+		
+		objs=eval("("+str+")");
+		if(objs[0].length==0){//如果没有主体信息，则直接造一个
+			objs[0]={id: "", title: "", content: "<p style='color:red'>该条目不存在，<a href='index.php'>点击回到首页</a></p>", modi_time: null, add_time: "",cate_id:''};
+		};
+	});
+	
+
 }
 
 </script>
