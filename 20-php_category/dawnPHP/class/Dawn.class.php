@@ -42,8 +42,25 @@ class Dawn{
 	}
 	
 	//出错后显示 返回首页
-	public static function died(){
-		die('Invalid visit.<br><a href="index.php">返回首页</a>');
+	public static function died($text='Invalid visit.'){
+		die('<br>'.$text.'<a href="javascript:window.history.back();">返回上一页</a> | <a href="index.php">返回首页</a>');
+	}
+	
+	//返回上一页
+	public static function back(){
+		echo '<script type="text/javascript">window.history.back();</script>';
+	}
+	
+	//定时返回
+	public static function goBackIn($time=5,$url='',$text='Access Denied!'){
+		echo "<script type='text/javascript' src='public/js/jump.js'></script>";
+		echo ('<h1>:(<br>'. $text .'</h1><h3>Jump to <a href="index.php">Home</a> page in <span id="jumpTo" style="color:red"></span> second(s).</h3>');
+		if($url==''){
+			echo "<script>jumpToUrl($time);</script>";
+		}else{
+			echo "<script>jumpToUrl($time, $url);</script>";
+		}
+		die();
 	}
 
 }

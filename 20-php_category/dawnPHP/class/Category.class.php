@@ -201,12 +201,12 @@ c group by cate_id order by u_rank;',
 		//先确定不存在，
 		$query=sprintf('select * from %scategory where u_id=%d;', 
 		DB_TBL_PREFIX,  
-		mysql_real_escape_string($uid,$GLOBALS['DB']), 
-		mysql_real_escape_string($name,$GLOBALS['DB']));
+		mysql_real_escape_string($uid,$GLOBALS['DB']));
 
 		$rows=mysql_query($query,$GLOBALS['DB']);
 		$num=mysql_affected_rows();
 		while($row=mysql_fetch_assoc($rows)){
+			//如果存在
 			if($row['name']==$name){
 				return false;
 			}

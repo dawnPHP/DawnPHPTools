@@ -15,6 +15,7 @@ UI参考：http://www.itbull.cn/
 	$cur_uid为登陆用户的uid；
 --------------------------------
 第一版本：
+--------------------------------
 1.前台页面和样式
 	-[1] 初步搞定html，添加美化css
 	
@@ -148,7 +149,8 @@ insert into user(username,password,email,regdate,usergroup) values
 	属性键名表mykey
 		name：随便叫
 		类别：(0)text、(1)picture、(2)file
-		
+=========================
+属性键表mykey
 CREATE TABLE `mykey` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
@@ -158,8 +160,8 @@ CREATE TABLE `mykey` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;	
 insert into `mykey`(name,type,u_id,rank) values
-('HPLC',1,1,1),('MS',1,1,2),('MS_note',0,1,3),('rar',2,1,3),
-('HPLC',1,2,1),('MS',1,2,2),('MS_note',0,2,3),('rar',2,2,3);
+('HPLC',1,1,1),('MS',1,1,2),('MS_note',0,1,3),('rar',2,1,4),
+('HPLC',1,2,1),('MS',1,2,2),('MS_note',0,2,3),('rar',2,2,4);
 
 =========================
 属性值表myvalue
@@ -179,13 +181,88 @@ insert into `myvalue`(u_id,a_id,add_time,key_id,text) values
 (1,42,1452684991,3,'some text here about MS'),
 (1,42,1452684991,4,'upload/usr_1/001.txt'),
 
-(2,33,1422681891,1,'upload/usr_2/002.jpg'),
-(2,33,1432684991,3,'some text here about MS002'),
-(2,33,1462684991,4,'upload/usr_2/002.txt');
+(2,33,1422681891,6,'upload/usr_2/002.jpg'),
+(2,33,1432684991,7,'some text here about MS002'),
+(2,33,1462684991,8,'upload/usr_2/002.txt');
 
+mysql> desc mykey;
++-------+------------------+------+-----+---------+----------------+
+| Field | Type             | Null | Key | Default | Extra          |
++-------+------------------+------+-----+---------+----------------+
+| id    | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50)      | NO   |     |         |                |
+| type  | int(2)           | NO   |     | 0       |                |
+| u_id  | int(10)          | NO   |     | 1       |                |
+| rank  | int(10)          | NO   |     | 1       |                |
++-------+------------------+------+-----+---------+----------------+
+5 rows in set (0.19 sec)
 
+mysql> desc myvalue;
++-----------+------------------+------+-----+---------+----------------+
+| Field     | Type             | Null | Key | Default | Extra          |
++-----------+------------------+------+-----+---------+----------------+
+| id        | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| a_id      | int(10)          | NO   |     | 1       |                |
+| u_id      | int(10)          | NO   |     | 1       |                |
+| add_time  | varchar(30)      | NO   |     |         |                |
+| modi_time | varchar(30)      | NO   |     |         |                |
+| key_id    | int(10)          | NO   |     | NULL    |                |
+| text      | text             | YES  |     | NULL    |                |
++-----------+------------------+------+-----+---------+----------------+
 
+============================================================
+发布新版本：在添加属性功能之前的版本。
+------------------------------------------------------------
+	- 加功能前添加标签：* [new tag]   v20thV0.1.9 -> v20thV0.1.9
+	- 基本的博客系统，可以登录缺少注册，缺少编辑器
+	commit fc9fd666f0fb316b1e476c05c655b0e7638b75e0
+Author: Dawn <JimmyMall@live.com>
+Date:   Wed Jan 13 20:10:18 2016 +0800
 
+    before v9 add property functions.
+============================================================
+	[1] 主页添加修改属性按钮，在detail页面显示、添加属性的值。
+	[2] git忽略upload文件夹
+	[3] add createElement(). 如果属性全显示，则隐藏添加按钮。
+	[4] 修改库引入方式，两句变一句。在库入口文件获取库文件的绝对路径。
+	[5] 上传失败返回，倒计时返回。通过
+		Dawn::goBackIn(5,'','上传出现错误！' . $arr[1]);调用js中jumpToUrl()函数实现。
+	[6] 点击删除属性，带确认提示。不允许编辑属性。想修改可以删除，再上传。
+		顺序：删除文件，再删除数据库记录。
+		
+	[7] 上传文件命名规则，放到a_id文件夹中/日期_识别号），便于聚集同一条的附件。
+		1)优化文件夹类。
+		
+		--怎么处理空文件夹？
+	[8] 点击属性页面，删除属性键（包括删除所有已有属性值信息、附件信息、属性键条目信息）
+	[9] 点击属性页面，添加属性的键。（只能设置name，不能设置type，默认type都是text），需要再修改。
+	[10] 点击属性页面，修改属性的键的信息。（提交后跳转到首页，有点唐突）
+
+============================================================
+发布新版本：在添加属性功能之后第一个可用版本。
+------------------------------------------------------------
+	- 加功能前添加标签：* [new tag]   v20thV0.2.0 -> v20thV0.2.0
+	- 基本的进程管理系统，可以录入信息，可以登录，缺少注册，缺少编辑器，缺少进程展示。
+	commit 
+Author: Dawn <JimmyMall@live.com>
+Date:   Wed Jan 23 22:08:18 2016 +0800
+
+    before v0.2 add register functions.
+============================================================	
+
+--------------------------------
+第2版本：0.2
+--------------------------------
+1.
+	文本框中的文字怎么显示正常呢？回车与br的转换。
+	
+	上传文件夹的可移动性怎么实现？
+	怎么上传的时保持文件原名？
+	表名：newkey/newvalue
+	
+
+	
+	
 	
 	修改分类:怎么ajax单页面内修改目录表? 
 			如果删除掉一个目录项，则对应的文章怎么处理？[ok 2.8.3]
@@ -194,12 +271,12 @@ insert into `myvalue`(u_id,a_id,add_time,key_id,text) values
 			怎么拖动修改目录显示顺序？
 	局部更新:怎么联动更新url？
 	
-	
+
+
+Web技术研究所：https://www.web-tinker.com/		
 		
-		
-		
-	
-	
+从零开始搭建Node.js, Express, Ejs, Mongodb服务器	
+http://www.toolmao.com/nodejs-express-ejs-mongodb-server
 
 
 	

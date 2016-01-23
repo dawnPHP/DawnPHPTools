@@ -1,10 +1,12 @@
 <?php
 /******************************************
-* 我自己的框架: dawnPHP v0.1.0
+* 我自己的框架: dawnPHP v0.1.1
 * 
-* 需要把库文件的地址定义为常量 define("BathPath",getcwd() . '/dawnPHP/');
-* 然后引用该库头文件 include('dawnPHP/mylib.php');
+* 引用该库入口文件即可 include('dawnPHP/door.php');
 ******************************************/
+
+//定义入口文件位置
+defined('BathPath') or define('BathPath', dirname(__file__) .'/' );
 
 //1.定义字符集
 header("Content-type: text/html; charset=utf-8");

@@ -37,6 +37,31 @@ function isEmpty(obj,desc){
 	return false;
 }
 
+/**
+	根据json信息建立dom元素
+	@para string 要建立的标签
+	@para json object 属性键值对
+	@para string or dom 元素内部innerHTML
+	return dom元素
+*/
+function createElement(tag,json,innerHTML){
+	var innerHTML=innerHTML||'';
+	//新建对象
+	var dom=document.createElement(tag);
+	//添加属性
+	for(var key in json){
+		dom.setAttribute(key,json[key]);
+	}
+	//塞入内容
+	if(innerHTML!=''){
+		dom.innerHTML=innerHTML;
+	}
+	//返回
+	return dom;
+}
+//测试 getElement('div',{'class':'red', 'id':'test2', },'123');
+
+
 
 
 //==============================	
@@ -158,7 +183,7 @@ function getArticleDom(obj){
 	oA.setAttribute('href','detail.php?a_id='+obj['id']);
 	oA.setAttribute('target','_blank');
 	oA.innerHTML=obj['title'];
-	
+		
 	var oSpan1=document.createElement('span');
 	var oA1=document.createElement('a');
 	//oA1.setAttribute('href','cateAction.php?a=del&a_id='+obj['id']);
@@ -173,7 +198,7 @@ function getArticleDom(obj){
 	oA2=document.createElement('a');
 	oA2.setAttribute('href','edit.php?a_id='+obj['id']);
 	oA2.setAttribute('target','_blank');
-	oA2.innerHTML='修改';
+	oA2.innerHTML='编辑';
 	oSpan2.appendChild(oA2);
 	
 	var oP=document.createElement('p');
