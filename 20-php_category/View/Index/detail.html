@@ -29,6 +29,26 @@
 #detail .box{border-right:1px solid grey;padding:0 5px;}
 #detail .last{border-right:0;}
 .clear{clear:left;height:10px;}
+
+
+/*属性的样式*/
+.property{list-style:none;  font-family:'微软雅黑';}
+.property li{ line-height:50px;min-height:50px; overflow: hidden; background:#eee; font-size:20px;margin:10px 0;}
+.property li b{text-align:right; font-variant:small-caps;  display:inline-block; width:18%; vertical-align: top;}
+.property li span{  display: inline-block; margin: 0 20px;}
+.property li p{ width:20%;  display: inline-block;float:right;}
+.property li img{max-width:100%;}
+
+
+/*添加新属性的控制框*/
+.ctrlBox{
+	border:1px solid red;
+	padding:10px;
+	font-size:20px;
+}
+.ctrlBox select{ width:200px; margin:0 10px;}
+
+</style>
 </style>
 <div class=main>
 	<div id='detail'>
@@ -100,7 +120,44 @@ window.onload=function(){
 		$('cate').setAttribute('href','index.php?cate_id='+main['cate_id']);//修改url
 		$('cate').innerHTML=main['cate_name']==false?'默认分类':main['cate_name'];//获得分类名
 		
-		$('content').innerHTML=main['content'];//正文
+
+		//获取属性值
+		prop=objs['prop'];
+		var html='';
+		 
+		//获取属性的dom元素
+		var result=getPropEle(prop);
+		html=result[0];//这是html元素
+		var comBoxValue=result[1];//这是未添加的key值
+				
+		$('content').innerHTML = main['content'] + '<div class=property>'+html+'</div>';
+		
+		
+		//插入控制框
+		var ctrlBox=document.createElement('div');
+		ctrlBox.setAttribute('class','ctrlBox');
+		//插入控制框：下拉框
+		var comBox=document.createElement('select');
+		comBox.setAttribute('id','noValueComBox');
+		comBox.innerHTML='<option value="-1">结果已经补齐</option>';
+		comBox=getComBox(comBoxValue,comBox);
+		ctrlBox.appendChild( comBox );
+		//插入控制框：按钮
+		var btnAdd=document.createElement('input');
+		btnAdd.setAttribute('type','button');
+		btnAdd.setAttribute('class','btn');
+		btnAdd.setAttribute('value','添加该属性');
+		btnAdd.setAttribute('onclick','addProp()');
+		ctrlBox.appendChild( btnAdd );
+		//插入空的控件父框（空）
+		var newBox=document.createElement('div');
+		newBox.setAttribute('id','newBox');
+		ctrlBox.appendChild( newBox );
+		//如果还有内容，则插入dom树
+		if(comBox.value!=-1){
+			$('content').appendChild( ctrlBox );
+		}
+		
 		
 		//标签没有 todo
 		$('tags').innerHTML="标签：无";//标签
@@ -135,4 +192,136 @@ window.onload=function(){
 	}
 	
 }
+
+
+//添加属性输入框
+function addProp(){
+	var sel=$('noValueComBox');
+	//获取dom元素的id和type
+	var str=sel.value;
+	if(str==-1){
+		alert('已经没有可以填充的指标了！');
+		return;
+	}
+	var id=parseInt(str);
+	var type=parseInt (str.substr(str.indexOf('(')+1));
+	
+	//组装dom元素  enctype="multipart/form-data">
+	var dom='<form action="cateAction.php?a=newValue" method="post"  enctype="multipart/form-data">';
+	dom +='<input name="key_id" type="hidden" value="'+id+'">';
+	dom +='<input name="a_id" type="hidden" value="'+a_id+'">';
+	dom +='<input name="type" type="hidden" value="'+type+'">';
+	switch(type){
+		case 0://text
+			dom +='<p>请输入文字：</p><textarea rows=4 cols=120 name="text" type="text" placeholder="please input some text"></textarea>';
+			break;
+		case 1://picture
+			dom +='<p>请选择图片(<2M; 支持格式：jpg/png/bmp/gif)：</p><input name="text" type="file" value="选择图片">';
+			break;
+		case 2://file
+			dom +='<p>请选择文件(<4M; 支持格式：pdf/doc/docx/xls/xlsx/ppt/pptx/zip/rar)：</p><input name="text" type="file" value="选择文件">';
+			break;
+	}
+	dom += '<br><input type="submit" value="提交"> </form>';
+	$('newBox').innerHTML=dom;
+}
+
+
+
+//制作下拉框
+function getComBox(comBoxValue,comBox){
+	if(comBoxValue==undefined || 0==comBoxValue.length){
+		return comBox;
+	}
+	
+	var len=comBoxValue.length;
+	//开始创造一系列options
+	var opt='';
+	for(var i=0;i<len;i++){
+		var obj=comBoxValue[i];
+		var uniqe=obj['id']+"("+obj['type']+")";
+		opt += '<option value='+uniqe+'>'+obj['name']+'</option>';
+	}
+	//返回
+	comBox.innerHTML=opt;
+	return comBox;
+}
+
+
+
+//获取属性的元素
+function getPropEle(json){
+	var keys=json['key']; //[Object, Object, Object, Object]
+	var values=json['value']; //[Object, Object, Object, Object]
+	if(0==values.length){
+		return ['',keys];
+	}
+	var dom='',hasValue=false,aNoValue=[];
+	for(var i=0;i<keys.length;i++){
+		var key=keys[i];//Object {id: "1", name: "HPLC", type: "1", u_id: "1", rank: "1"}
+		hasValue=false;//表明属性没有赋值
+		for(var j=0;j<values.length;j++){
+			var value=values[j];
+			
+			//Object {id: "1", a_id: "42", u_id: "1", add_time: "1452681891", modi_time: "",text: "upload/usr_1/001.jpg",key_id: "6"}
+			//n(value['key_id']+' - '+key['id']);
+			if(value['key_id']==key['id']){
+				hasValue=true;//表明属性已经赋值
+				
+				var k=key['name'],
+					v=value['text'],
+					id=value['id'];
+				
+				//var alinkEdit='<a target="_blank" href="cateAction.php?a=editValue&v_id='+id+'&type='+key['type']+'">编辑</a>';
+
+				//var alinkDelete='<a target="_blank" href="cateAction.php?a=delValue&v_id='+id+'&type='+key['type']+'">删除</a>';
+				var alinkDelete='<a target="_blank" href="javascript:delValue('+id+','+key['type']+')">删除</a>';
+				
+				switch (+key['type']){
+					case 0://文字
+						dom += '<li><b>'+k+'</b><span>'+v+'</span><p>'+alinkDelete+'</p></li>';
+						break;
+					case 1://图片
+						dom += '<li><b>'+k+'</b><span><a target="_blank" title="点击查看原图" href="'+v+'"><img src="'+v+'" /></a></span><p>'+alinkDelete+'</p></li>';
+						break;
+					case 2://附件
+						dom += '<li><b>'+k+'</b><span><a href="'+v+'" />download</a>(right click, save as...)</span><p>'+alinkDelete+'</p></li>';
+						break;
+					default:
+						//n(key['type']+' , key='+ key['name'] +', value='+value['text']+', id='+value['id'])
+				}
+			}
+		}
+		
+		if(!hasValue){
+			aNoValue.push(key);
+		}
+	}
+	return [dom,aNoValue];
+}
+
+//删除属性值
+function delValue(id,type){
+	//确认是否删除
+	if(!confirm('确定要删除该属性值？')) return;
+	
+	//执行ajax删除
+	var ajax=new Ajax();
+	var url="cateAction.php?a=delValue&id="+id+'&type='+type;
+
+	ajax.get(url,function(str){
+		objs=eval("("+str+")");
+		//提示
+		if(objs[0]==1){
+			alert(objs[1]);
+		}else{
+			alert('删除失败，请重试。'+objs[1]);
+		}
+		//刷新页面。
+		window.location=window.location;
+	});
+	
+
+}
+
 </script>

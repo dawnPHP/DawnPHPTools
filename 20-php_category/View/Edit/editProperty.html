@@ -1,0 +1,130 @@
+<div class='topAction'>
+	<div class=wrapper>
+		<span>管理&gt;管理属性</span>
+		<a href='index.php'><input type='button' class=btn value='&lt;&lt;返回首页' /></a>
+		<p>	功能：增添、删除、修改属性的名称，以及修改属性的显示顺序。</p>
+	</div>
+</div>
+
+
+
+<div class='category'>
+	<div class='wrapper'>
+
+		<input type='button' id='add' class='btn blue' value='添加属性' />
+
+		<form method='post' action='doEditPropKey.php?a=send'>
+		<table>
+			<tr>
+				<th>属性名称</th>
+				<th>属性类型</th>
+				<th>显示顺序</th>
+				<th>操作</th>
+			</tr>
+		<?php 
+			$i=1;
+			while($row=mysql_fetch_assoc($rows)){
+				$i++;
+		?>
+			<tr class=<?php echo ($i%2==0)?'even':'odd'; ?>>
+				<input type='hidden' name='id[]' value="<?php echo $row['id']?>" />
+				<td><input type='text' name='name[]' value="<?php echo $row['name']?>" /></td>
+				
+				<td><select name='type[]'>
+				<?php
+					foreach($file_type as $k=>$v){
+						$select='';
+						if($k==$row['type']){
+							$select=' selected=selected ';
+						}
+						echo "<option {$select} value={$k}>{$v}</option>";
+					}
+				?>
+				</select></td>
+								
+				
+				<td><input type='text' name='rank[]' value="<?php echo $row['rank']?>" /></td>
+				<td><input type='button' class='btn' onclick='javascript:deletePropKey(<?php echo $row['id'].','.$row['type'];?>);'value='删除' /></td>
+			</tr>
+		<?php }?>
+			
+		</table>
+			<input type='hidden' id='isModify' value=0 />
+			
+			<a href='index.php'><input type='button' class='btn' value='&lt;&lt;返回首页(放弃修改)' /></a>
+			<input id='send' type='button' class='btn blue' value="提交修改" />   
+		</form>
+	</div>
+</div>
+
+<script>
+var u_id=<?php echo $_SESSION['user']['uid'];?>;
+var cate_id=-1;
+
+window.onload=function(){
+	//添加新属性的键
+	$('add').onclick=function(){
+		var new_key=prompt('请输入新分类名字：');
+		if(trim(new_key)==''){return;}
+		var ajax=new Ajax();
+		ajax.get('doEditPropKey.php?a=add&name='+new_key,function(s){
+			//console.log(s);
+			if(s)window.location.reload();
+		})
+	};
+	
+	
+	//修改input内容会解锁提交按钮
+	var aInput=document.getElementsByTagName('input');
+	for(var i=0;i<aInput.length;i++){
+		oInput=aInput[i];
+		oInput.onchange=function(){
+			$('isModify').value=1;
+		}
+	}
+	//改变select内容也会解锁提交按钮
+	var aSelect=document.getElementsByTagName('select');
+	for(var i=0;i<aSelect.length;i++){
+		oSelect=aSelect[i];
+		oSelect.onchange=function(){
+			$('isModify').value=1;
+		}
+	}
+	
+	
+	//提交按钮
+	$('send').onclick=function(){
+		if($('isModify').value<1){
+			alert('没有检测到修改，请修改后再提交。');
+		}else{
+			//添加提交
+			document.forms[0].submit();
+		}
+	}
+	
+}
+
+
+	//删除【属性键】按钮
+	function deletePropKey(key_id,type){
+		//询问确认
+		var conf=confirm('你确定要删除该属性吗？将要删除条目中已添加的该属性值和附件文件。请谨慎操作！');
+		if(!conf){return;}
+		
+		if(!confirm('请再次确认是否删除该属性？将要删除条目中已添加的该属性值和附件文件。请谨慎操作！')) return;
+		
+		var url='doEditPropKey.php?a=del&key_id='+key_id+'&type='+type;
+		//执行删除
+		var ajax=new Ajax();
+		ajax.get(url,function(str){
+			var obj=eval("("+str+")");
+			if(obj[0]==1){
+				window.location.reload();
+			}else{
+				alert('删除失败，请重试。错误提示： ' + obj[1]);
+			}
+		});
+
+		return false;
+	}
+</script>

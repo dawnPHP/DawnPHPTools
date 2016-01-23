@@ -22,3 +22,10 @@ function debug($s,$isDie=true){
 		die();
 	}
 }
+
+//排除函数
+function dump($s){
+	echo '<hr><pre>';
+	print_r($s);
+	echo '</pre><hr>';
+}

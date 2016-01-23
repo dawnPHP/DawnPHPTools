@@ -1,6 +1,6 @@
 <?php
 session_start();
-define("BathPath",getcwd() . '/dawnPHP/');
+
 include('dawnPHP/mylib.php');
 
 //获取操作名
@@ -24,8 +24,6 @@ $cate_id=Dawn::get('cate_id',0);
 
 //登陆
 if($action=='login'){
-	//debug($_POST);
-
 	$user=User::login(Dawn::post('usr'), Dawn::post('psw'));
 	if(count($user)>0){
 		$_SESSION['user']=$user;
@@ -71,28 +69,32 @@ $cur_uid=$_SESSION['user']['uid'];
 
 //这一条去掉，不知道影响多少？
 if($uid!=-1){
-	//$cur_uid=$uid;
+	//$uid=$cur_uid;
 }
 
 
 switch ($action){
 	case 'category':
 		//返回目录
-		$cate=Category::getByUserId($cur_uid);	
+		$cate=Category::getByUserId($uid);	
 		echo json_encode($cate);
 		break;
 	case 'artilist'://article list
 		//返回文章列表
-		$articles=Article::getList($cur_uid,$cate_id);	
+		$articles=Article::getList($uid,$cate_id);	
 		echo json_encode($articles);
 		break;
 	case 'detail':
 		//返回文章详细信息 
-		// 补充属性信息
 		$a_id=Dawn::get('a_id','');
 		//判断是否为空
 		
+		//文章基本信息
 		$cate=Article::detail($uid,$a_id);	
+		// 要补充属性信息
+		$prop=Property::detail($uid,$a_id);
+		$cate['prop']=$prop;
+		//返回结果
 		echo json_encode($cate);
 		break;
 	case 'change_cate':
@@ -126,7 +128,6 @@ switch ($action){
 		break;
 	case 'saveItem':
 		//更新文章
-		//debug($_POST);
 		
 		//新建数据
 		$id=Dawn::post('id','');
@@ -138,7 +139,97 @@ switch ($action){
 		//更新数据库
 		echo Article::save($id,$cur_uid,$title,$content,$cate_id,$tags);
 		break;
+	case 'newValue':
+		//添加新属性值
+		//获取参数
+		$a_id=Dawn::post('a_id','');
+		$key_id=Dawn::post('key_id','');
+		$text=Dawn::post('text','');
+		$type=Dawn::post('type','');//如果是文件，需要上传
+		//Warning: POST Content-Length of 10975023 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+		//http://stackoverflow.com/questions/6279897/post-content-length-exceeds-the-limit
+		//http://www.360doc.com/content/13/1210/11/14452132_336027836.shtml
+
+		//执行文件上传
+		$path='upload/usr_'.$cur_uid. '/'. $a_id;
+		if($type==1){//图片上传
+			//文件的限制条件
+			$restricts=array(
+				'size'=>2000, //unit: kb
+				'type'=>array("image/gif", "image/jpeg", "image/pjpeg", "image/png")
+			);
+
+			//实例化上传对象
+			$upload1=new UploadFile($_FILES['text']);
+			$upload1->set_restricts($restricts);
+			//执行上传
+			$arr = $upload1->upload_to($path, false);
+			if($arr[0]==0){
+				//Dawn::died('上传出现错误！' . $arr[1]);
+				Dawn::goBackIn(5,'','上传出现错误！' . $arr[1]);
+			}else{
+				$text=$arr[1];
+			}
+		}elseif($type==2){//文件上传
+			//文件的限制条件
+			$restricts=array(
+				'size'=>4000, //unit: kb
+				'type'=>array('application/pdf',
+					'application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-powerpoint','application/vnd.openxmlformats-officedocument.presentationml.presentation',
+					'application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'text/plain','application/octet-stream')
+			);
+			//doc/docx/xls/xlsx/ppt/pptx/zip/rar
+
+			//实例化上传对象
+			$upload1=new UploadFile($_FILES['text']);
+			$upload1->set_restricts($restricts);
+			//执行上传
+			$arr = $upload1->upload_to($path, false);
+			if($arr[0]==0){
+				Dawn::goBackIn(5,'','上传出现错误！' . $arr[1]);
+			}else{
+				$text=$arr[1];
+			}
+		}
+		
+		//添加属性值
+		$result=MyValue::add($cur_uid, $a_id, $key_id, $text);
+		if(!$result){
+			Dawn::died('添加属性失败。');
+		}
+		Dawn::back();
+		
+		break;
+	case 'delValue'://删除属性值
+		//新建数据
+		$id=Dawn::get('id','');
+		$type=Dawn::get('type','');
+		//删除数据
+		$result=MyValue::del($cur_uid, $id, $type);
+		echo json_encode($result);
+		
+		break;
 	default:
-		echo 'error...';
+		echo '<h1>oops！</h1>Something Error ...';
 		die();
 }
+
+/*
+//debug($_FILES);
+//rtf application/msword
+
+//doc 	application/msword
+//docx application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+//ppt 	application/vnd.ms-powerpoint
+//pptx application/vnd.openxmlformats-officedocument.presentationml.presentation
+
+//xls 	application/vnd.ms-excel
+//xlsx	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+//txt text/plain
+//html 	text/html
+//pdf/md/seq/zip/rar application/octet-stream
+*/
