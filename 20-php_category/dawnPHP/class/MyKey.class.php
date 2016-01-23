@@ -1,28 +1,40 @@
 ﻿<?php
 class MyKey{
-	//该类操作myvalue表。
+	//该类操作mykey表。
 	
-	//添加value值
-	public static function add($cur_uid, $a_id, $key_id, $text){
-		$query=sprintf('insert into %smyvalue(a_id,u_id,add_time,key_id,text) values(%s,%s,%d,%s,"%s");',
-			DB_TBL_PREFIX,
-			mysql_real_escape_string($a_id,$GLOBALS['DB']),
-			mysql_real_escape_string($cur_uid,$GLOBALS['DB']),
-			time(),
-			mysql_real_escape_string($key_id,$GLOBALS['DB']),
-			mysql_real_escape_string($text,$GLOBALS['DB'])
-		);
-		//debug($query);
-		$result=mysql_query($query, $GLOBALS['DB']);
-		if($result){
-			return true;
+	//添加key值
+	public static function add($cur_uid, $name){
+		//先确定不存在，
+		$query=sprintf('select * from %smykey where u_id=%d;', 
+		DB_TBL_PREFIX,  
+		mysql_real_escape_string($cur_uid,$GLOBALS['DB']));
+
+		$rows=mysql_query($query,$GLOBALS['DB']);
+		$num=mysql_affected_rows();
+		while($row=mysql_fetch_assoc($rows)){
+			//如果存在
+			if($row['name']==$name){
+				return false;
+			}
+		}
+
+		//然后再添加
+		$query2=sprintf('insert into %smykey(name,type,u_id,rank) values("%s",%d, %d, %d);', 
+			DB_TBL_PREFIX,  
+			mysql_real_escape_string($name,$GLOBALS['DB']),
+			mysql_real_escape_string(0,$GLOBALS['DB']),//默认类别是0(txt)
+			mysql_real_escape_string($cur_uid,$GLOBALS['DB']), 
+			++$num);
+
+		if(mysql_query($query2,$GLOBALS['DB'])){
+			return true; 
 		}else{
-			return mysql_error();
+			return false; 
 		}
 	}
 	
 	
-	//删除value值
+	//删除key值
 	public static function del($cur_uid, $key_id, $type){
 		//获取myvalue表记录，
 		$rows=MyValue::getValuesBy($cur_uid, $key_id);

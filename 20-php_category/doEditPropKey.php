@@ -12,9 +12,18 @@ include('dawnPHP/mylib.php');
 $action=Dawn::get('a');
 switch ($action){
 	case 'del':
-	$key_id=Dawn::get('key_id');
-	$type=Dawn::get('type');
+		$key_id=Dawn::get('key_id');
+		$type=Dawn::get('type');
 		$result=MyKey::del($cur_uid, $key_id,$type);
 		echo json_encode($result);
 		break;
+	case 'add':
+		$name=Dawn::get('name');
+		$result = MyKey::add($cur_uid, $name);
+		break;
+		
+		
+		
+		
+		
 }
