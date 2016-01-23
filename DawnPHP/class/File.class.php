@@ -16,13 +16,11 @@
 $file = 'c:/my/mylog.txt';
 $abc=File::getFileName($file);
 print_r( $abc );
-
 Array
 (
     [0] => mylog
     [1] => txt
 )*/
-
 class File{
 	 /**
      * 返回文件名及后缀名。

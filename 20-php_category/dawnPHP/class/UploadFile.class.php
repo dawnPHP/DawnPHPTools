@@ -5,8 +5,8 @@
  * 单文件上传
  * 类名时驼峰法，方法名是下划线法。
  *
- * @version		v1.0.0
- * @revise		2015.10.06
+ * @version		v1.0.1
+ * @revise		2016.01.23
  * @date		2015.10.06
  * @author		Dawn
  * @email		JimmyMall@live.com
@@ -121,7 +121,7 @@ class UploadFile{
 			$dir_name = $dir_name.'/';
 		}
 		//如果不存在，就新建文件夹
-		File::mkdirs( $dir_name );
+		Dir::mkdirs( $dir_name );
 		
 		$file=$this->file;//获取文件
 		if($isOriginName){
