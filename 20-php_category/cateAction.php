@@ -151,6 +151,7 @@ switch ($action){
 		//http://www.360doc.com/content/13/1210/11/14452132_336027836.shtml
 
 		//执行文件上传
+		$path='upload/usr_'.$cur_uid. '/'. $a_id;
 		if($type==1){//图片上传
 			//文件的限制条件
 			$restricts=array(
@@ -162,7 +163,7 @@ switch ($action){
 			$upload1=new UploadFile($_FILES['text']);
 			$upload1->set_restricts($restricts);
 			//执行上传
-			$arr = $upload1->upload_to('upload/usr_'.$cur_uid.'/',false);
+			$arr = $upload1->upload_to($path, false);
 			if($arr[0]==0){
 				//Dawn::died('上传出现错误！' . $arr[1]);
 				Dawn::goBackIn(5,'','上传出现错误！' . $arr[1]);
@@ -185,7 +186,7 @@ switch ($action){
 			$upload1=new UploadFile($_FILES['text']);
 			$upload1->set_restricts($restricts);
 			//执行上传
-			$arr = $upload1->upload_to('upload/usr_'.$cur_uid.'/',false);
+			$arr = $upload1->upload_to($path, false);
 			if($arr[0]==0){
 				Dawn::goBackIn(5,'','上传出现错误！' . $arr[1]);
 			}else{

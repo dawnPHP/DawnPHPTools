@@ -120,6 +120,8 @@ class UploadFile{
 		if( substr($dir_name, -1) !='/' ){
 			$dir_name = $dir_name.'/';
 		}
+		//如果不存在，就新建文件夹
+		File::mkdirs( $dir_name );
 		
 		$file=$this->file;//获取文件
 		if($isOriginName){
