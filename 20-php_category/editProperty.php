@@ -9,7 +9,8 @@ $uid=$_SESSION['user']['uid'];
 include('dawnPHP/mylib.php');
 
 //获取数据
-$sql='select id,name,u_rank from category where u_id='.$uid . ' order by u_rank';
+//$sql='select id,name,u_rank from category where u_id='.$uid . ' order by u_rank';
+$sql='select id,name,type,rank from mykey where u_id='.$uid . ' order by rank';
 $rows=mysql_query($sql,$GLOBALS['DB']);
 
 
