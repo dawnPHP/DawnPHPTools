@@ -35,7 +35,4 @@ class Property{
 		//4.返回数组
 		return $arr;
 	}
-
-
-
 }

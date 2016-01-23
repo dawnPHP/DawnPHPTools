@@ -22,8 +22,16 @@ switch ($action){
 		$result = MyKey::add($cur_uid, $name);
 		break;
 		
-		
-		
-		
-		
+	case 'send':
+		$result=MyKey::update($_POST);
+		if($result){
+			echo "<script>alert('修改成功'); window.location='index.php'; </script>";
+			exit();
+		}else{
+			echo '<a href="Location:editCate.php">点击返回</a>';
+			echo '<hr>';
+			die(mysql_error());
+		}
+		break;	
+	
 }

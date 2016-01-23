@@ -32,7 +32,7 @@ class MyKey{
 			return false; 
 		}
 	}
-	
+
 	
 	//删除key值
 	public static function del($cur_uid, $key_id, $type){
@@ -69,6 +69,43 @@ class MyKey{
 		}
 	}
 	
+	
+		
+	//更新数据
+	public static function update($arr){
+		//1.对post数据循环
+		$len=count( $arr['id'] );
+		$query=sprintf('insert into %smykey(id,name,type,rank) values',DB_TBL_PREFIX);
+		for($i=0;$i<$len;$i++){
+			//2.组装sql语句
+			//$query .= sprintf('update %scategory set name="%s",u_rank=%d where id=%d;',
+			$query .= sprintf('( %d,"%s",%d,%d)',
+				mysql_real_escape_string($arr['id'][$i],$GLOBALS['DB']),
+				mysql_real_escape_string($arr['name'][$i],$GLOBALS['DB']),
+				mysql_real_escape_string($arr['type'][$i],$GLOBALS['DB']),
+				mysql_real_escape_string($arr['rank'][$i],$GLOBALS['DB'])
+			);
+			if($i!=$len-1){
+				$query .= ',';
+			}else{
+				$query .= 'ON DUPLICATE KEY UPDATE name=VALUES(name), type=VALUES(type), rank=VALUES(rank);';
+			}
+		}
+
+		mysql_query($query,$GLOBALS['DB']);
+		$result=mysql_affected_rows();
+		
+		if($result>0){
+			return true; 
+		}else{
+			return false; 
+		}
+	
+	}
+	
+	
+	
+	//获取文件路径
 	public static function getFilePath($cur_uid, $id){
 		//查询数据库记录
 		$query=sprintf('select * from %smyvalue where u_id=%d and id=%d;',

@@ -62,7 +62,7 @@ var u_id=<?php echo $_SESSION['user']['uid'];?>;
 var cate_id=-1;
 
 window.onload=function(){
-	//添加新分类
+	//添加新属性的键
 	$('add').onclick=function(){
 		var new_key=prompt('请输入新分类名字：');
 		if(trim(new_key)==''){return;}
@@ -72,6 +72,35 @@ window.onload=function(){
 			if(s)window.location.reload();
 		})
 	};
+	
+	
+	//修改input内容会解锁提交按钮
+	var aInput=document.getElementsByTagName('input');
+	for(var i=0;i<aInput.length;i++){
+		oInput=aInput[i];
+		oInput.onchange=function(){
+			$('isModify').value=1;
+		}
+	}
+	//改变select内容也会解锁提交按钮
+	var aSelect=document.getElementsByTagName('select');
+	for(var i=0;i<aSelect.length;i++){
+		oSelect=aSelect[i];
+		oSelect.onchange=function(){
+			$('isModify').value=1;
+		}
+	}
+	
+	
+	//提交按钮
+	$('send').onclick=function(){
+		if($('isModify').value<1){
+			alert('没有检测到修改，请修改后再提交。');
+		}else{
+			//添加提交
+			document.forms[0].submit();
+		}
+	}
 	
 }
 
