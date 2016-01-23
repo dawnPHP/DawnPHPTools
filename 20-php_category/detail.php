@@ -6,7 +6,7 @@ if(!isset($_SESSION['user']['uid'])){
 $user=$_SESSION['user'];
 $uid=$_SESSION['user']['uid'];
 
-define("BathPath",getcwd() . '/dawnPHP/');
+
 include('dawnPHP/mylib.php');
 
 //获取条目详细数据

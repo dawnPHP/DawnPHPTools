@@ -1,6 +1,6 @@
 <?php
 session_start();
-define("BathPath",getcwd() . '/dawnPHP/');
+
 include('dawnPHP/mylib.php');
 
 //获取操作名
