@@ -20,6 +20,47 @@ class MyValue{
 			return mysql_error();
 		}
 	}
+	
+	
+	//删除value值
+	public static function del($cur_uid, $id, $type){
+		//删除文件
+		if($type>0){
+			//获取文件地址
+			$filepath=self::getFilePath($cur_uid, $id);
+			//删除文件
+			unlink($filepath);
+		}
+		
+		//删除数据库记录
+		$query=sprintf('delete from %smyvalue where u_id=%d and id=%d;',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($cur_uid,$GLOBALS['DB']),
+			mysql_real_escape_string($id,$GLOBALS['DB'])
+		);
+		$result=mysql_query($query, $GLOBALS['DB']);
+		if(mysql_affected_rows()>0){
+			return array(1, 'delete success!');
+		}else{
+			return array(0, mysql_error() );
+		}
+	}
+	
+	public static function getFilePath($cur_uid, $id){
+		//查询数据库记录
+		$query=sprintf('select * from %smyvalue where u_id=%d and id=%d;',
+			DB_TBL_PREFIX,
+			mysql_real_escape_string($cur_uid,$GLOBALS['DB']),
+			mysql_real_escape_string($id,$GLOBALS['DB'])
+		);
+
+		//查询
+		$result=mysql_query($query, $GLOBALS['DB']);
+		$row=mysql_fetch_assoc($result);
+		
+		//返回
+		return $row['text'];		
+	}
 
 
 

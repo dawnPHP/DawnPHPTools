@@ -272,19 +272,20 @@ function getPropEle(json){
 					v=value['text'],
 					id=value['id'];
 				
-				var alinkEdit='<a target="_blank" href="cateAction.php?a=editValue&v_id='+id+'&type='+key['type']+'">编辑</a>';
+				//var alinkEdit='<a target="_blank" href="cateAction.php?a=editValue&v_id='+id+'&type='+key['type']+'">编辑</a>';
+
 				//var alinkDelete='<a target="_blank" href="cateAction.php?a=delValue&v_id='+id+'&type='+key['type']+'">删除</a>';
-				var alinkDelete='<a target="_blank" href="javascript:delValue('+id+')">删除</a>';
+				var alinkDelete='<a target="_blank" href="javascript:delValue('+id+','+key['type']+')">删除</a>';
 				
 				switch (+key['type']){
 					case 0://文字
-						dom += '<li><b>'+k+'</b><span>'+v+'</span><p>'+alinkEdit+'|'+alinkDelete+'</p></li>';
+						dom += '<li><b>'+k+'</b><span>'+v+'</span><p>'+alinkDelete+'</p></li>';
 						break;
 					case 1://图片
-						dom += '<li><b>'+k+'</b><span><a target="_blank" title="点击查看原图" href="'+v+'"><img src="'+v+'" /></a></span><p>'+alinkEdit+'|'+alinkDelete+'</p></li>';
+						dom += '<li><b>'+k+'</b><span><a target="_blank" title="点击查看原图" href="'+v+'"><img src="'+v+'" /></a></span><p>'+alinkDelete+'</p></li>';
 						break;
 					case 2://附件
-						dom += '<li><b>'+k+'</b><span><a href="'+v+'" />download</a>(right click, save as...)</span><p>'+alinkEdit+'|'+alinkDelete+'</p></li>';
+						dom += '<li><b>'+k+'</b><span><a href="'+v+'" />download</a>(right click, save as...)</span><p>'+alinkDelete+'</p></li>';
 						break;
 					default:
 						//n(key['type']+' , key='+ key['name'] +', value='+value['text']+', id='+value['id'])
@@ -299,23 +300,25 @@ function getPropEle(json){
 	return [dom,aNoValue];
 }
 
-//删除属性
-function delValue(id){
+//删除属性值
+function delValue(id,type){
 	//确认是否删除
 	if(!confirm('确定要删除该属性值？')) return;
 	
 	//执行ajax删除
 	var ajax=new Ajax();
-	var url="cateAction.php?a=delValue&v_id="+id;
-	
+	var url="cateAction.php?a=delValue&id="+id+'&type='+type;
+
 	ajax.get(url,function(str){
-		n(url);return; 
-		
-		
 		objs=eval("("+str+")");
-		if(objs[0].length==0){//如果没有主体信息，则直接造一个
-			objs[0]={id: "", title: "", content: "<p style='color:red'>该条目不存在，<a href='index.php'>点击回到首页</a></p>", modi_time: null, add_time: "",cate_id:''};
-		};
+		//提示
+		if(objs[0]==1){
+			alert(objs[1]);
+		}else{
+			alert('删除失败，请重试。'+objs[1]);
+		}
+		//刷新页面。
+		window.location=window.location;
 	});
 	
 

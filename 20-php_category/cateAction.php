@@ -198,20 +198,18 @@ switch ($action){
 		if(!$result){
 			Dawn::died('添加属性失败。');
 		}
-		//Dawn::back();
+		Dawn::back();
 		
 		break;
 	case 'delValue'://删除属性值
 		//新建数据
-		$id=Dawn::post('id','');
+		$id=Dawn::get('id','');
+		$type=Dawn::get('type','');
 		//删除数据
-		$result=MyValue::save($id,$cur_uid);
-		
-		
-		
+		$result=MyValue::del($cur_uid, $id, $type);
+		echo json_encode($result);
 		
 		break;
-		
 	default:
 		echo '<h1>oops！</h1>Something Error ...';
 		die();

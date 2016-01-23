@@ -43,7 +43,7 @@ class Dawn{
 	
 	//出错后显示 返回首页
 	public static function died($text='Invalid visit.'){
-		die('<br>'.$text.'<a href="index.php">返回首页</a>');
+		die('<br>'.$text.'<a href="javascript:window.history.back();">返回上一页</a> | <a href="index.php">返回首页</a>');
 	}
 	
 	//返回上一页
