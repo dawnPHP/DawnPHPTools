@@ -7,6 +7,7 @@
 	MyDebug: v1.0.2, 
 	UploadFile:v1.0.0,
 	ZoomImage:v1.0.0,
+	MDParser:v1.0.0,
 }
 
 

@@ -209,32 +209,32 @@ window.onload=function(){
 		aBtn[1].onclick=function(){
 			doDeleteTag(this);
 		}
+	}
 		
-		//删除标签的事件处理函数
-		function doDeleteTag(obj){
-			//获取删除的文本
-			var delTag='';
-			if(obj.previousElementSibling){
-				delTag= obj.previousElementSibling.innerHTML;
-			}else{
-				delTag= obj.previousSibling.innerHTML;
-			}
-			//从form->input中删除该tag
-			var aTags=oTagInFrom.value.split(',');
-			var arr=[];
-			for(var i=0;i<aTags.length;i++){
-				if(aTags[i]==delTag) continue;
-				arr.push(aTags[i]);
-			}
-			oTagInFrom.value=arr.join(',');
-			
-			//删除该dom元素
-			obj.parentElement.remove();
-			//更新输入框的宽度
-			oNewTag_div.style.width=( parseInt(getStyle(oNewTag,'width')) -parseInt(getStyle(oUl,'width')) ) +'px';
-			//设置光标焦点
-			oNewTag_input.focus();
+	//删除标签的事件处理函数
+	function doDeleteTag(obj){
+		//获取删除的文本
+		var delTag='';
+		if(obj.previousElementSibling){
+			delTag= obj.previousElementSibling.innerHTML;
+		}else{
+			delTag= obj.previousSibling.innerHTML;
 		}
+		//从form->input中删除该tag
+		var aTags=oTagInFrom.value.split(',');
+		var arr=[];
+		for(var i=0;i<aTags.length;i++){
+			if(aTags[i]==delTag) continue;
+			arr.push(aTags[i]);
+		}
+		oTagInFrom.value=arr.join(',');
+		
+		//删除该dom元素
+		obj.parentElement.remove();
+		//更新输入框的宽度
+		oNewTag_div.style.width=( parseInt(getStyle(oNewTag,'width')) -parseInt(getStyle(oUl,'width')) ) +'px';
+		//设置光标焦点
+		oNewTag_input.focus();
 	}
 	
 	

@@ -30,7 +30,7 @@
 [config]	18-php_config_class（基于数组）
 [cURL]	19-php_cURL_domainPriceAPI(基于cURL采集数据)
 [目录]	20-php_category(基于目录的分类)
-
+[markdown]	21-MarkDown
 -----------------------------------
 ===================================
 
@@ -60,6 +60,7 @@
 [2015-12-15]	18-php_config_class（基于数组）
 [2015-12-28]	19-php_cURL_domainPriceAPI(基于cURL采集数据)
 [2015-12-28]	20-php_category(基于目录的分类)
+[2016-10-01]	21-MarkDown(markdown读取类)
 
 
 -----------------------------------
@@ -81,7 +82,7 @@
 19-php_cURL_domainPriceAPI(基于cURL采集数据) {cURL:比较初级}
 
 比较推荐 20-php_category(基于目录的分类) 中类的结构，初步实现自动加载。
-
+21-MarkDown	{}
 
 -----------------------------------
 ===================================

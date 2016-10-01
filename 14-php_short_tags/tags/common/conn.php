@@ -6,7 +6,7 @@ version:1.0.1
 
 //-------连接数据库---------------
 //通过php连接mysql数据库：
-$conn=mysql_connect('192.168.1.100','root','') or die(mysql_error());
+$conn=mysql_connect('127.0.0.1','root','') or die(mysql_error());
 
 //选择数据集
 mysql_select_db('myblog') or die(mysql_error());
