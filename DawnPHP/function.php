@@ -11,10 +11,12 @@ function random_text($count,$rm_similar=false){
 	return $text;
 }
 
-//ÅÅ³ýº¯Êý
-function debug($s,$isDie=true){
+
+//ÅÅ´íº¯Êý
+function debug($s,$isDie=false){
 	echo '<hr><pre>';
 	print_r($s);
+	//var_dump($s);
 	echo '</pre><hr>';
 	if($isDie){
 		die();

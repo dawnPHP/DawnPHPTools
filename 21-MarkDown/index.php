@@ -32,7 +32,8 @@ github和segmentFault上的样式表挺好的！
 include 'MDParser.class.php';
 
 // 读取文件
-$file_name1='gulp.md';
+//$file_name1='gulp.md';
+$file_name1='me.md';
 $text = file_get_contents($file_name1);
 
 //根据id判断是否导入另一个文件

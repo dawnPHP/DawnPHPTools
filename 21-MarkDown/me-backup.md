@@ -25,16 +25,17 @@
 以下`重点标注的`为我熟练使用的技能。  
 
 - web前端: ``html``/`css`/`javascript`/`jQuery`   
-- web后端: ``php``/java/nodejs/python/Hack/Node  
+- web后端: ``php``/node/java/python/Hack/Node  
 - Web框架: `ThinkPHP`/CI/Yaf/Yii/Lavaral/LazyPHP
 - 开源程序: `phpCMS`/ecShop/Discuz/wordPress/eduShop  
   
-- 前端框架: `Bootstrap` 
-- 数据库相关: `MySQL`/Navicat/PgSQL/PDO/SQLite  
+- 前端框架: *Bootstrap*/AngularJS/EmberJS/HTML5/Cocos2dJS/ionic  
+- 前端工具: Bower/Gulp/SaSS/LeSS/PhoneGap  
+- 数据库相关: `MySQL`/PgSQL/PDO/SQLite  
 - 版本管理、文档和自动化部署工具: Svn/``Git``/PHPDoc/Phing/Composer  
-
-
-
+- 单元测试: PHPUnit/SimpleTest/Qunit  
+- 云和开放平台: `SAE`/BAE/AWS/微博开放平台/`微信应用开发`  
+- 支付功能: 中国银联/支付宝/微信支付  
 
 
 ## 技术博客  
@@ -54,7 +55,27 @@
 - 开源项目[txtBlog](http://blog.dawnEve.cc/ "博客框架和内容纯手工打造。")，用以管理庞杂的web知识  
 - [微信订阅号：miostudio]  
 
+
+
+## 面向对象的七大原则：  
+
+- 开闭原则  
+- 里氏转换原则  
+- 依赖倒转原则  
+- 接口隔离原则  
+- 组合/聚合复用原则  
+- “迪米特”法则  
+- 单一直则原则  
+
 ```
-更新日期: 20161017
+可靠性，健壮性，可扩展性，可重用性！这四点是软件四大支柱，所以写代码的时候一定要注意这几点。
+
+
+可靠性：代表你写的代码是可靠的，不会出现Exception；
+健壮性：代表你程序的容错机制不错；
+可扩展性：代表，适当的业务修改是可以快速完成的，不需要大量修改；
+可重用性：相信知道继承的同学都知道可重用性，对于相同的业务逻辑要进行封装，不要重复书写，这点和函数作用类似。。。
+
+更新日期: 20160218
 ```
 
