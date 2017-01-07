@@ -16,3 +16,37 @@ excel中另存为“文本文件（制表符分割）(*.txt)”，去掉表头�
 
 3.txt导入到mysql
 load data local infile 'E:\\class_result.txt' into table result fields terminated by '\t';
+
+分解开：
+	load data local infile 'E:\\class_result.txt' 
+	into table result 
+	fields terminated by '\t';
+
+
+
+===================================
+
+load data infile语句从一个文本文件中以很高的速度读入一个表中。使用这个命令之前，mysqld进程（服务）必须已经在运行。为了安全原因，当读取位于服务器上的文本文件时，文件必须处于数据库目录或可被所有人读取。另外，为了对服务器上文件使用load data infile，在服务器主机上你必须有file的权限。
+
+基本语法：
+load data  [low_priority] [local] infile 'file_name txt' [replace | ignore]
+into table tbl_name
+[fields
+[terminated by't']
+[OPTIONALLY] enclosed by '']
+[escaped by'\' ]]
+[lines terminated by'n']
+[ignore number lines]
+[(col_name,   )]
+
+
+==================================
+我来说明一下相关的参数
+关于我的导入语句，我现在直说两个，其他的参考手册。
+character set gbk;
+
+这个字符集一定要写，要不然就会乱码或者只导入一部分数据。
+
+
+http://hunan.iteye.com/blog/752606
+

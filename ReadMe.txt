@@ -1,4 +1,8 @@
-﻿标签ok，分类ok，标签ok，回收站，字体设置，分享，添加好友等。
+﻿锋利的PHP工具箱
+	————抽象成函数或类，放到工具箱中备用。
+
+
+标签ok，分类ok，标签ok，回收站，字体设置，分享，添加好友等。
 MySQLHelper ok, Router ok, Cache ok.
 
 ====================================
@@ -142,10 +146,12 @@ Databases:
  =============================================*/
 class Benchmark{
 	 /**
-     * 检测上传根目录(百度云上传时支持自动创建目录，直接返回)
+     * 检测上传根目录(米欧云上传时支持自动创建目录，直接返回)
      * @param string $rootpath   根目录
      * @return boolean true-检测通过，false-检测失败
      */
-	 functon xx(){}
+	 functon xx($rootpath){
+		return false;
+	 }
 }
 
