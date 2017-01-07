@@ -54,6 +54,11 @@ Databases: 没有.sql文件。
 pathinfo方式，所谓的pathinfo，就是形如这样的url。xxx.com/index.php/c/index/aa/cc，apache在处理这个url的时候会把index.php后面的部分输入到环境变量$_SERVER['PATH_INFO']，它等于/c/index/aa/cc。
 
 
+
+
+==================================================
+使用方法
+--------------------------------------------------
 demo1：常用参数实例。
 
 demo2:借助反射函数求出类中方法的参数列表，并带入进去。独立为一个Router类。只有2个对外方法。
@@ -68,18 +73,48 @@ Router::make("Article/index/id/20",array('id'=>5));//后面的会覆盖前面的
 
 
 
+===============================================================================
+//todo
+有人认为：
+	这种方式应该是路由的最基本形态。
+	处理过程简单，但是路由不能随意自定义。
+	像www.ruanpower.com/home/index/test/aid/5这样的路由我个人认为还不是太优雅。
+	这样目录层次太深了。
+	www.ruanpower.com/home/test/5
+	这样会好一点。
+	如果改造成自定义路由，这其中就要维护路由表，还会用到正则，最主要的是要考虑反向路由。也就是能根据路由表达式和参数生成URL地址。
+所以，需要这样的路由 xx.com/item-132.html 
+这样实现了简短、伪静态。
+名词：路由表、反向路由。
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------
 参考：
 1.分享一个PHP项目或者框架可用的路由类Router.class.php
 http://www.oschina.net/code/snippet_1424211_51033
 
 2.基于原生PHP的路由分配实现
 http://blog.csdn.net/helencoder/article/details/52065969
+
+开发自己PHP MVC框架（一）
+http://blog.csdn.net/fengqiuzhihua/article/details/7913899
+
+
 
 3.PHP实现一个简单url路由功能
 http://www.cnblogs.com/meteoric_cry/archive/2012/07/17/2595375.html
@@ -89,4 +124,5 @@ http://www.nowamagic.net/librarys/veda/detail/1938
 
 5.php路由实现的两种方式
 http://yanue.net/post-92.html
+
 
