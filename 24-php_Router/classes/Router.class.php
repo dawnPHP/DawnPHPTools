@@ -19,7 +19,8 @@
 路由类：
 依赖于php的反射机制。
 1.实现了函数到类的凝练。能从当前url中分配变量到对应类的方法。 使用方法 Router::init();
-//todo 2.产生url：由方法和变量产生url
+//todo 2.产生url：由方法和变量产生url。使用方法： 
+	Router::make('User/index',array('id'=>5));
 
 
 测试用url：http://localhost/DawnPHPTools/24-php_Router/Article/show/tag/apple/id/2017?cat=good
@@ -29,22 +30,26 @@ class Router{
 	static private $controller;
 	static private $action;
 	static private $config;//还没有使用
+	static private $params=array();
 	
 	//初始化
 	static function init($config=array()){
 		self::$config=$config;
-		self::parseURL();
+		self::parseURI();
 		self::dispache();
 	}
 	
 	/**
-	* 为控制器和操作、$_GET分配值
+	* 从字符串，为控制器和操作、$_GET分配值
 	*/
-	static function parseURL(){
-		if(!empty($_SERVER['PATH_INFO'])){
+	static function parseURI($str=''){
+		if($str==""){
+			$str=$_SERVER['PATH_INFO'];
+		}
+		if(!empty($str)){
 			//替换两头的斜线/
-			$_SERVER['PATH_INFO']=preg_replace('/\/{1,}/','/',$_SERVER['PATH_INFO']);//双斜线过滤为单斜线
-			$pathinfo=trim($_SERVER['PATH_INFO'],'/');//  Article/index/id/2007 单用这一句，遇到双斜线会出现bug
+			$str=preg_replace('/\/{1,}/','/',$str);//双斜线过滤为单斜线
+			$pathinfo=trim($str,'/');//  Article/index/id/2007 单用这一句，遇到双斜线会出现bug
 		}else{
 			$pathinfo='Index/index';
 		}
@@ -60,7 +65,7 @@ class Router{
 		self::$controller=$controller;
 		self::$action=$action;
 
-		$paras=array();
+		$params=array();
 		//获取配对的参数
 		$para_count=count($pathinfo_arr)-2;
 		//debug('剩余url参数个数： '.$para_count);//4
@@ -73,11 +78,12 @@ class Router{
 			for($i=0;$i<$para_count/2;$i++){
 				$k=2*$i+2;
 				//echo $k.'='.$pathinfo_arr[$k].'<br>';
-				$paras[$pathinfo_arr[$k]]=$pathinfo_arr[$k+1];
+				$params[$pathinfo_arr[$k]]=$pathinfo_arr[$k+1];
 			}
 		}
 		//参数和get合并，如果有同名参数，则会被get覆盖。
-		$_GET=array_merge($paras,$_GET);
+		self::$params=$params;
+		$_GET=array_merge($params,$_GET);
 	}
 	
 	/**
@@ -128,7 +134,7 @@ class Router{
 	
 	
 	/**
-	使用反射机制，获取类中方法的参数列表，顺序，默认值。
+	【最难】使用反射机制，获取类中方法的参数列表，顺序，默认值。
 	http://blog.csdn.net/my_yang/article/details/43882661
 
 
@@ -158,7 +164,7 @@ class Router{
 		$reflection = new ReflectionClass($clazz);
 		$methods=$reflection->getMethods();
 		
-		//通过反射获取类的注释  
+		//通过反射获取类的注释  (//todo 好像失败了)
 		$doc = $reflection->getDocComment ();
 
 		//解析类的注释头  
@@ -172,8 +178,9 @@ class Router{
 
 
 		//遍历所有的方法  
+		$call=array();
 		foreach($methods as $method){
-			//只获取我们需要的方法
+			//只获取我们需要的方法。如果去掉这个判断，就可以遍历类的所有方法。
 			if($method->getName()!=$action){
 				continue;
 			}
@@ -213,4 +220,27 @@ class Router{
 		}
 		return $call;
 	}
+	
+	
+	//
+	function make($str,$params=array()){
+		//1.如果没有第一个参数，报错。
+		if(empty($str) || is_array($str)){
+			die("must input Controler/action using string.");
+		}
+		//2.判断第一个参数，构建主url
+		self::parseURI($str);
+		$php_self=split('index.php',$_SERVER['PHP_SELF']);
+		$_url=$php_self[0].self::$controller.'/'.self::$action;
+		//debug($_url);
+		
+		//3.设置参数设置
+		$params=array_merge(self::$params,$params);
+		foreach($params as $k=>$v){
+			$_url .= '/'.$k.'/'.$v;
+		}
+		echo $_url;
+	}
+	
+	
 }

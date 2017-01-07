@@ -15,8 +15,8 @@ include 'function.php';
 */
 
 //demo1.目的：测试几个常见url获取和处理方法
+//include 'demo1.php';
 /*
-include 'demo1.php';
 http://localhost/DawnPHPTools/24-php_Router/Article/index/id/2007
 */
 
