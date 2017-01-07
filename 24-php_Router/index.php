@@ -18,20 +18,10 @@ include 'function.php';
 //include 'demo1.php';
 /*
 http://localhost/DawnPHPTools/24-php_Router/Article/index/id/2007
+http://localhost/DawnPHPTools/24-php_Router/Article/show/tag/apple/id/2017?cat=good
 */
 
 //demo2.基本功能，1.地址分发，2.url生成U('User/index',array('id'=>12))
 include 'demo2.php';
 
-
-
-
-//demo2.测试包含文件
-//include 'demo3.php';
-/*
-http://localhost/DawnPHPTools/24-php_Router/Article/show/tag/apple/id/2017?cat=good
-*/
-
-
-
-
+//更多测试在demo2.php中。

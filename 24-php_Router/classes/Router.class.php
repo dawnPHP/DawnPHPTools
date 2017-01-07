@@ -19,8 +19,7 @@
 路由类：
 依赖于php的反射机制。
 1.实现了函数到类的凝练。能从当前url中分配变量到对应类的方法。 使用方法 Router::init();
-//todo 2.产生url：由方法和变量产生url。使用方法： 
-	Router::make('User/index',array('id'=>5));
+2.产生url：由方法和变量产生url。使用方法： 	Router::make('User/index',array('id'=>5));
 
 
 测试用url：http://localhost/DawnPHPTools/24-php_Router/Article/show/tag/apple/id/2017?cat=good
@@ -32,17 +31,24 @@ class Router{
 	static private $config;//还没有使用
 	static private $params=array();
 	
-	//初始化
+	//初始化，这个$config参数目前没用到。
 	static function init($config=array()){
 		self::$config=$config;
-		self::parseURI();
+		
+		//参数和get合并，如果有同名参数，则会被get覆盖。
+		$rs=self::parseURI();
+		self::$controller=$rs[0];
+		self::$action=$rs[1];
+		self::$params=$rs[2];
+		$_GET=array_merge(self::$params,$_GET);	debug($_GET);	
+		
 		self::dispache();
 	}
 	
 	/**
-	* 从字符串，为控制器和操作、$_GET分配值
+	* 解析字符串，返回array(控制器,操作,参数数组)
 	*/
-	static function parseURI($str=''){
+	private static function parseURI($str=''){
 		if($str==""){
 			$str=$_SERVER['PATH_INFO'];
 		}
@@ -61,9 +67,6 @@ class Router{
 		if(count($pathinfo_arr)>1){
 			$action=$pathinfo_arr[1];
 		}
-		
-		self::$controller=$controller;
-		self::$action=$action;
 
 		$params=array();
 		//获取配对的参数
@@ -81,15 +84,16 @@ class Router{
 				$params[$pathinfo_arr[$k]]=$pathinfo_arr[$k+1];
 			}
 		}
-		//参数和get合并，如果有同名参数，则会被get覆盖。
-		self::$params=$params;
-		$_GET=array_merge($params,$_GET);
+		
+		return array($controller,$action,$params);
 	}
+	
+	
 	
 	/**
 	* 由控制器、方法、参数，找到对应的文件并实例化。
 	*/
-	static function dispache(){
+	private static function dispache(){
 		$controller=self::$controller;
 		$action=self::$action;
 		//检测是否有该文件
@@ -159,7 +163,7 @@ class Router{
 		实例化后的类
 		方法名
 	*/
-	function reflectParams($clazz,$action){
+	private static function reflectParams($clazz,$action){
 		
 		$reflection = new ReflectionClass($clazz);
 		$methods=$reflection->getMethods();
@@ -222,20 +226,23 @@ class Router{
 	}
 	
 	
+	
+	
+	//看来需要消除make的负面影响。不要留有状态！
 	//
-	function make($str,$params=array()){
+	static function make($str,$params=array()){
 		//1.如果没有第一个参数，报错。
 		if(empty($str) || is_array($str)){
 			die("must input Controler/action using string.");
 		}
 		//2.判断第一个参数，构建主url
-		self::parseURI($str);
+		$rs=self::parseURI($str);
 		$php_self=split('index.php',$_SERVER['PHP_SELF']);
-		$_url=$php_self[0].self::$controller.'/'.self::$action;
+		$_url=$php_self[0].$rs[0].'/'.$rs[1];
 		//debug($_url);
 		
 		//3.设置参数设置
-		$params=array_merge(self::$params,$params);
+		$params=array_merge($rs[2],$params);
 		foreach($params as $k=>$v){
 			$_url .= '/'.$k.'/'.$v;
 		}

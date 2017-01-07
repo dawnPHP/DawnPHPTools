@@ -1,3 +1,39 @@
+------------------------
+Log format for each tools:
+------------------------
+title: 24-php_Router 
+Description:基于MVC的路由。仿tp3.2的功能 
+
+keywords: router
+pros&cons: 
+	pros: php的简单路由功能。
+	cons:
+
+version: v1.0.0
+mod_time:[]
+add_time:[17:12 2017/01/07]
+auther: Dawn
+Email: jimmymall@live.com
+
+Files&Functions:
+==================================================
+文件结构：
+index.php 	#入口文件
+.htaccess 保证单入口的文件。
+	除非有文件确切路径比如test.txt，否则都要经过index.php。
+demo1.php 测试1 基础实验
+demo2.php 测试2 功能实验。
+	//todo 怎么自己配置路由？自定义路由转向？ 比如xx.com/u/20 自动转向 xx.com/User/detail/id/20
+
+Router.class.php 路由的核心文件。
+
+其他2个文件夹内都是辅助测试文件。
+config/
+controllers/
+
+==================================================
+Databases: 没有.sql文件。
+
 
 
 
@@ -20,7 +56,15 @@ pathinfo方式，所谓的pathinfo，就是形如这样的url。xxx.com/index.ph
 
 demo1：常用参数实例。
 
-demo2:借助反射函数求出类中方法的参数列表，并带入进去。config/function.php中的
+demo2:借助反射函数求出类中方法的参数列表，并带入进去。独立为一个Router类。只有2个对外方法。
+1.路由分发。
+	Router::init();
+
+2.生成路由：
+Router::make("Article");
+Router::make("Article/index");
+Router::make("Article/index/id/20");
+Router::make("Article/index/id/20",array('id'=>5));//后面的会覆盖前面的id。
 
 
 

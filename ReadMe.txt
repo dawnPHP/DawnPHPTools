@@ -1,4 +1,5 @@
 ﻿标签ok，分类ok，标签ok，回收站，字体设置，分享，添加好友等。
+MySQLHelper ok, Router ok, Cache ok.
 
 ====================================
 ============总索引==================
@@ -18,6 +19,7 @@
 
 [AuthCode][YanZhengMa][验证码] 03-php_yanZhengMa(AuthCode)
 [MySQL][PHP][增删改查] 00-singlePageBlog
+[MySQL][PHP]22-MySQL_data_transfer(MySQL监视表)
 [excel2mysql] 04-php_excel2MySQL
 [pdf]	06-PHP_Lib_FPDF
 [jsonp]	12-jsonp
@@ -31,6 +33,9 @@
 [cURL]	19-php_cURL_domainPriceAPI(基于cURL采集数据)
 [目录]	20-php_category(基于目录的分类)
 [markdown]	21-MarkDown
+[Cache] 23-php_file_Cache(文件缓存实例)
+[Router] 24-php_Router(路由系统)
+
 -----------------------------------
 ===================================
 
@@ -63,6 +68,7 @@
 [2016-10-01]	21-MarkDown(markdown读取类)
 [2017-01-01]	22-MySQL_data_transfer(MySQL类)
 [2017-01-05]	23-php_file_Cache(文件缓存实例)
+[2017-01-07]	24-php_Router(路由系统)
 
 
 -----------------------------------
@@ -88,7 +94,7 @@
 还未加入class文件
  22-MySQL_data_transfer(MySQL监视表) (MysqlHelper: 操作MySQL的类)
  23-php_file_Cache(文件缓存实例){Cache:文件缓存}
-
+ 24-php_Router(路由系统){Router:路由系统}
 
 -----------------------------------
 ===================================
