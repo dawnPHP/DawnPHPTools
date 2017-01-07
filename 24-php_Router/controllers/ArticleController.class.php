@@ -2,9 +2,9 @@
 class ArticleController{
 	function __construct(){
 		$base_url="http://localhost/DawnPHPTools/24-php_Router/Article";
-		echo '<div style="color:red; border:1px solid red;padding:10px;">init....<br>';
-		echo "<a href='$base_url/index/cat/good/id/12?name=wxm'>index</a> | ";
-		echo "<a href='$base_url/show/id/2017'>show</a> | <hr>";
+		echo '<div style="background:#efeeef; border:1px dashed green;padding:10px;">init....<br>';
+		echo "<a href='$base_url/index/cat/good/id/12?name=wxm'>index方法</a> | ";
+		echo "<a href='$base_url/show/id/2017'>show方法</a> | <hr>";
 	}
 
 
@@ -17,12 +17,13 @@ class ArticleController{
 	}
 	
 	function show($id=0){
-		echo "<h2 style='color:#000;'>show</h2>";
+		echo "<h2 style='color:#f00;'>show</h2>";
 		echo '<pre>Article-show: test.<br>';
 		echo '展示 id='.$id.' 的文章。';
 	}
 	
-	function _destruct(){
-		echo "</div>";
+	function __destruct(){
+		echo '<p>the end......................</p>';
+		echo "</pre></div>";
 	}
 }
