@@ -35,6 +35,8 @@ MySQLHelper ok, Router ok, Cache ok.
 [wechat][微信]	17-php_weixin（微信开发）
 [config]	18-php_config_class（基于数组）
 [cURL]	19-php_cURL_domainPriceAPI(基于cURL采集数据)
+[GetPost] 25-GetPost_testor(数据发送接收测试)
+
 [目录]	20-php_category(基于目录的分类)
 [markdown]	21-MarkDown
 [Cache] 23-php_file_Cache(文件缓存实例)
@@ -73,6 +75,7 @@ MySQLHelper ok, Router ok, Cache ok.
 [2017-01-01]	22-MySQL_data_transfer(MySQL类)
 [2017-01-05]	23-php_file_Cache(文件缓存实例)
 [2017-01-07]	24-php_Router(路由系统)
+[2017-01-20]	25-GetPost_testor(数据发送、接收测试)
 
 
 -----------------------------------
