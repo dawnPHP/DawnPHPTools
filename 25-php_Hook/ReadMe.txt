@@ -35,6 +35,7 @@ Databases: 没有.sql文件。
 
 refer：tp的行为,ci的hook类, wp的plugin机制,
 drupal更有资格说hook,
+wordpress、discuz的源代码有更多插件机制（简易版参考002/目录）
 tp叫事件和行为。
 sy2，yii2叫event
 */
@@ -47,3 +48,10 @@ sy2，yii2叫event
 预先给钩子注册函数。
 然后在代码需要的位置上监听钩子。
 参考demo例子。
+
+
+refer:
+http://blog.csdn.net/ljuncong/article/details/50753908
+https://github.com/bainternet/PHP-Hooks
+
+http://baijunyao.com/article/85
