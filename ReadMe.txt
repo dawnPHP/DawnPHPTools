@@ -4,6 +4,7 @@
 
 标签ok，分类ok，标签ok，回收站，字体设置，分享，添加好友等。
 MySQLHelper ok, Router ok, Cache ok.
+Hook ok,
 
 ====================================
 ============总索引==================
@@ -39,6 +40,7 @@ MySQLHelper ok, Router ok, Cache ok.
 [markdown]	21-MarkDown
 [Cache] 23-php_file_Cache(文件缓存实例)
 [Router] 24-php_Router(路由系统)
+[Hook] 25-php_Hook (钩子)
 
 -----------------------------------
 ===================================
@@ -73,6 +75,7 @@ MySQLHelper ok, Router ok, Cache ok.
 [2017-01-01]	22-MySQL_data_transfer(MySQL类)
 [2017-01-05]	23-php_file_Cache(文件缓存实例)
 [2017-01-07]	24-php_Router(路由系统)
+[2017-02-15]	25-php_Hook(钩子)
 
 
 -----------------------------------
@@ -94,12 +97,14 @@ MySQLHelper ok, Router ok, Cache ok.
 19-php_cURL_domainPriceAPI(基于cURL采集数据) {cURL:比较初级}
 比较推荐 20-php_category(基于目录的分类) 中类的结构，初步实现自动加载。
 21-MarkDown	{}
-
+25-php_Hook {钩子 Hook:v1.0.0}
+ 
 还未加入class文件
  22-MySQL_data_transfer(MySQL监视表) (MysqlHelper: 操作MySQL的类)
  23-php_file_Cache(文件缓存实例){Cache:文件缓存}
  24-php_Router(路由系统){Router:路由系统}
-
+ 25-php_Hook(钩子)
+ 
 -----------------------------------
 ===================================
 
