@@ -7,7 +7,7 @@ include('dawnPHP/mylib.php');
 
 /*
 $_SESSION['uid'] = 2;
-$_SESSION['username'] = '王军亮';
+$_SESSION['username'] = '王某某';
 $_SESSION['lastlogin'] = 1449571811;
 $_SESSION['usergroup'] = 2;
 $_SESSION['lastBrowseTime'] = 1449571919;
