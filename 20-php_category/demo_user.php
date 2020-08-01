@@ -28,7 +28,7 @@ print_r($_SESSION);
 $_SESSION['user']=null;
 $user=array(
 	'uid'=>'2',
-	'username'=>'王军亮',
+	'username'=>'王某某',
 	'lastlogin'=>'1449571811',
 	'usergroup'=>'2',
 	'lastBrowseTime'=>'1449571919',
